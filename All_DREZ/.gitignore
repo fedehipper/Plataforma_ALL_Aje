@@ -1,0 +1,7 @@
+/Debug/
+
+*.settings.xml
+
+*.settings/language.settings.xml
+
+*.*.xml

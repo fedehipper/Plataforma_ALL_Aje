@@ -9,8 +9,9 @@ int main(void) {
 
 	allegro_init();
 	install_keyboard();
-	set_gfx_mode(GFX_SAFE, 660, 660, 0, 0);
+	set_gfx_mode(GFX_SAFE, 670, 670, 0, 0);
 	draw_tablero();
+
 
 
 

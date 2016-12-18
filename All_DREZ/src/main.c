@@ -20,6 +20,19 @@ int main(void) {
 	re_draw(campo);
 
 
+
+
+
+
+//
+//	rectfill(screen, aux_1, aux_1, aux_2, aux_2, 4);
+//	rectfill(screen, aux_1 + 160, aux_1, aux_2 + 160, aux_2, 4);
+//	rectfill(screen, aux_1 + 320, aux_1, aux_2 + 320, aux_2, 4);
+//	rectfill(screen, aux_1 + 480, aux_1, aux_2 + 480, aux_2, 4);
+
+
+
+
 	readkey();
 
 	avanzar_uno(2, 'f', 'B', campo);

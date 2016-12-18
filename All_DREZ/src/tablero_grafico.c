@@ -43,6 +43,21 @@ void draw_coordenadas(void) {
 	textprintf_justify_ex(screen, font, 655, 10, 605, 0, 15, 0, "8");
 }
 
+void draw_cuadros_tablero(void) {
+	int aux_1 = 11, aux_2 = 89, i, j;
+	// si es fila impar y posicion de columna impar entonces se pinta
+	for(i = 0 ; i < 8 ; i++) {
+		for(j = 0 ; j < 8 ; j++) {
+			if((i == 0 || i == 2 || i == 4 || i == 6) && (j == 0 || j == 2 || j == 4 || j == 6)) {
+				rectfill(screen, aux_1 + 80 * i, aux_1 + 80 * j, aux_2 + 80 * i, aux_2 + 80 * j, 4);
+			}
+			else if((i == 1 || i == 3 || i == 5 || i == 7) && (j == 1 || j == 3 || j == 5 || j == 7)) {
+				rectfill(screen, aux_1 + 80 * i, aux_1 + 80 * j, aux_2 + 80 * i, aux_2 + 80 * j, 4);
+			}
+		}
+	}
+}
+
 void tablero_en_blanco(char campo[LADO][LADO]) {
 	int i, j;
 	for(i = 0 ; i < 8 ; i++) {
@@ -124,6 +139,7 @@ void crear_piezas(void) {
 void re_draw(char campo[LADO][LADO]) {
 	clear_bitmap(screen);
 	draw_tablero();
+	draw_cuadros_tablero();
 	draw_peon_blanco(campo);
 	draw_peon_negro(campo);
 }

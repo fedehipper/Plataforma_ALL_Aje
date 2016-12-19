@@ -4,31 +4,33 @@
 #define ESCALA 10
 #define LADO 8
 #define LADO_PIEZA 40
+#define COLOR_LINEAS 42
+#define COLOR_CUADRADOS 4
 
 BITMAP *b_peon_blanco, *b_peon_negro;
 
 void draw_bordes(void) {
-	rect(screen, ESCALA, ESCALA, 650, 650, palette_color[15]);
+	rect(screen, ESCALA, ESCALA, 650, 650, palette_color[COLOR_LINEAS]);
 }
 
 void draw_lineas_verticales(void) {
-	rect(screen, ESCALA, ESCALA, 90, 650, palette_color[15]);
-	rect(screen, ESCALA, ESCALA, 170, 650, palette_color[15]);
-	rect(screen, ESCALA, ESCALA, 250, 650, palette_color[15]);
-	rect(screen, ESCALA, ESCALA, 330, 650, palette_color[15]);
-	rect(screen, ESCALA, ESCALA, 410, 650, palette_color[15]);
-	rect(screen, ESCALA, ESCALA, 490, 650, palette_color[15]);
-	rect(screen, ESCALA, ESCALA, 570, 650, palette_color[15]);
+	rect(screen, ESCALA, ESCALA, 90, 650, palette_color[COLOR_LINEAS]);
+	rect(screen, ESCALA, ESCALA, 170, 650, palette_color[COLOR_LINEAS]);
+	rect(screen, ESCALA, ESCALA, 250, 650, palette_color[COLOR_LINEAS]);
+	rect(screen, ESCALA, ESCALA, 330, 650, palette_color[COLOR_LINEAS]);
+	rect(screen, ESCALA, ESCALA, 410, 650, palette_color[COLOR_LINEAS]);
+	rect(screen, ESCALA, ESCALA, 490, 650, palette_color[COLOR_LINEAS]);
+	rect(screen, ESCALA, ESCALA, 570, 650, palette_color[COLOR_LINEAS]);
 }
 
 void draw_lineas_horizontales(void) {
-	rect(screen, ESCALA, ESCALA, 650, 90, palette_color[15]);
-	rect(screen, ESCALA, ESCALA, 650, 170, palette_color[15]);
-	rect(screen, ESCALA, ESCALA, 650, 250, palette_color[15]);
-	rect(screen, ESCALA, ESCALA, 650, 330, palette_color[15]);
-	rect(screen, ESCALA, ESCALA, 650, 410, palette_color[15]);
-	rect(screen, ESCALA, ESCALA, 650, 490, palette_color[15]);
-	rect(screen, ESCALA, ESCALA, 650, 570, palette_color[15]);
+	rect(screen, ESCALA, ESCALA, 650, 90, palette_color[COLOR_LINEAS]);
+	rect(screen, ESCALA, ESCALA, 650, 170, palette_color[COLOR_LINEAS]);
+	rect(screen, ESCALA, ESCALA, 650, 250, palette_color[COLOR_LINEAS]);
+	rect(screen, ESCALA, ESCALA, 650, 330, palette_color[COLOR_LINEAS]);
+	rect(screen, ESCALA, ESCALA, 650, 410, palette_color[COLOR_LINEAS]);
+	rect(screen, ESCALA, ESCALA, 650, 490, palette_color[COLOR_LINEAS]);
+	rect(screen, ESCALA, ESCALA, 650, 570, palette_color[COLOR_LINEAS]);
 }
 
 void draw_coordenadas(void) {
@@ -49,10 +51,10 @@ void draw_cuadros_tablero(void) {
 	for(i = 0 ; i < 8 ; i++) {
 		for(j = 0 ; j < 8 ; j++) {
 			if((i == 0 || i == 2 || i == 4 || i == 6) && (j == 0 || j == 2 || j == 4 || j == 6)) {
-				rectfill(screen, aux_1 + 80 * i, aux_1 + 80 * j, aux_2 + 80 * i, aux_2 + 80 * j, 4);
+				rectfill(screen, aux_1 + 80 * i, aux_1 + 80 * j, aux_2 + 80 * i, aux_2 + 80 * j, COLOR_CUADRADOS);
 			}
 			else if((i == 1 || i == 3 || i == 5 || i == 7) && (j == 1 || j == 3 || j == 5 || j == 7)) {
-				rectfill(screen, aux_1 + 80 * i, aux_1 + 80 * j, aux_2 + 80 * i, aux_2 + 80 * j, 4);
+				rectfill(screen, aux_1 + 80 * i, aux_1 + 80 * j, aux_2 + 80 * i, aux_2 + 80 * j, COLOR_CUADRADOS);
 			}
 		}
 	}
@@ -83,10 +85,11 @@ void inicializar_posicion_piezas(char campo[LADO][LADO]) {
 }
 
 void draw_tablero(void) {
-	draw_bordes();
 	draw_lineas_verticales();
 	draw_lineas_horizontales();
 	draw_coordenadas();
+	draw_cuadros_tablero();
+	draw_bordes();
 }
 
 void crear_peon_blanco(void) {
@@ -139,7 +142,6 @@ void crear_piezas(void) {
 void re_draw(char campo[LADO][LADO]) {
 	clear_bitmap(screen);
 	draw_tablero();
-	draw_cuadros_tablero();
 	draw_peon_blanco(campo);
 	draw_peon_negro(campo);
 }

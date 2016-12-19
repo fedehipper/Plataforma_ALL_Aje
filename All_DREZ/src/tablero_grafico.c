@@ -7,7 +7,8 @@
 #define COLOR_LINEAS 42
 #define COLOR_CUADRADOS 4
 
-BITMAP *b_peon_blanco, *b_peon_negro, *b_torre_blanca, *b_torre_negra, *b_alfil_blanco, *b_alfil_negro;
+BITMAP *b_peon_blanco, *b_peon_negro, *b_torre_blanca, *b_torre_negra, *b_alfil_blanco, *b_alfil_negro, *b_caballo_blanco,
+	   *b_caballo_negro;
 
 void draw_bordes(void) {
 	rect(screen, ESCALA, ESCALA, 650, 650, palette_color[COLOR_LINEAS]);
@@ -45,17 +46,15 @@ void draw_coordenadas(void) {
 	textprintf_justify_ex(screen, font, 655, 10, 605, 0, 15, 0, "8");
 }
 
+// si es fila impar y posicion de columna impar entonces se pinta
 void draw_cuadros_tablero(void) {
 	int aux_1 = 11, aux_2 = 89, i, j;
-	// si es fila impar y posicion de columna impar entonces se pinta
 	for(i = 0 ; i < 8 ; i++) {
 		for(j = 0 ; j < 8 ; j++) {
-			if((i == 0 || i == 2 || i == 4 || i == 6) && (j == 0 || j == 2 || j == 4 || j == 6)) {
+			if((i == 0 || i == 2 || i == 4 || i == 6) && (j == 0 || j == 2 || j == 4 || j == 6))
 				rectfill(screen, aux_1 + 80 * i, aux_1 + 80 * j, aux_2 + 80 * i, aux_2 + 80 * j, COLOR_CUADRADOS);
-			}
-			else if((i == 1 || i == 3 || i == 5 || i == 7) && (j == 1 || j == 3 || j == 5 || j == 7)) {
+			else if((i == 1 || i == 3 || i == 5 || i == 7) && (j == 1 || j == 3 || j == 5 || j == 7))
 				rectfill(screen, aux_1 + 80 * i, aux_1 + 80 * j, aux_2 + 80 * i, aux_2 + 80 * j, COLOR_CUADRADOS);
-			}
 		}
 	}
 }
@@ -72,12 +71,10 @@ void tablero_en_blanco(char campo[LADO][LADO]) {
 // piezas en minuscula --> blancas y mayuscula --> negras
 void inicializar_posicion_peones(char campo[LADO][LADO]) {
 	int i;
-	for(i = 0 ; i < 8 ; i++) {
+	for(i = 0 ; i < 8 ; i++)
 		campo[1][i] = 'p';
-	}
-	for(i = 0 ; i < 8 ; i++) {
+	for(i = 0 ; i < 8 ; i++)
 		campo[6][i] = 'P';
-	}
 }
 
 void inicializar_posicion_alfiles(char campo[LADO][LADO]) {
@@ -94,10 +91,18 @@ void inicializar_posicion_torres(char campo[LADO][LADO]) {
 	campo[7][7] = 'T';
 }
 
+void inicializar_posicion_caballos(char campo[LADO][LADO]) {
+	campo[0][1] = 'c';
+	campo[0][6] = 'c';
+	campo[7][1] = 'C';
+	campo[7][6] = 'C';
+}
+
 void inicializar_posicion_piezas(char campo[LADO][LADO]) {
 	inicializar_posicion_peones(campo);
 	inicializar_posicion_torres(campo);
 	inicializar_posicion_alfiles(campo);
+	inicializar_posicion_caballos(campo);
 }
 
 void draw_tablero(void) {
@@ -108,6 +113,27 @@ void draw_tablero(void) {
 	draw_bordes();
 }
 
+void crear_caballo_blanco(void) {
+	int i, j;
+	b_caballo_blanco = create_bitmap(80, 80);
+	clear_bitmap(b_caballo_blanco);
+	for(i = 0 ; i < LADO_PIEZA ; i++) {
+		for(j = 0 ; j < LADO_PIEZA ; j++) {
+			putpixel(b_caballo_blanco, i, j, palette_color[caballo_blanco[j][i]]);
+		}
+	}
+}
+
+void crear_caballo_negro(void) {
+	int i, j;
+	b_caballo_negro = create_bitmap(80, 80);
+	clear_bitmap(b_caballo_negro);
+	for(i = 0 ; i < LADO_PIEZA ; i++) {
+		for(j = 0 ; j < LADO_PIEZA ; j++) {
+			putpixel(b_caballo_negro, i, j, palette_color[caballo_negro[j][i]]);
+		}
+	}
+}
 void crear_torre_blanca(void) {
 	int i, j;
 	b_torre_blanca = create_bitmap(80, 80);
@@ -238,6 +264,29 @@ void draw_alfil_negro(char campo[LADO][LADO]) {
 	}
 }
 
+void draw_caballo_blanco(char campo[LADO][LADO]) {
+	int i, j;
+	for(i = 0 ; i < LADO ; i++) {
+		for(j = 0 ; j < LADO ; j++) {
+			if(campo[i][j] == 'c') {
+				draw_sprite(screen, b_caballo_blanco, j * 80 + 30, i * 80 + 30);
+			}
+		}
+	}
+}
+
+void draw_caballo_negro(char campo[LADO][LADO]) {
+	int i, j;
+	for(i = 0 ; i < LADO ; i++) {
+		for(j = 0 ; j < LADO ; j++) {
+			if(campo[i][j] == 'C') {
+				draw_sprite(screen, b_caballo_negro, j * 80 + 30, i * 80 + 30);
+			}
+		}
+	}
+}
+
+
 void crear_piezas(void) {
 	crear_torre_blanca();
 	crear_torre_negra();
@@ -245,6 +294,9 @@ void crear_piezas(void) {
 	crear_peon_negro();
 	crear_alfil_blanco();
 	crear_alfil_negro();
+	crear_caballo_blanco();
+	crear_caballo_negro();
+
 }
 
 void re_draw(char campo[LADO][LADO]) {
@@ -256,7 +308,8 @@ void re_draw(char campo[LADO][LADO]) {
 	draw_torre_negra(campo);
 	draw_alfil_blanco(campo);
 	draw_alfil_negro(campo);
-
+	draw_caballo_blanco(campo);
+	draw_caballo_negro(campo);
 }
 
 

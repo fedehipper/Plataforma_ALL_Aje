@@ -72,35 +72,35 @@ void tablero_en_blanco(char campo[LADO][LADO]) {
 void inicializar_posicion_peones(char campo[LADO][LADO]) {
 	int i;
 	for(i = 0 ; i < 8 ; i++)
-		campo[1][i] = 'p';
+		campo[1][i] = 'P';
 	for(i = 0 ; i < 8 ; i++)
-		campo[6][i] = 'P';
+		campo[6][i] = 'p';
 }
 
 void inicializar_posicion_reinas(char campo[LADO][LADO]) {
-	campo[0][4] = 'w';
-	campo[7][4] = 'W';
+	campo[0][4] = 'W';
+	campo[7][4] = 'w';
 }
 
 void inicializar_posicion_alfiles(char campo[LADO][LADO]) {
-	campo[0][2] = 'a';
-	campo[0][5] = 'a';
-	campo[7][2] = 'A';
-	campo[7][5] = 'A';
+	campo[0][2] = 'A';
+	campo[0][5] = 'A';
+	campo[7][2] = 'a';
+	campo[7][5] = 'a';
 }
 
 void inicializar_posicion_torres(char campo[LADO][LADO]) {
-	campo[0][0] = 't';
-	campo[0][7] = 't';
-	campo[7][0] = 'T';
-	campo[7][7] = 'T';
+	campo[0][0] = 'T';
+	campo[0][7] = 'T';
+	campo[7][0] = 't';
+	campo[7][7] = 't';
 }
 
 void inicializar_posicion_caballos(char campo[LADO][LADO]) {
-	campo[0][1] = 'c';
-	campo[0][6] = 'c';
-	campo[7][1] = 'C';
-	campo[7][6] = 'C';
+	campo[0][1] = 'C';
+	campo[0][6] = 'C';
+	campo[7][1] = 'c';
+	campo[7][6] = 'c';
 }
 
 void inicializar_posicion_piezas(char campo[LADO][LADO]) {
@@ -199,8 +199,8 @@ void crear_peon_blanco(void) {
 	int i, j;
 	b_peon_blanco = create_bitmap(80, 80);
 	clear_bitmap(b_peon_blanco);
-	for(i = 0 ; i < LADO_PIEZA ; i++) {
-		for(j = 0 ; j < LADO_PIEZA ; j++)
+	for(i = 0 ; i < LADO_PIEZA + 30 ; i++) {
+		for(j = 0 ; j < LADO_PIEZA + 30 ; j++)
 			putpixel(b_peon_blanco, i, j, palette_color[peon_blanco[j][i]]);
 	}
 }
@@ -231,7 +231,7 @@ void draw_peon_blanco(char campo[LADO][LADO]) {
 	for(i = 0 ; i < LADO ; i++) {
 		for(j = 0 ; j < LADO ; j++) {
 			if(campo[i][j] == 'p') {
-				draw_sprite(screen, b_peon_blanco, j * 80 + 30, i * 80 + 30);
+				draw_sprite(screen, b_peon_blanco, j * 80 + 15, i * 80 + 15);
 			}
 		}
 	}

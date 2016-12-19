@@ -10,6 +10,7 @@ int main(void) {
 
 	allegro_init();
 	install_keyboard();
+	install_mouse();
 	set_gfx_mode(GFX_SAFE, 670, 670, 0, 0);
 	crear_piezas();
 	draw_tablero();

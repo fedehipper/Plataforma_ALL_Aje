@@ -296,7 +296,6 @@ void crear_piezas(void) {
 	crear_alfil_negro();
 	crear_caballo_blanco();
 	crear_caballo_negro();
-
 }
 
 void re_draw(char campo[LADO][LADO]) {

@@ -197,7 +197,7 @@ void crear_torre_negra(void) {
 
 void crear_peon_blanco(void) {
 	int i, j;
-	b_peon_blanco = create_bitmap(80, 80);
+	b_peon_blanco = create_bitmap(110, 110);
 	clear_bitmap(b_peon_blanco);
 	for(i = 0 ; i < LADO_PIEZA + 30 ; i++) {
 		for(j = 0 ; j < LADO_PIEZA + 30 ; j++)
@@ -207,10 +207,10 @@ void crear_peon_blanco(void) {
 
 void crear_peon_negro(void) {
 	int i, j;
-	b_peon_negro = create_bitmap(80, 80);
+	b_peon_negro = create_bitmap(110, 110);
 	clear_bitmap(b_peon_negro);
-	for(i = 0 ; i < LADO_PIEZA ; i++) {
-		for(j = 0 ; j < LADO_PIEZA ; j++)
+	for(i = 0 ; i < LADO_PIEZA + 30; i++) {
+		for(j = 0 ; j < LADO_PIEZA + 30 ; j++)
 			putpixel(b_peon_negro, i, j, palette_color[peon_negro[j][i]]);
 	}
 }
@@ -220,7 +220,7 @@ void draw_peon_negro(char campo[LADO][LADO]) {
 	for(i = 0 ; i < LADO; i++) {
 		for(j = 0 ; j < LADO ; j++) {
 			if(campo[i][j] == 'P') {
-				draw_sprite(screen, b_peon_negro, j * 80 + 30, i * 80 + 30);
+				draw_sprite(screen, b_peon_negro, j * 80 + 15, i * 80 + 15);
 			}
 		}
 	}

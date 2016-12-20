@@ -177,8 +177,8 @@ void crear_alfil_negro(void) {
 	int i, j;
 	b_alfil_negro = create_bitmap(80, 80);
 	clear_bitmap(b_alfil_negro);
-	for(i = 0 ; i < LADO_PIEZA ; i++) {
-		for(j = 0 ; j < LADO_PIEZA ; j++) {
+	for(i = 0 ; i < LADO_PIEZA + 30 ; i++) {
+		for(j = 0 ; j < LADO_PIEZA + 30; j++) {
 			putpixel(b_alfil_negro, i, j, palette_color[alfil_negro[j][i]]);
 		}
 	}
@@ -275,7 +275,7 @@ void draw_alfil_negro(char campo[LADO][LADO]) {
 	for(i = 0 ; i < LADO ; i++) {
 		for(j = 0 ; j < LADO ; j++) {
 			if(campo[i][j] == 'A') {
-				draw_sprite(screen, b_alfil_negro, j * 80 + 30, i * 80 + 30);
+				draw_sprite(screen, b_alfil_negro, j * 80 + 15, i * 80 + 15);
 			}
 		}
 	}

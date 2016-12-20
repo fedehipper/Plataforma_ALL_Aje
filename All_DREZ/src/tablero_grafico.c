@@ -152,10 +152,10 @@ void crear_reina_blanca(void) {
 
 void crear_caballo_negro(void) {
 	int i, j;
-	b_caballo_negro = create_bitmap(80, 80);
+	b_caballo_negro = create_bitmap(110, 110);
 	clear_bitmap(b_caballo_negro);
-	for(i = 0 ; i < LADO_PIEZA ; i++) {
-		for(j = 0 ; j < LADO_PIEZA ; j++) {
+	for(i = 0 ; i < LADO_PIEZA + 30 ; i++) {
+		for(j = 0 ; j < LADO_PIEZA + 30 ; j++) {
 			putpixel(b_caballo_negro, i, j, palette_color[caballo_negro[j][i]]);
 		}
 	}
@@ -306,7 +306,7 @@ void draw_caballo_negro(char campo[LADO][LADO]) {
 	for(i = 0 ; i < LADO ; i++) {
 		for(j = 0 ; j < LADO ; j++) {
 			if(campo[i][j] == 'C') {
-				draw_sprite(screen, b_caballo_negro, j * 80 + 30, i * 80 + 30);
+				draw_sprite(screen, b_caballo_negro, j * 80 + 15, i * 80 + 15);
 			}
 		}
 	}

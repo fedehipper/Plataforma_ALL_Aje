@@ -24,7 +24,7 @@ int main(void) {
 
 	readkey();
 
-	avanzar_uno(2, 'f', 'B', campo);
+	avanzar_uno(7, 'f', 'N', campo);
 
 	re_draw(campo);
 

@@ -1,4 +1,5 @@
 #include <allegro.h>
+#include <stdbool.h>
 #include "piezas.h"
 
 #define ESCALA 10
@@ -46,14 +47,22 @@ void draw_coordenadas(void) {
 	textprintf_justify_ex(screen, font, 655, 10, 605, 0, 15, 0, "8");
 }
 
+bool impar_relativo(int i, int j) {
+	return (i == 0 || i == 2 || i == 4 || i == 6) && (j == 0 || j == 2 || j == 4 || j == 6);
+}
+
+bool par_relativo(int i, int j) {
+	return (i == 1 || i == 3 || i == 5 || i == 7) && (j == 1 || j == 3 || j == 5 || j == 7);
+}
+
 // si es fila impar y posicion de columna impar entonces se pinta
 void draw_cuadros_tablero(void) {
 	int aux_1 = 11, aux_2 = 89, i, j;
 	for(i = 0 ; i < 8 ; i++) {
 		for(j = 0 ; j < 8 ; j++) {
-			if((i == 0 || i == 2 || i == 4 || i == 6) && (j == 0 || j == 2 || j == 4 || j == 6))
+			if(impar_relativo(i, j))
 				rectfill(screen, aux_1 + 80 * i, aux_1 + 80 * j, aux_2 + 80 * i, aux_2 + 80 * j, COLOR_CUADRADOS);
-			else if((i == 1 || i == 3 || i == 5 || i == 7) && (j == 1 || j == 3 || j == 5 || j == 7))
+			else if(par_relativo(i, j))
 				rectfill(screen, aux_1 + 80 * i, aux_1 + 80 * j, aux_2 + 80 * i, aux_2 + 80 * j, COLOR_CUADRADOS);
 		}
 	}
@@ -121,10 +130,10 @@ void draw_tablero(void) {
 
 void crear_caballo_blanco(void) {
 	int i, j;
-	b_caballo_blanco = create_bitmap(80, 80);
+	b_caballo_blanco = create_bitmap(110, 110);
 	clear_bitmap(b_caballo_blanco);
-	for(i = 0 ; i < LADO_PIEZA ; i++) {
-		for(j = 0 ; j < LADO_PIEZA ; j++) {
+	for(i = 0 ; i < LADO_PIEZA + 30 ; i++) {
+		for(j = 0 ; j < LADO_PIEZA + 30 ; j++) {
 			putpixel(b_caballo_blanco, i, j, palette_color[caballo_blanco[j][i]]);
 		}
 	}
@@ -286,7 +295,7 @@ void draw_caballo_blanco(char campo[LADO][LADO]) {
 	for(i = 0 ; i < LADO ; i++) {
 		for(j = 0 ; j < LADO ; j++) {
 			if(campo[i][j] == 'c') {
-				draw_sprite(screen, b_caballo_blanco, j * 80 + 30, i * 80 + 30);
+				draw_sprite(screen, b_caballo_blanco, j * 80 + 15, i * 80 + 15);
 			}
 		}
 	}

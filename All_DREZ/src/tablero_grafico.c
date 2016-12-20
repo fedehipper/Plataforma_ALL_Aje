@@ -164,10 +164,10 @@ void crear_torre_blanca(void) {
 
 void crear_alfil_blanco(void) {
 	int i, j;
-	b_alfil_blanco = create_bitmap(80, 80);
+	b_alfil_blanco = create_bitmap(110, 110);
 	clear_bitmap(b_alfil_blanco);
-	for(i = 0 ; i < LADO_PIEZA ; i++) {
-		for(j = 0 ; j < LADO_PIEZA ; j++) {
+	for(i = 0 ; i < LADO_PIEZA + 30 ; i++) {
+		for(j = 0 ; j < LADO_PIEZA + 30; j++) {
 			putpixel(b_alfil_blanco, i, j, palette_color[alfil_blanco[j][i]]);
 		}
 	}
@@ -264,7 +264,7 @@ void draw_alfil_blanco(char campo[LADO][LADO]) {
 	for(i = 0 ; i < LADO ; i++) {
 		for(j = 0 ; j < LADO ; j++) {
 			if(campo[i][j] == 'a') {
-				draw_sprite(screen, b_alfil_blanco, j * 80 + 30, i * 80 + 30);
+				draw_sprite(screen, b_alfil_blanco, j * 80 + 15, i * 80 + 15);
 			}
 		}
 	}

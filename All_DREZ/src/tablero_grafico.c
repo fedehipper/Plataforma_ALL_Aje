@@ -87,8 +87,8 @@ void inicializar_posicion_peones(char campo[LADO][LADO]) {
 }
 
 void inicializar_posicion_reinas(char campo[LADO][LADO]) {
-	campo[0][4] = 'W';
-	campo[7][4] = 'w';
+	campo[0][3] = 'W';
+	campo[7][3] = 'w';
 }
 
 void inicializar_posicion_alfiles(char campo[LADO][LADO]) {

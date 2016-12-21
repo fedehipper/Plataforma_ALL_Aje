@@ -141,10 +141,10 @@ void crear_caballo_blanco(void) {
 
 void crear_reina_blanca(void) {
 	int i, j;
-	b_reina_blanca = create_bitmap(80, 80);
+	b_reina_blanca = create_bitmap(110, 110);
 	clear_bitmap(b_reina_blanca);
-	for(i = 0 ; i < LADO_PIEZA ; i++) {
-		for(j = 0 ; j < LADO_PIEZA ; j++) {
+	for(i = 0 ; i < LADO_PIEZA + 30 ; i++) {
+		for(j = 0 ; j < LADO_PIEZA + 30 ; j++) {
 			putpixel(b_reina_blanca, i, j, palette_color[reina_blanca[j][i]]);
 		}
 	}
@@ -184,7 +184,7 @@ void crear_alfil_blanco(void) {
 
 void crear_alfil_negro(void) {
 	int i, j;
-	b_alfil_negro = create_bitmap(80, 80);
+	b_alfil_negro = create_bitmap(110, 110);
 	clear_bitmap(b_alfil_negro);
 	for(i = 0 ; i < LADO_PIEZA + 30 ; i++) {
 		for(j = 0 ; j < LADO_PIEZA + 30; j++) {
@@ -195,7 +195,7 @@ void crear_alfil_negro(void) {
 
 void crear_torre_negra(void) {
 	int i, j;
-	b_torre_negra = create_bitmap(80, 80);
+	b_torre_negra = create_bitmap(110, 110);
 	clear_bitmap(b_torre_negra);
 	for(i = 0 ; i < LADO_PIEZA + 30 ; i++) {
 		for(j = 0 ; j < LADO_PIEZA + 30; j++) {
@@ -317,7 +317,7 @@ void draw_reina_blanca(char campo[LADO][LADO]) {
 	for(i = 0 ; i < LADO; i++) {
 		for(j = 0 ; j < LADO ; j++) {
 			if(campo[i][j] == 'w') {
-				draw_sprite(screen, b_reina_blanca, j * 80 + 30, i * 80 + 30);
+				draw_sprite(screen, b_reina_blanca, j * 80 + 15, i * 80 + 15);
 			}
 		}
 	}

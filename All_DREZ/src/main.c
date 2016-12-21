@@ -4,8 +4,6 @@
 #include "tablero_grafico.h"
 #include "movimientos_peon.h"
 
-#define ESCALA 10
-
 int main(void) {
 
 	allegro_init();

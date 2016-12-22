@@ -12,16 +12,23 @@ void seleccionar(char campo[LADO][LADO]) {
 
 	int tecla = 0;
 	while(tecla != KEY_A) {
-		rest(60);
-		printf("%d %d\n" ,mouse_x,mouse_y);
+		rest(120);
+
 
 		 if (mouse_b & 1)
-			 printf("El botón izquierdo está pulsado\n");
+			 printf("%d %d\n" ,mouse_x,mouse_y);
 
-		 if (!(mouse_b & 2))
-			 printf("El botón derecho no está pulsado\n");
+
+
+
+
+
 		 if(keypressed()) tecla = readkey() >> 8;
-		re_draw(campo);
+
+		 //re_draw(campo);
 	}
+
+
+	// verificar la posicion y si clic, tomar el x e y y dividirlo por 10 y mostrar por pantalla luego de cliquear unicamente
 
 }

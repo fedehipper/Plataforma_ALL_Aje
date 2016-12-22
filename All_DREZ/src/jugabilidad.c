@@ -31,7 +31,7 @@ void seleccionar(char campo[LADO][LADO]) {
 	while(tecla != KEY_ESC) {
 		rest(75);
 
-		if(clic == 1) {
+		if(clic == 1 && pieza != '_') {
 			fila_origen = fila;
 			columna_origen = columna;
 		}

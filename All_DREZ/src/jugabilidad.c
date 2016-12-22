@@ -24,6 +24,10 @@ char obtener_pieza(int fila, int columna, char campo[LADO][LADO]) {
 		return '_';
 }
 
+bool hay_pieza(int fila, int columna, char campo[LADO][LADO]) {
+	return campo[fila][columna] != ' ';
+}
+
 void seleccionar(char campo[LADO][LADO]) {
 	int fila = 0, columna = 0, fila_origen = 0, fila_destino = 0, columna_origen = 0, columna_destino = 0, clic = 0, tecla = 0;
 	char pieza = ' ';
@@ -49,8 +53,11 @@ void seleccionar(char campo[LADO][LADO]) {
 		if(mouse_b & 1) {
 			fila = (mouse_y - 11) / 80;
 			columna = (mouse_x - 11) / 80;
-			draw_selector_cuadrado(fila, columna, campo);
-			pieza = obtener_pieza(fila, columna, campo);
+			if(hay_pieza(fila, columna, campo)) {
+				draw_selector_cuadrado(fila, columna, campo);
+			}
+				pieza = obtener_pieza(fila, columna, campo);
+
 			if(pieza != '_')
 				clic += 1;
 		}

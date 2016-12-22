@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <math.h>
 #include <stdlib.h>
 #include <allegro.h>
 #include <stdbool.h>
@@ -51,11 +52,11 @@ void draw_coordenadas(void) {
 }
 
 bool impar_relativo(int i, int j) {
-	return (i == 0 || i == 2 || i == 4 || i == 6) && (j == 0 || j == 2 || j == 4 || j == 6);
+	return fmod(i + j, 2)  > 0;
 }
 
 bool par_relativo(int i, int j) {
-	return (i == 1 || i == 3 || i == 5 || i == 7) && (j == 1 || j == 3 || j == 5 || j == 7);
+	return fmod(i + j, 2) == 0;
 }
 
 // si es fila impar y posicion de columna impar entonces se pinta
@@ -64,8 +65,8 @@ void draw_cuadros_tablero(void) {
 	for(i = 0 ; i < 8 ; i++) {
 		for(j = 0 ; j < 8 ; j++) {
 			if(impar_relativo(i, j))
-				rectfill(screen, aux_1 + 80 * i, aux_1 + 80 * j, aux_2 + 80 * i, aux_2 + 80 * j, COLOR_CUADRADOS);
-			else if(par_relativo(i, j))
+				rectfill(screen, aux_1 + 80 * i, aux_1 + 80 * j, aux_2 + 80 * i, aux_2 + 80 * j, 16);
+			else
 				rectfill(screen, aux_1 + 80 * i, aux_1 + 80 * j, aux_2 + 80 * i, aux_2 + 80 * j, COLOR_CUADRADOS);
 		}
 	}
@@ -431,7 +432,15 @@ void re_draw(char campo[LADO][LADO]) {
 }
 
 void draw_selector_cuadrado(int fila, int columna, char campo[LADO][LADO]) {
-	rectfill(screen, 11 + 80 * columna , 11 + 80 * fila, 89 + 80 * columna, 89 + 80 * fila, 12);
+	//rectfill(screen, 11 + 80 * columna , 11 + 80 * fila, 89 + 80 * columna, 89 + 80 * fila, 12);
+
+	if(par_relativo(fila, columna)) {
+		rectfill(screen, 11 + 80 * columna , 11 + 80 * fila, 89 + 80 * columna, 89 + 80 * fila, 12);
+	}
+	else if (impar_relativo(fila, columna)) {
+		rectfill(screen, 11 + 80 * columna , 11 + 80 * fila, 89 + 80 * columna, 89 + 80 * fila, 21);
+	}
+
 	char pieza = campo[fila][columna];
 	switch(pieza) {
 		case 'p': draw_peon_blanco(campo);
@@ -467,4 +476,3 @@ void draw_cuadrado(int fila, int columna, char campo[LADO][LADO]) {
 	else
 		rectfill(screen, 11 + 80 * columna , 11 + 80 * fila, 89 + 80 * columna, 89 + 80 * fila, 16);
 }
-

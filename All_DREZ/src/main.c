@@ -40,3 +40,4 @@ int main(void) {
 
 	return EXIT_SUCCESS;
 }
+END_OF_MAIN();

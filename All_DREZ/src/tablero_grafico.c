@@ -4,7 +4,7 @@
 
 #define ESCALA 10
 #define LADO 8
-#define LADO_PIEZA 40
+#define LADO_PIEZA 71
 #define COLOR_LINEAS 42
 #define COLOR_CUADRADOS 4
 
@@ -138,8 +138,8 @@ void crear_caballo_blanco(void) {
 	int i, j;
 	b_caballo_blanco = create_bitmap(110, 110);
 	clear_bitmap(b_caballo_blanco);
-	for(i = 0 ; i < LADO_PIEZA + 30 ; i++) {
-		for(j = 0 ; j < LADO_PIEZA + 30 ; j++) {
+	for(i = 0 ; i < LADO_PIEZA ; i++) {
+		for(j = 0 ; j < LADO_PIEZA ; j++) {
 			putpixel(b_caballo_blanco, i, j, palette_color[caballo_blanco[j][i]]);
 		}
 	}
@@ -149,8 +149,8 @@ void crear_reina_blanca(void) {
 	int i, j;
 	b_reina_blanca = create_bitmap(110, 110);
 	clear_bitmap(b_reina_blanca);
-	for(i = 0 ; i < LADO_PIEZA + 30 ; i++) {
-		for(j = 0 ; j < LADO_PIEZA + 30 ; j++) {
+	for(i = 0 ; i < LADO_PIEZA ; i++) {
+		for(j = 0 ; j < LADO_PIEZA ; j++) {
 			putpixel(b_reina_blanca, i, j, palette_color[reina_blanca[j][i]]);
 		}
 	}
@@ -160,8 +160,8 @@ void crear_rey_blanco(void) {
 	int i, j;
 	b_rey_blanco = create_bitmap(110, 110);
 	clear_bitmap(b_rey_blanco);
-	for(i = 0 ; i < LADO_PIEZA + 30 ; i++) {
-		for(j = 0 ; j < LADO_PIEZA + 30 ; j++) {
+	for(i = 0 ; i < 70 ; i++) {
+		for(j = 0 ; j < 70 ; j++) {
 			putpixel(b_rey_blanco, i, j, palette_color[rey_blanco[j][i]]);
 		}
 	}
@@ -171,8 +171,8 @@ void crear_rey_negro(void) {
 	int i, j;
 	b_rey_negro = create_bitmap(110, 110);
 	clear_bitmap(b_rey_negro);
-	for(i = 0 ; i < LADO_PIEZA + 30 ; i++) {
-		for(j = 0 ; j < LADO_PIEZA + 30 ; j++) {
+	for(i = 0 ; i < 70; i++) {
+		for(j = 0 ; j < 70 ; j++) {
 			putpixel(b_rey_negro, i, j, palette_color[rey_negro[j][i]]);
 		}
 	}
@@ -182,8 +182,8 @@ void crear_reina_negra(void) {
 	int i, j;
 	b_reina_negra = create_bitmap(110, 110);
 	clear_bitmap(b_reina_negra);
-	for(i = 0 ; i < LADO_PIEZA + 30 ; i++) {
-		for(j = 0 ; j < LADO_PIEZA + 30 ; j++) {
+	for(i = 0 ; i < LADO_PIEZA ; i++) {
+		for(j = 0 ; j < LADO_PIEZA ; j++) {
 			putpixel(b_reina_negra, i, j, palette_color[reina_negra[j][i]]);
 		}
 	}
@@ -193,8 +193,8 @@ void crear_caballo_negro(void) {
 	int i, j;
 	b_caballo_negro = create_bitmap(110, 110);
 	clear_bitmap(b_caballo_negro);
-	for(i = 0 ; i < LADO_PIEZA + 30 ; i++) {
-		for(j = 0 ; j < LADO_PIEZA + 30 ; j++) {
+	for(i = 0 ; i < LADO_PIEZA ; i++) {
+		for(j = 0 ; j < LADO_PIEZA ; j++) {
 			putpixel(b_caballo_negro, i, j, palette_color[caballo_negro[j][i]]);
 		}
 	}
@@ -203,8 +203,8 @@ void crear_torre_blanca(void) {
 	int i, j;
 	b_torre_blanca = create_bitmap(110, 110);
 	clear_bitmap(b_torre_blanca);
-	for(i = 0 ; i < LADO_PIEZA + 30 ; i++) {
-		for(j = 0 ; j < LADO_PIEZA + 30 ; j++) {
+	for(i = 0 ; i < LADO_PIEZA ; i++) {
+		for(j = 0 ; j < LADO_PIEZA ; j++) {
 			putpixel(b_torre_blanca, i, j, palette_color[torre_blanca[j][i]]);
 		}
 	}
@@ -214,8 +214,8 @@ void crear_alfil_blanco(void) {
 	int i, j;
 	b_alfil_blanco = create_bitmap(115, 115);
 	clear_bitmap(b_alfil_blanco);
-	for(i = 0 ; i < LADO_PIEZA + 30 ; i++) {
-		for(j = 0 ; j < LADO_PIEZA + 30; j++) {
+	for(i = 0 ; i < LADO_PIEZA ; i++) {
+		for(j = 0 ; j < LADO_PIEZA ; j++) {
 			putpixel(b_alfil_blanco, i, j, palette_color[alfil_blanco[j][i]]);
 		}
 	}
@@ -225,8 +225,8 @@ void crear_alfil_negro(void) {
 	int i, j;
 	b_alfil_negro = create_bitmap(115, 115);
 	clear_bitmap(b_alfil_negro);
-	for(i = 0 ; i < LADO_PIEZA + 30 ; i++) {
-		for(j = 0 ; j < LADO_PIEZA + 30; j++) {
+	for(i = 0 ; i < LADO_PIEZA ; i++) {
+		for(j = 0 ; j < LADO_PIEZA ; j++) {
 			putpixel(b_alfil_negro, i, j, palette_color[alfil_negro[j][i]]);
 		}
 	}
@@ -236,8 +236,8 @@ void crear_torre_negra(void) {
 	int i, j;
 	b_torre_negra = create_bitmap(110, 110);
 	clear_bitmap(b_torre_negra);
-	for(i = 0 ; i < LADO_PIEZA + 30 ; i++) {
-		for(j = 0 ; j < LADO_PIEZA + 30; j++) {
+	for(i = 0 ; i < LADO_PIEZA ; i++) {
+		for(j = 0 ; j < LADO_PIEZA ; j++) {
 			putpixel(b_torre_negra, i, j, palette_color[torre_negra[j][i]]);
 		}
 	}
@@ -247,8 +247,8 @@ void crear_peon_blanco(void) {
 	int i, j;
 	b_peon_blanco = create_bitmap(110, 110);
 	clear_bitmap(b_peon_blanco);
-	for(i = 0 ; i < LADO_PIEZA + 30 ; i++) {
-		for(j = 0 ; j < LADO_PIEZA + 30 ; j++)
+	for(i = 0 ; i < LADO_PIEZA ; i++) {
+		for(j = 0 ; j < LADO_PIEZA  ; j++)
 			putpixel(b_peon_blanco, i, j, palette_color[peon_blanco[j][i]]);
 	}
 }
@@ -257,8 +257,8 @@ void crear_peon_negro(void) {
 	int i, j;
 	b_peon_negro = create_bitmap(110, 110);
 	clear_bitmap(b_peon_negro);
-	for(i = 0 ; i < LADO_PIEZA + 30; i++) {
-		for(j = 0 ; j < LADO_PIEZA + 30 ; j++)
+	for(i = 0 ; i < LADO_PIEZA ; i++) {
+		for(j = 0 ; j < LADO_PIEZA ; j++)
 			putpixel(b_peon_negro, i, j, palette_color[peon_negro[j][i]]);
 	}
 }

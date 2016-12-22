@@ -1,3 +1,5 @@
+#include <stdbool.h>
+
 #define LADO 8
 #define CARACTER_A_ENTERO 97
 
@@ -11,6 +13,6 @@ void avanzar_uno(int fila, char columna, char jugador, char campo[LADO][LADO]) {
 	}
 }
 
-//void avanzar_dos_inicial(int fila, char columna, char jugador, char campo[LADO][LADO]) {
+//bool alcance(int fila_origen, int columna_origen, int fila_destino, int columna_destino, char campo[LADO][LADO]) {
 //
 //}

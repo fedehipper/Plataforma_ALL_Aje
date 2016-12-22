@@ -14,7 +14,9 @@ int main(void) {
 	install_mouse();
 	install_timer();
 	set_gfx_mode(GFX_SAFE, 670, 670, 0, 0);
-	show_mouse(screen);
+	show_os_cursor(2);
+
+
 	crear_piezas();
 	draw_tablero();
 	char campo[LADO][LADO];

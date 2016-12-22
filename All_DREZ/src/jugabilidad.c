@@ -29,7 +29,7 @@ void seleccionar(char campo[LADO][LADO]) {
 	char pieza = ' ';
 
 	while(tecla != KEY_ESC) {
-		rest(75);
+		rest(100);
 
 		if(clic == 1 && pieza != '_') {
 			fila_origen = fila;
@@ -43,8 +43,6 @@ void seleccionar(char campo[LADO][LADO]) {
 			draw_selector_cuadrado(fila_destino, columna_destino, campo);
 			draw_cuadrado(fila_origen, columna_origen, campo);
 			re_draw(campo);
-			rest(300);
-			re_draw(campo);
 			clic = 0;
 		}
 
@@ -57,10 +55,13 @@ void seleccionar(char campo[LADO][LADO]) {
 				clic += 1;
 		}
 
-		if(mouse_b & 2)
+		if(mouse_b & 2) {
 			re_draw(campo);
+			clic = 0;
+		}
 
 		if(keypressed()) tecla = readkey() >> 8;
 	}
 
 }
+

@@ -9,7 +9,7 @@
 #define COLOR_CUADRADOS 4
 
 BITMAP *b_peon_blanco, *b_peon_negro, *b_torre_blanca, *b_torre_negra, *b_alfil_blanco, *b_alfil_negro, *b_caballo_blanco,
-	   *b_caballo_negro, *b_reina_blanca, *b_reina_negra;
+	   *b_caballo_negro, *b_reina_blanca, *b_reina_negra, *b_rey_blanco, *b_rey_negro;
 
 void draw_bordes(void) {
 	rect(screen, ESCALA, ESCALA, 650, 650, palette_color[COLOR_LINEAS]);
@@ -88,7 +88,12 @@ void inicializar_posicion_peones(char campo[LADO][LADO]) {
 
 void inicializar_posicion_reinas(char campo[LADO][LADO]) {
 	campo[0][3] = 'W';
-	campo[7][4] = 'w';
+	campo[7][3] = 'w';
+}
+
+void inicializar_posicion_reyes(char campo[LADO][LADO]) {
+	campo[0][4] = 'R';
+	campo[7][4] = 'r';
 }
 
 void inicializar_posicion_alfiles(char campo[LADO][LADO]) {
@@ -118,6 +123,7 @@ void inicializar_posicion_piezas(char campo[LADO][LADO]) {
 	inicializar_posicion_alfiles(campo);
 	inicializar_posicion_caballos(campo);
 	inicializar_posicion_reinas(campo);
+	inicializar_posicion_reyes(campo);
 }
 
 void draw_tablero(void) {
@@ -146,6 +152,28 @@ void crear_reina_blanca(void) {
 	for(i = 0 ; i < LADO_PIEZA + 30 ; i++) {
 		for(j = 0 ; j < LADO_PIEZA + 30 ; j++) {
 			putpixel(b_reina_blanca, i, j, palette_color[reina_blanca[j][i]]);
+		}
+	}
+}
+
+void crear_rey_blanco(void) {
+	int i, j;
+	b_rey_blanco = create_bitmap(110, 110);
+	clear_bitmap(b_rey_blanco);
+	for(i = 0 ; i < LADO_PIEZA + 30 ; i++) {
+		for(j = 0 ; j < LADO_PIEZA + 30 ; j++) {
+			putpixel(b_rey_blanco, i, j, palette_color[rey_blanco[j][i]]);
+		}
+	}
+}
+
+void crear_rey_negro(void) {
+	int i, j;
+	b_rey_negro = create_bitmap(110, 110);
+	clear_bitmap(b_rey_negro);
+	for(i = 0 ; i < LADO_PIEZA + 30 ; i++) {
+		for(j = 0 ; j < LADO_PIEZA + 30 ; j++) {
+			putpixel(b_rey_negro, i, j, palette_color[rey_negro[j][i]]);
 		}
 	}
 }
@@ -334,6 +362,28 @@ void draw_reina_blanca(char campo[LADO][LADO]) {
 	}
 }
 
+void draw_rey_blanco(char campo[LADO][LADO]) {
+	int i, j;
+	for(i = 0 ; i < LADO; i++) {
+		for(j = 0 ; j < LADO ; j++) {
+			if(campo[i][j] == 'r') {
+				draw_sprite(screen, b_rey_blanco, j * 80 + 15, i * 80 + 15);
+			}
+		}
+	}
+}
+
+void draw_rey_negro(char campo[LADO][LADO]) {
+	int i, j;
+	for(i = 0 ; i < LADO; i++) {
+		for(j = 0 ; j < LADO ; j++) {
+			if(campo[i][j] == 'R') {
+				draw_sprite(screen, b_rey_negro, j * 80 + 15, i * 80 + 15);
+			}
+		}
+	}
+}
+
 void draw_reina_negra(char campo[LADO][LADO]) {
 	int i, j;
 	for(i = 0 ; i < LADO; i++) {
@@ -356,6 +406,8 @@ void crear_piezas(void) {
 	crear_caballo_negro();
 	crear_reina_blanca();
 	crear_reina_negra();
+	crear_rey_blanco();
+	crear_rey_negro();
 }
 
 void re_draw(char campo[LADO][LADO]) {
@@ -371,6 +423,8 @@ void re_draw(char campo[LADO][LADO]) {
 	draw_caballo_negro(campo);
 	draw_reina_blanca(campo);
 	draw_reina_negra(campo);
+	draw_rey_blanco(campo);
+	draw_rey_negro(campo);
 }
 
 

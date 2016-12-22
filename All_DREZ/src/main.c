@@ -30,11 +30,6 @@ int main(void) {
 
 	readkey();
 
-	avanzar_uno(7, 'f', 'N', campo);
-
-	re_draw(campo);
-
-	readkey();
 
 	allegro_exit();
 

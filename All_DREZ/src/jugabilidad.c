@@ -41,13 +41,18 @@ void seleccionar(char campo[LADO][LADO]) {
 			re_draw(campo);
 		}
 
-		if (mouse_b & 1) {
+		if(mouse_b & 1) {
 			fila = (mouse_y - 11) / 80;
 			columna = (mouse_x - 11) / 80;
 			printf("%d %d\n" ,fila,columna);
 			draw_selector_cuadrado(fila, columna, campo);
 			pieza = campo[fila][columna];
 			clic_origen += 1;
+		}
+
+		if(mouse_b & 2) {
+			clic_origen = 0;
+			re_draw(campo);
 		}
 
 		 // fila --> y

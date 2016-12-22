@@ -432,13 +432,11 @@ void re_draw(char campo[LADO][LADO]) {
 }
 
 void draw_selector_cuadrado(int fila, int columna, char campo[LADO][LADO]) {
-	//rectfill(screen, 11 + 80 * columna , 11 + 80 * fila, 89 + 80 * columna, 89 + 80 * fila, 12);
-
 	if(par_relativo(fila, columna)) {
 		rectfill(screen, 11 + 80 * columna , 11 + 80 * fila, 89 + 80 * columna, 89 + 80 * fila, 12);
 	}
 	else if (impar_relativo(fila, columna)) {
-		rectfill(screen, 11 + 80 * columna , 11 + 80 * fila, 89 + 80 * columna, 89 + 80 * fila, 21);
+		rectfill(screen, 11 + 80 * columna , 11 + 80 * fila, 89 + 80 * columna, 89 + 80 * fila, 24);
 	}
 
 	char pieza = campo[fila][columna];

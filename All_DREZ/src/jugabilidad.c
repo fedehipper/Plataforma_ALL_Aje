@@ -3,13 +3,40 @@
 #include <allegro.h>
 #include <stdbool.h>
 #include "tablero_grafico.h"
+#include "movimientos_peon.h"
 
 #define LADO 8
 
-void mover_pieza_a_destino(char pieza,int fila_origen, int fila_destino, int columna_origen, int columna_destino, char campo[LADO][LADO]) {
+void mover_pieza_a_destino(char pieza, int fila_origen, int fila_destino, int columna_origen, int columna_destino, char campo[LADO][LADO]) {
+
 	if(campo[fila_origen][columna_origen] != ' ' && columna_destino != 8 && fila_destino != 8 && columna_origen != 8 && fila_origen != 8) {
-		campo[fila_destino][columna_destino] = campo[fila_origen][columna_origen];
-		campo[fila_origen][columna_origen] = ' ';
+
+
+
+		// llamar a funciones que verifican si es posible realizar el movimiento
+
+		switch(campo[fila_origen][columna_origen]) {
+			case 'p':
+			case 'P': {
+				if(movimiento_permitido(fila_origen, columna_origen, fila_destino, columna_destino, campo)) {
+					campo[fila_destino][columna_destino] = campo[fila_origen][columna_origen];
+					campo[fila_origen][columna_origen] = ' ';
+				}
+			}
+			break;
+			default: {
+				campo[fila_destino][columna_destino] = campo[fila_origen][columna_origen];
+				campo[fila_origen][columna_origen] = ' ';
+
+			}
+		}
+
+
+
+
+
+
+
 	}
 }
 

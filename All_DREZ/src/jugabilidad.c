@@ -35,6 +35,8 @@ void seleccionar(char campo[LADO][LADO]) {
 			 draw_cuadrado(fila_origen, columna_origen, campo);
 			 clic_origen = false;
 			 re_draw(campo);
+			 rest(250);
+			 re_draw(campo);
 		 }
 
 

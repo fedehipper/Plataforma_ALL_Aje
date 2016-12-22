@@ -35,19 +35,21 @@ void seleccionar(char campo[LADO][LADO]) {
 	while(tecla != KEY_ESC) {
 		rest(100);
 
-		if(clic == 1 && pieza != '_') {
-			fila_origen = fila;
-			columna_origen = columna;
-		}
+		if(pieza != '_') {
+			if(clic == 1) {
+				fila_origen = fila;
+				columna_origen = columna;
+			}
 
-		if(clic > 1 && !misma_coordenada(fila_origen, columna_origen, fila, columna) && pieza != '_') {
-			fila_destino = fila;
-			columna_destino = columna;
-			mover_pieza_a_destino(pieza, fila_origen, fila_destino, columna_origen, columna_destino, campo);
-			draw_selector_cuadrado(fila_destino, columna_destino, campo);
-			draw_cuadrado(fila_origen, columna_origen, campo);
-			re_draw(campo);
-			clic = 0;
+			if(clic > 1 && !misma_coordenada(fila_origen, columna_origen, fila, columna)) {
+				fila_destino = fila;
+				columna_destino = columna;
+				mover_pieza_a_destino(pieza, fila_origen, fila_destino, columna_origen, columna_destino, campo);
+				draw_selector_cuadrado(fila_destino, columna_destino, campo);
+				draw_cuadrado(fila_origen, columna_origen, campo);
+				re_draw(campo);
+				clic = 0;
+			}
 		}
 
 		if(mouse_b & 1) {
@@ -56,10 +58,10 @@ void seleccionar(char campo[LADO][LADO]) {
 			if(hay_pieza(fila, columna, campo)) {
 				draw_selector_cuadrado(fila, columna, campo);
 			}
-				pieza = obtener_pieza(fila, columna, campo);
-
-			if(pieza != '_')
+			pieza = obtener_pieza(fila, columna, campo);
+			if(pieza != '_') {
 				clic += 1;
+			}
 		}
 
 		if(mouse_b & 2) {

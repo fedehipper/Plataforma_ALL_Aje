@@ -212,7 +212,7 @@ void crear_torre_blanca(void) {
 
 void crear_alfil_blanco(void) {
 	int i, j;
-	b_alfil_blanco = create_bitmap(110, 110);
+	b_alfil_blanco = create_bitmap(115, 115);
 	clear_bitmap(b_alfil_blanco);
 	for(i = 0 ; i < LADO_PIEZA + 30 ; i++) {
 		for(j = 0 ; j < LADO_PIEZA + 30; j++) {
@@ -223,7 +223,7 @@ void crear_alfil_blanco(void) {
 
 void crear_alfil_negro(void) {
 	int i, j;
-	b_alfil_negro = create_bitmap(110, 110);
+	b_alfil_negro = create_bitmap(115, 115);
 	clear_bitmap(b_alfil_negro);
 	for(i = 0 ; i < LADO_PIEZA + 30 ; i++) {
 		for(j = 0 ; j < LADO_PIEZA + 30; j++) {

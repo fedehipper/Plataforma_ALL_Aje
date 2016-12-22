@@ -12,11 +12,11 @@ void seleccionar(char campo[LADO][LADO]) {
 
 	int tecla = 0;
 	while(tecla != KEY_A) {
-		rest(120);
+		rest(115);
 
 
 		 if (mouse_b & 1)
-			 printf("%d %d\n" ,mouse_x,mouse_y);
+			 printf("%d %d\n" ,(mouse_x - 11) / 80,(mouse_y - 11) / 80);
 
 
 

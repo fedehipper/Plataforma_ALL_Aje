@@ -5,6 +5,13 @@
 #define LADO 8
 #define CARACTER_A_ENTERO 97
 
+bool es_amigo(char peon, char otro) {
+	if(peon == 'p') {
+		return otro == 'w' || otro == 'a' || otro == 'r' || otro == 't' || otro == 'c' || otro == 'p';
+	} else {
+		return otro == 'W' || otro == 'A' || otro == 'R' || otro == 'T' || otro == 'C' || otro == 'P';
+	}
+}
 
 char color_peon(int fila_origen, int columna_origen, char campo[LADO][LADO]) {
 	return campo[fila_origen][columna_origen];
@@ -52,23 +59,27 @@ bool puede_ir_al_siguiente_saltando_uno(int fila_origen, int fila_destino, int c
 
 bool puede_ir_al_superior(int fila_origen, int columna_origen, int fila_destino, int columna_destino, char campo[LADO][LADO]) {
 	char objetivo = campo[fila_destino][columna_destino];
-	if(color_peon(fila_origen, columna_origen, campo) == 'p') {
-		return objetivo != ' ' ||( objetivo > 65 && objetivo < 97); // 65 en adelante NEGRO, 97 en adelante BLANCO
-	} else {
-		return objetivo != ' ' || objetivo > 97;
-	}
+	return objetivo != ' ' && !es_amigo(campo[fila_origen][columna_origen], campo[fila_destino][columna_destino]);
 }
+
 bool movimiento_permitido(int fila_origen, int columna_origen, int fila_destino, int columna_destino, char campo[LADO][LADO]) {
+
+	if(es_superior_izquierda(fila_origen, fila_destino, columna_origen, columna_destino, campo)) {
+		return puede_ir_al_superior(fila_origen, columna_origen, fila_destino, columna_destino, campo);
+	}
+
+	if(es_superior_derecho(fila_origen, fila_destino, columna_origen, columna_destino, campo)) {
+		return puede_ir_al_superior(fila_origen, columna_origen, fila_destino, columna_destino, campo);
+	}
+
 	if(es_inmediato_siguiente(fila_origen, fila_destino, columna_origen, campo)) {
 		return puede_ir_al_inmediato_siguiente(fila_destino, columna_destino, campo);
-	} else if(es_siguiente_saltando_uno(fila_origen, fila_destino, columna_origen, campo)) {
+	}
+
+	if(es_siguiente_saltando_uno(fila_origen, fila_destino, columna_origen, campo)) {
 		return puede_ir_al_siguiente_saltando_uno(fila_origen, fila_destino, columna_destino, campo);
-	} else if(es_superior_derecho(fila_origen, fila_destino, columna_origen, columna_destino, campo)) {
-		return puede_ir_al_superior(fila_origen, columna_origen, fila_destino, columna_destino, campo);
-	} else if(es_superior_izquierda(fila_origen, fila_destino, columna_origen, columna_destino, campo)) {
-		return puede_ir_al_superior(fila_origen, columna_origen, fila_destino, columna_destino, campo);
-	} else
-		return false;
+	} else return false;
+
 }
 
 

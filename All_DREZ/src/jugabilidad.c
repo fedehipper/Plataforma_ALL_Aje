@@ -15,6 +15,8 @@ void mover_pieza_a_destino(char pieza, int fila_origen, int fila_destino, int co
 
 		// llamar a funciones que verifican si es posible realizar el movimiento
 
+		printf("%d %d\n", fila_destino, columna_destino);
+
 		switch(campo[fila_origen][columna_origen]) {
 			case 'p':
 			case 'P': {

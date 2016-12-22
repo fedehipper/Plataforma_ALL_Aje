@@ -8,16 +8,21 @@
 
 
 void seleccionar(char campo[LADO][LADO]) {
-
+	int fila = 0, columna = 0;
 
 	int tecla = 0;
 	while(tecla != KEY_A) {
 		rest(115);
 
 
-		 if (mouse_b & 1)
-			 printf("%d %d\n" ,(mouse_x - 11) / 80,(mouse_y - 11) / 80);
-
+		 if (mouse_b & 1) {
+			 fila = (mouse_y - 11) / 80;
+			 columna = (mouse_x - 11) / 80;
+			 printf("%d %d\n" ,fila,columna);
+			 draw_selector_cuadrado(fila, columna);
+		 }
+		 // fila --> y
+		 // columna --> x
 
 
 

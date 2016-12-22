@@ -68,6 +68,10 @@ void draw_cuadros_tablero(void) {
 	}
 }
 
+void draw_selector_cuadrado(int fila, int columna) {
+	rectfill(screen, 11 + 80 * columna , 11 + 80 * fila, 89 + 80 * columna, 89 + 80 * fila, 12);
+}
+
 void tablero_en_blanco(char campo[LADO][LADO]) {
 	int i, j;
 	for(i = 0 ; i < 8 ; i++) {

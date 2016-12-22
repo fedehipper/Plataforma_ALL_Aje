@@ -19,7 +19,7 @@ void seleccionar(char campo[LADO][LADO]) {
 			 fila = (mouse_y - 11) / 80;
 			 columna = (mouse_x - 11) / 80;
 			 printf("%d %d\n" ,fila,columna);
-			 draw_selector_cuadrado(fila, columna);
+			 draw_selector_cuadrado(fila, columna, campo);
 		 }
 		 // fila --> y
 		 // columna --> x

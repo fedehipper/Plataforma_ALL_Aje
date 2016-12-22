@@ -1,3 +1,5 @@
+#include <stdio.h>
+#include <stdlib.h>
 #include <allegro.h>
 #include <stdbool.h>
 #include "piezas.h"
@@ -7,6 +9,7 @@
 #define LADO_PIEZA 71
 #define COLOR_LINEAS 42
 #define COLOR_CUADRADOS 4
+#define CARACTER_A_ENTERO 97
 
 BITMAP *b_peon_blanco, *b_peon_negro, *b_torre_blanca, *b_torre_negra, *b_alfil_blanco, *b_alfil_negro, *b_caballo_blanco,
 	   *b_caballo_negro, *b_reina_blanca, *b_reina_negra, *b_rey_blanco, *b_rey_negro;
@@ -66,10 +69,6 @@ void draw_cuadros_tablero(void) {
 				rectfill(screen, aux_1 + 80 * i, aux_1 + 80 * j, aux_2 + 80 * i, aux_2 + 80 * j, COLOR_CUADRADOS);
 		}
 	}
-}
-
-void draw_selector_cuadrado(int fila, int columna) {
-	rectfill(screen, 11 + 80 * columna , 11 + 80 * fila, 89 + 80 * columna, 89 + 80 * fila, 12);
 }
 
 void tablero_en_blanco(char campo[LADO][LADO]) {
@@ -429,6 +428,38 @@ void re_draw(char campo[LADO][LADO]) {
 	draw_reina_negra(campo);
 	draw_rey_blanco(campo);
 	draw_rey_negro(campo);
+}
+
+void draw_selector_cuadrado(int fila, int columna, char campo[LADO][LADO]) {
+	rectfill(screen, 11 + 80 * columna , 11 + 80 * fila, 89 + 80 * columna, 89 + 80 * fila, 12);
+	char pieza = campo[fila][columna];
+	printf("%c", pieza);
+	switch(pieza) {
+		case 'p': draw_peon_blanco(campo);
+		break;
+		case 'P': draw_peon_negro(campo);
+		break;
+		case 't': draw_torre_blanca(campo);
+		break;
+		case 'T': draw_torre_negra(campo);
+		break;
+		case 'a': draw_alfil_blanco(campo);
+		break;
+		case 'A': draw_alfil_negro(campo);
+		break;
+		case 'c': draw_caballo_blanco(campo);
+		break;
+		case 'C': draw_caballo_negro(campo);
+		break;
+		case 'r': draw_rey_blanco(campo);
+		break;
+		case 'R': draw_rey_negro(campo);
+		break;
+		case 'w': draw_reina_blanca(campo);
+		break;
+		case 'W': draw_reina_negra(campo);
+		break;
+	}
 }
 
 

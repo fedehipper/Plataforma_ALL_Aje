@@ -433,7 +433,6 @@ void re_draw(char campo[LADO][LADO]) {
 void draw_selector_cuadrado(int fila, int columna, char campo[LADO][LADO]) {
 	rectfill(screen, 11 + 80 * columna , 11 + 80 * fila, 89 + 80 * columna, 89 + 80 * fila, 12);
 	char pieza = campo[fila][columna];
-	printf("%c", pieza);
 	switch(pieza) {
 		case 'p': draw_peon_blanco(campo);
 		break;
@@ -462,7 +461,10 @@ void draw_selector_cuadrado(int fila, int columna, char campo[LADO][LADO]) {
 	}
 }
 
-
-
-
+void draw_cuadrado(int fila, int columna, char campo[LADO][LADO]) {
+	if(impar_relativo(fila, columna))
+		rectfill(screen, 11 + 80 * columna , 11 + 80 * fila, 89 + 80 * columna, 89 + 80 * fila, COLOR_CUADRADOS);
+	else
+		rectfill(screen, 11 + 80 * columna , 11 + 80 * fila, 89 + 80 * columna, 89 + 80 * fila, 16);
+}
 

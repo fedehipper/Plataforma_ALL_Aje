@@ -7,8 +7,10 @@
 #define LADO 8
 
 void mover_pieza_a_destino(char pieza,int fila_origen, int fila_destino, int columna_origen, int columna_destino, char campo[LADO][LADO]) {
-	campo[fila_destino][columna_destino] = campo[fila_origen][columna_origen];
-	campo[fila_origen][columna_origen] = ' ';
+	if(campo[fila_origen][columna_origen] != ' ') {
+		campo[fila_destino][columna_destino] = campo[fila_origen][columna_origen];
+		campo[fila_origen][columna_origen] = ' ';
+	}
 }
 
 bool misma_coordenada(int fila, int columna, int nueva_fila, int nueva_columna) {

@@ -160,8 +160,8 @@ void crear_rey_blanco(void) {
 	int i, j;
 	b_rey_blanco = create_bitmap(110, 110);
 	clear_bitmap(b_rey_blanco);
-	for(i = 0 ; i < 70 ; i++) {
-		for(j = 0 ; j < 70 ; j++) {
+	for(i = 0 ; i < LADO_PIEZA ; i++) {
+		for(j = 0 ; j < LADO_PIEZA ; j++) {
 			putpixel(b_rey_blanco, i, j, palette_color[rey_blanco[j][i]]);
 		}
 	}
@@ -171,8 +171,8 @@ void crear_rey_negro(void) {
 	int i, j;
 	b_rey_negro = create_bitmap(110, 110);
 	clear_bitmap(b_rey_negro);
-	for(i = 0 ; i < 70; i++) {
-		for(j = 0 ; j < 70 ; j++) {
+	for(i = 0 ; i < LADO_PIEZA; i++) {
+		for(j = 0 ; j < LADO_PIEZA ; j++) {
 			putpixel(b_rey_negro, i, j, palette_color[rey_negro[j][i]]);
 		}
 	}

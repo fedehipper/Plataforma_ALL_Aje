@@ -63,23 +63,18 @@ bool puede_ir_al_superior(int fila_origen, int columna_origen, int fila_destino,
 }
 
 bool movimiento_permitido(int fila_origen, int columna_origen, int fila_destino, int columna_destino, char campo[LADO][LADO]) {
-
 	if(es_superior_izquierda(fila_origen, fila_destino, columna_origen, columna_destino, campo)) {
 		return puede_ir_al_superior(fila_origen, columna_origen, fila_destino, columna_destino, campo);
 	}
-
 	if(es_superior_derecho(fila_origen, fila_destino, columna_origen, columna_destino, campo)) {
 		return puede_ir_al_superior(fila_origen, columna_origen, fila_destino, columna_destino, campo);
 	}
-
 	if(es_inmediato_siguiente(fila_origen, fila_destino, columna_origen, campo)) {
 		return puede_ir_al_inmediato_siguiente(fila_destino, columna_destino, campo);
 	}
-
 	if(es_siguiente_saltando_uno(fila_origen, fila_destino, columna_origen, campo)) {
 		return puede_ir_al_siguiente_saltando_uno(fila_origen, fila_destino, columna_destino, campo);
 	} else return false;
-
 }
 
 

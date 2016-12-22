@@ -16,7 +16,6 @@ int main(void) {
 	set_gfx_mode(GFX_SAFE, 670, 670, 0, 0);
 	show_os_cursor(2);
 
-
 	crear_piezas();
 	draw_tablero();
 	char campo[LADO][LADO];
@@ -25,16 +24,10 @@ int main(void) {
 	inicializar_posicion_piezas(campo);
 	re_draw(campo);
 
-
-
 	seleccionar(campo);
 
-
 	readkey();
-
-
 	allegro_exit();
-
 	return EXIT_SUCCESS;
 }
 END_OF_MAIN();

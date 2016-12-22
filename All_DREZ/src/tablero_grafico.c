@@ -432,44 +432,46 @@ void re_draw(char campo[LADO][LADO]) {
 }
 
 void draw_selector_cuadrado(int fila, int columna, char campo[LADO][LADO]) {
-	if(par_relativo(fila, columna)) {
-		rectfill(screen, 11 + 80 * columna , 11 + 80 * fila, 89 + 80 * columna, 89 + 80 * fila, 12);
-	}
-	else if (impar_relativo(fila, columna)) {
-		rectfill(screen, 11 + 80 * columna , 11 + 80 * fila, 89 + 80 * columna, 89 + 80 * fila, 24);
-	}
+	if(fila != 8 && columna != 8) {
+		if(par_relativo(fila, columna)) {
+			rectfill(screen, 11 + 80 * columna , 11 + 80 * fila, 89 + 80 * columna, 89 + 80 * fila, 12);
+		}
+		else if (impar_relativo(fila, columna)) {
+			rectfill(screen, 11 + 80 * columna , 11 + 80 * fila, 89 + 80 * columna, 89 + 80 * fila, 24);
+		}
 
-	char pieza = campo[fila][columna];
-	switch(pieza) {
-		case 'p': draw_peon_blanco(campo);
-		break;
-		case 'P': draw_peon_negro(campo);
-		break;
-		case 't': draw_torre_blanca(campo);
-		break;
-		case 'T': draw_torre_negra(campo);
-		break;
-		case 'a': draw_alfil_blanco(campo);
-		break;
-		case 'A': draw_alfil_negro(campo);
-		break;
-		case 'c': draw_caballo_blanco(campo);
-		break;
-		case 'C': draw_caballo_negro(campo);
-		break;
-		case 'r': draw_rey_blanco(campo);
-		break;
-		case 'R': draw_rey_negro(campo);
-		break;
-		case 'w': draw_reina_blanca(campo);
-		break;
-		case 'W': draw_reina_negra(campo);
-		break;
+		char pieza = campo[fila][columna];
+		switch(pieza) {
+			case 'p': draw_peon_blanco(campo);
+			break;
+			case 'P': draw_peon_negro(campo);
+			break;
+			case 't': draw_torre_blanca(campo);
+			break;
+			case 'T': draw_torre_negra(campo);
+			break;
+			case 'a': draw_alfil_blanco(campo);
+			break;
+			case 'A': draw_alfil_negro(campo);
+			break;
+			case 'c': draw_caballo_blanco(campo);
+			break;
+			case 'C': draw_caballo_negro(campo);
+			break;
+			case 'r': draw_rey_blanco(campo);
+			break;
+			case 'R': draw_rey_negro(campo);
+			break;
+			case 'w': draw_reina_blanca(campo);
+			break;
+			case 'W': draw_reina_negra(campo);
+			break;
+		}
 	}
 }
 
 void draw_cuadrado(int fila, int columna, char campo[LADO][LADO]) {
-	if(impar_relativo(fila, columna))
+	if(impar_relativo(fila, columna) && fila != 8 && columna != 8)
 		rectfill(screen, 11 + 80 * columna , 11 + 80 * fila, 89 + 80 * columna, 89 + 80 * fila, COLOR_CUADRADOS);
 	else
 		rectfill(screen, 11 + 80 * columna , 11 + 80 * fila, 89 + 80 * columna, 89 + 80 * fila, 16);

@@ -16,7 +16,7 @@ char color_peon(int fila_origen, int columna_origen, char campo[LADO][LADO]) {
 	return campo[fila_origen][columna_origen];
 }
 
-bool es_inmediato_siguiente(int fila_origen, int fila_destino, int columna_origen, char campo[LADO][LADO]) {
+bool es_inmediato_siguiente_a_peon(int fila_origen, int fila_destino, int columna_origen, char campo[LADO][LADO]) {
 	if(color_peon(fila_origen, columna_origen, campo) == 'p') {
 		return fila_origen - 1 == fila_destino;
 	} else {
@@ -24,7 +24,7 @@ bool es_inmediato_siguiente(int fila_origen, int fila_destino, int columna_orige
 	}
 }
 
-bool es_siguiente_saltando_uno(int fila_origen, int fila_destino, int columna_origen, char campo[LADO][LADO]) {
+bool es_siguiente_saltando_uno_a_peon(int fila_origen, int fila_destino, int columna_origen, char campo[LADO][LADO]) {
 	if(color_peon(fila_origen, columna_origen, campo) == 'p') {
 		return fila_origen - 2 == fila_destino;
 	} else {
@@ -32,7 +32,7 @@ bool es_siguiente_saltando_uno(int fila_origen, int fila_destino, int columna_or
 	}
 }
 
-bool es_superior_derecho(int fila_origen, int fila_destino, int columna_origen, int columna_destino, char campo[LADO][LADO]) {
+bool es_superior_derecho_de_peon(int fila_origen, int fila_destino, int columna_origen, int columna_destino, char campo[LADO][LADO]) {
 	if(color_peon(fila_origen, columna_origen, campo) == 'p') {
 		return fila_origen - 1 == fila_destino && columna_origen + 1 == columna_destino;
 	} else {
@@ -40,7 +40,7 @@ bool es_superior_derecho(int fila_origen, int fila_destino, int columna_origen, 
 	}
 }
 
-bool es_superior_izquierda(int fila_origen, int fila_destino, int columna_origen, int columna_destino, char campo[LADO][LADO]) {
+bool es_superior_izquierda_de_peon(int fila_origen, int fila_destino, int columna_origen, int columna_destino, char campo[LADO][LADO]) {
 	if(color_peon(fila_origen, columna_origen, campo) == 'p') {
 		return fila_origen - 1 == fila_destino && columna_origen - 1 == columna_destino;
 	} else {
@@ -48,31 +48,31 @@ bool es_superior_izquierda(int fila_origen, int fila_destino, int columna_origen
 	}
 }
 
-bool puede_ir_al_inmediato_siguiente(int fila_destino, int columna_destino, char campo[LADO][LADO]) {
+bool puede_ir_al_inmediato_siguiente_peon(int fila_destino, int columna_destino, char campo[LADO][LADO]) {
 	return campo[fila_destino][columna_destino] == ' ';
 }
 
-bool puede_ir_al_siguiente_saltando_uno(int fila_origen, int fila_destino, int columna_destino, char campo[LADO][LADO]) {
+bool puede_ir_al_siguiente_saltando_uno_peon(int fila_origen, int fila_destino, int columna_destino, char campo[LADO][LADO]) {
 	return campo[fila_destino][columna_destino] == ' ' && (fila_origen == 6 || fila_origen == 1);
 }
 
-bool puede_ir_al_superior(int fila_origen, int columna_origen, int fila_destino, int columna_destino, char campo[LADO][LADO]) {
+bool puede_ir_al_superior_peon(int fila_origen, int columna_origen, int fila_destino, int columna_destino, char campo[LADO][LADO]) {
 	char objetivo = campo[fila_destino][columna_destino];
 	return objetivo != ' ' && !es_amigo_de_peon(campo[fila_origen][columna_origen], campo[fila_destino][columna_destino]);
 }
 
 bool movimiento_permitido_peon(int fila_origen, int columna_origen, int fila_destino, int columna_destino, char campo[LADO][LADO]) {
-	if(es_superior_izquierda(fila_origen, fila_destino, columna_origen, columna_destino, campo)) {
-		return puede_ir_al_superior(fila_origen, columna_origen, fila_destino, columna_destino, campo);
+	if(es_superior_izquierda_de_peon(fila_origen, fila_destino, columna_origen, columna_destino, campo)) {
+		return puede_ir_al_superior_peon(fila_origen, columna_origen, fila_destino, columna_destino, campo);
 	}
-	if(es_superior_derecho(fila_origen, fila_destino, columna_origen, columna_destino, campo)) {
-		return puede_ir_al_superior(fila_origen, columna_origen, fila_destino, columna_destino, campo);
+	if(es_superior_derecho_de_peon(fila_origen, fila_destino, columna_origen, columna_destino, campo)) {
+		return puede_ir_al_superior_peon(fila_origen, columna_origen, fila_destino, columna_destino, campo);
 	}
-	if(es_inmediato_siguiente(fila_origen, fila_destino, columna_origen, campo)) {
-		return puede_ir_al_inmediato_siguiente(fila_destino, columna_destino, campo);
+	if(es_inmediato_siguiente_a_peon(fila_origen, fila_destino, columna_origen, campo)) {
+		return puede_ir_al_inmediato_siguiente_peon(fila_destino, columna_destino, campo);
 	}
-	if(es_siguiente_saltando_uno(fila_origen, fila_destino, columna_origen, campo)) {
-		return puede_ir_al_siguiente_saltando_uno(fila_origen, fila_destino, columna_destino, campo);
+	if(es_siguiente_saltando_uno_a_peon(fila_origen, fila_destino, columna_origen, campo)) {
+		return puede_ir_al_siguiente_saltando_uno_peon(fila_origen, fila_destino, columna_destino, campo);
 	} else return false;
 }
 

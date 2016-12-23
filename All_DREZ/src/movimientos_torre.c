@@ -15,7 +15,7 @@ char color_torre(int fila_origen, int columna_origen, char campo[LADO][LADO]) {
 	return campo[fila_origen][columna_origen];
 }
 
-bool es_abajo(int fila_origen, int columna_origen, int fila_destino, char campo[LADO][LADO]) {
+bool es_abajo_de_torre(int fila_origen, int columna_origen, int fila_destino, char campo[LADO][LADO]) {
 	if(color_torre(fila_origen, columna_origen, campo) == 't') {
 		return fila_origen < fila_destino;
 	} else {
@@ -23,7 +23,7 @@ bool es_abajo(int fila_origen, int columna_origen, int fila_destino, char campo[
 	}
 }
 
-bool es_arriba(int fila_origen, int columna_origen, int fila_destino, char campo[LADO][LADO]) {
+bool es_arriba_de_torre(int fila_origen, int columna_origen, int fila_destino, char campo[LADO][LADO]) {
 	if(color_torre(fila_origen, columna_origen, campo) == 't') {
 		return fila_origen > fila_destino;
 	} else {
@@ -31,7 +31,7 @@ bool es_arriba(int fila_origen, int columna_origen, int fila_destino, char campo
 	}
 }
 
-bool es_a_la_izquierda(int fila_origen, int columna_origen, int columna_destino, char campo[LADO][LADO]) {
+bool es_a_la_izquierda_de_torre(int fila_origen, int columna_origen, int columna_destino, char campo[LADO][LADO]) {
 	if(color_torre(fila_origen, columna_origen, campo) == 't') {
 		return columna_origen > columna_destino;
 	} else {
@@ -39,7 +39,7 @@ bool es_a_la_izquierda(int fila_origen, int columna_origen, int columna_destino,
 	}
 }
 
-bool es_a_la_derecha(int fila_origen, int columna_origen, int columna_destino, char campo[LADO][LADO]) {
+bool es_a_la_derecha_de_torre(int fila_origen, int columna_origen, int columna_destino, char campo[LADO][LADO]) {
 	if(color_torre(fila_origen, columna_origen, campo) == 't') {
 		return columna_origen < columna_destino;
 	} else {
@@ -47,7 +47,7 @@ bool es_a_la_derecha(int fila_origen, int columna_origen, int columna_destino, c
 	}
 }
 
-bool puede_ir_arriba(int fila_origen, int fila_destino, int columna, char campo[LADO][LADO]) {
+bool puede_ir_arriba_torre(int fila_origen, int fila_destino, int columna, char campo[LADO][LADO]) {
 	int i = 0, distancia = 0;
 	if(color_torre(fila_origen, columna, campo) == 't') {
 		distancia = fila_origen - fila_destino;
@@ -67,7 +67,7 @@ bool puede_ir_arriba(int fila_origen, int fila_destino, int columna, char campo[
 	return i == distancia && !es_amigo_de_torre(campo[fila_origen][columna], campo[fila_destino][columna]);
 }
 
-bool puede_ir_abajo(int fila_origen, int fila_destino, int columna, char campo[LADO][LADO]) {
+bool puede_ir_abajo_torre(int fila_origen, int fila_destino, int columna, char campo[LADO][LADO]) {
 	int i = 0, distancia = 0;
 	if(color_torre(fila_origen, columna, campo) == 't') {
 		distancia = fila_destino - fila_origen;
@@ -88,7 +88,7 @@ bool puede_ir_abajo(int fila_origen, int fila_destino, int columna, char campo[L
 }
 
 
-bool puede_ir_izquierda(int columna_origen, int columna_destino, int fila, char campo[LADO][LADO]) {
+bool puede_ir_izquierda_torre(int columna_origen, int columna_destino, int fila, char campo[LADO][LADO]) {
 	int i = 0, distancia = 0;
 	if(color_torre(fila, columna_origen, campo) == 't') {
 		distancia = columna_origen - columna_destino;
@@ -108,7 +108,7 @@ bool puede_ir_izquierda(int columna_origen, int columna_destino, int fila, char 
 	return i == distancia && !es_amigo_de_torre(campo[fila][columna_origen], campo[fila][columna_destino]);
 }
 
-bool puede_ir_derecha(int columna_origen, int columna_destino, int fila, char campo[LADO][LADO]) {
+bool puede_ir_derecha_torre(int columna_origen, int columna_destino, int fila, char campo[LADO][LADO]) {
 	int i = 0, distancia = 0;
 	if(color_torre(fila, columna_origen, campo) == 't') {
 		distancia = columna_destino - columna_origen;
@@ -130,14 +130,14 @@ bool puede_ir_derecha(int columna_origen, int columna_destino, int fila, char ca
 
 
 bool movimiento_permitido_torre(int fila_origen, int columna_origen, int fila_destino, int columna_destino, char campo[LADO][LADO]) {
-	if(es_arriba(fila_origen, columna_origen,  fila_destino, campo)) {
-		return puede_ir_arriba(fila_origen, fila_destino, columna_origen, campo);
-	} else if(es_abajo(fila_origen, columna_origen,  fila_destino, campo)) {
-		return puede_ir_abajo(fila_origen, fila_destino, columna_origen, campo);
-	} else if(es_a_la_derecha(fila_origen, columna_origen, columna_destino, campo)) {
-		return puede_ir_derecha(columna_origen, columna_destino, fila_origen, campo);
-	} else if(es_a_la_izquierda(fila_origen, columna_origen, columna_destino, campo)) {
-		return puede_ir_izquierda(columna_origen, columna_destino, fila_origen, campo);
+	if(es_arriba_de_torre(fila_origen, columna_origen,  fila_destino, campo)) {
+		return puede_ir_arriba_torre(fila_origen, fila_destino, columna_origen, campo);
+	} else if(es_abajo_de_torre(fila_origen, columna_origen,  fila_destino, campo)) {
+		return puede_ir_abajo_torre(fila_origen, fila_destino, columna_origen, campo);
+	} else if(es_a_la_derecha_de_torre(fila_origen, columna_origen, columna_destino, campo)) {
+		return puede_ir_derecha_torre(columna_origen, columna_destino, fila_origen, campo);
+	} else if(es_a_la_izquierda_de_torre(fila_origen, columna_origen, columna_destino, campo)) {
+		return puede_ir_izquierda_torre(columna_origen, columna_destino, fila_origen, campo);
 	} else
 		return false;
 }

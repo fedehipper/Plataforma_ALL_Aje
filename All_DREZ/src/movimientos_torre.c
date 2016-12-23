@@ -2,8 +2,8 @@
 
 #define LADO 8
 
-bool es_amigo_de_torre(char peon, char otro) {
-	if(peon == 't') {
+bool es_amigo_de_torre(char torre, char otro) {
+	if(torre == 't') {
 		return otro == 'w' || otro == 'a' || otro == 'r' || otro == 'p' || otro == 'c' || otro == 't';
 	} else {
 		return otro == 'W' || otro == 'A' || otro == 'R' || otro == 'P' || otro == 'C' || otro == 'T';
@@ -25,9 +25,9 @@ bool es_abajo(int fila_origen, int columna_origen, int fila_destino, char campo[
 
 bool es_arriba(int fila_origen, int columna_origen, int fila_destino, char campo[LADO][LADO]) {
 	if(color_torre(fila_origen, columna_origen, campo) == 't') {
-		return (fila_origen - fila_destino) > 0;
+		return fila_origen > fila_destino;
 	} else {
-		return (fila_origen - fila_destino) * (-1) > 0;
+		return fila_origen < fila_destino;
 	}
 }
 
@@ -51,12 +51,17 @@ bool puede_ir_arriba(int fila_origen, int fila_destino, int columna, char campo[
 	int i = 0, distancia = 0;
 	if(color_torre(fila_origen, columna, campo) == 't') {
 		distancia = fila_origen - fila_destino;
+		for(i = 1 ; i < distancia ; i++) {
+			if(campo[fila_origen - i][columna] != ' ') {
+				break;
+			}
+		}
 	} else {
 		distancia = fila_destino - fila_origen;
-	}
-	for(i = 1 ; i <= distancia ; i++) {
-		if(campo[i][columna] != ' ') {
-			break;
+		for(i = 1 ; i < distancia ; i++) {
+			if(campo[fila_origen + i][columna] != ' ') {
+				break;
+			}
 		}
 	}
 	return i == distancia && !es_amigo_de_torre(campo[fila_origen][columna], campo[fila_destino][columna]);
@@ -66,12 +71,17 @@ bool puede_ir_abajo(int fila_origen, int fila_destino, int columna, char campo[L
 	int i = 0, distancia = 0;
 	if(color_torre(fila_origen, columna, campo) == 't') {
 		distancia = fila_destino - fila_origen;
+		for(i = 1 ; i < distancia ; i++) {
+			if(campo[fila_origen + i][columna] != ' ') {
+				break;
+			}
+		}
 	} else {
 		distancia = fila_origen - fila_destino;
-	}
-	for(i = 1 ; i <= distancia ; i++) {
-		if(campo[i][columna] != ' ') {
-			break;
+		for(i = 1 ; i < distancia ; i++) {
+			if(campo[fila_origen - i][columna] != ' ') {
+				break;
+			}
 		}
 	}
 	return i == distancia && !es_amigo_de_torre(campo[fila_origen][columna], campo[fila_destino][columna]);

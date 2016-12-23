@@ -61,7 +61,7 @@ void seleccionar(char campo[LADO][LADO]) {
 	char pieza = ' ';
 
 	while(tecla != KEY_ESC) {
-		rest(100);
+		rest(125);
 
 		if(pieza != '_') {
 			if(clic == 1) {

@@ -4,6 +4,7 @@
 #include <stdbool.h>
 #include "tablero_grafico.h"
 #include "movimientos_peon.h"
+#include "movimientos_torre.h"
 
 #define LADO 8
 
@@ -11,33 +12,31 @@ void mover_pieza_a_destino(char pieza, int fila_origen, int fila_destino, int co
 
 	if(campo[fila_origen][columna_origen] != ' ' && columna_destino != 8 && fila_destino != 8 && columna_origen != 8 && fila_origen != 8) {
 
-
-
-		// llamar a funciones que verifican si es posible realizar el movimiento
-
-		printf("%d %d\n", fila_destino, columna_destino);
-
 		switch(campo[fila_origen][columna_origen]) {
 			case 'p':
 			case 'P': {
-				if(movimiento_permitido(fila_origen, columna_origen, fila_destino, columna_destino, campo)) {
+				if(movimiento_permitido_peon(fila_origen, columna_origen, fila_destino, columna_destino, campo)) {
 					campo[fila_destino][columna_destino] = campo[fila_origen][columna_origen];
 					campo[fila_origen][columna_origen] = ' ';
 				}
 			}
 			break;
+			case 'T':
+			case 't': {
+				if(movimiento_permitido_torre(fila_origen, columna_origen, fila_destino, columna_destino, campo)) {
+					campo[fila_destino][columna_destino] = campo[fila_origen][columna_origen];
+					campo[fila_origen][columna_origen] = ' ';
+				}
+			}
+			break;
+
+
 			default: {
 				campo[fila_destino][columna_destino] = campo[fila_origen][columna_origen];
 				campo[fila_origen][columna_origen] = ' ';
 
 			}
 		}
-
-
-
-
-
-
 
 	}
 }

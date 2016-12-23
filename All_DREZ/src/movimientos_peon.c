@@ -3,9 +3,8 @@
 #include <stdbool.h>
 
 #define LADO 8
-#define CARACTER_A_ENTERO 97
 
-bool es_amigo(char peon, char otro) {
+bool es_amigo_de_peon(char peon, char otro) {
 	if(peon == 'p') {
 		return otro == 'w' || otro == 'a' || otro == 'r' || otro == 't' || otro == 'c' || otro == 'p';
 	} else {
@@ -59,10 +58,10 @@ bool puede_ir_al_siguiente_saltando_uno(int fila_origen, int fila_destino, int c
 
 bool puede_ir_al_superior(int fila_origen, int columna_origen, int fila_destino, int columna_destino, char campo[LADO][LADO]) {
 	char objetivo = campo[fila_destino][columna_destino];
-	return objetivo != ' ' && !es_amigo(campo[fila_origen][columna_origen], campo[fila_destino][columna_destino]);
+	return objetivo != ' ' && !es_amigo_de_peon(campo[fila_origen][columna_origen], campo[fila_destino][columna_destino]);
 }
 
-bool movimiento_permitido(int fila_origen, int columna_origen, int fila_destino, int columna_destino, char campo[LADO][LADO]) {
+bool movimiento_permitido_peon(int fila_origen, int columna_origen, int fila_destino, int columna_destino, char campo[LADO][LADO]) {
 	if(es_superior_izquierda(fila_origen, fila_destino, columna_origen, columna_destino, campo)) {
 		return puede_ir_al_superior(fila_origen, columna_origen, fila_destino, columna_destino, campo);
 	}

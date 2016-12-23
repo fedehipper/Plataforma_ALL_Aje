@@ -29,6 +29,14 @@ void mover_pieza_a_destino(char pieza, int fila_origen, int fila_destino, int co
 				}
 			}
 			break;
+			case 'r':
+			case 'R': {
+				if(movimiento_permitido_rey(fila_origen, columna_origen, fila_destino, columna_destino, campo)) {
+					campo[fila_destino][columna_destino] = campo[fila_origen][columna_origen];
+					campo[fila_origen][columna_origen] = ' ';
+				}
+			}
+			break;
 
 
 			default: {

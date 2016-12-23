@@ -18,7 +18,7 @@ bool es_superior_a_rey(int fila_origen, int fila_destino, int columna, char camp
 	if(color_rey(fila_origen, columna, campo) == 'r') {
 		return fila_destino == fila_origen - 1;
 	} else {
-		return fila_destino + 1 == fila_origen;
+		return fila_destino - 1 == fila_origen;
 	}
 }
 
@@ -26,7 +26,7 @@ bool es_inferior_a_rey(int fila_origen, int fila_destino, int columna, char camp
 	if(color_rey(fila_origen, columna, campo) == 'r') {
 		return fila_destino - 1 == fila_origen;
 	} else {
-		return fila_destino == fila_origen + 1;
+		return fila_destino == fila_origen - 1;
 	}
 }
 
@@ -34,7 +34,7 @@ bool es_izquierda_a_rey(int fila, int columna_origen, int columna_destino, char 
 	if(color_rey(fila, columna_origen, campo) == 'r') {
 		return columna_origen == columna_destino + 1;
 	} else {
-		return columna_origen + 1 == columna_destino;
+		return columna_origen - 1 == columna_destino;
 	}
 }
 
@@ -42,39 +42,39 @@ bool es_derecha_a_rey(int fila, int columna_origen, int columna_destino, char ca
 	if(color_rey(fila, columna_origen, campo) == 'r') {
 		return columna_origen + 1 == columna_destino;
 	} else {
-		return columna_origen == columna_destino + 1;
+		return columna_origen == columna_destino - 1;
 	}
 }
 
 bool es_superior_derecho_a_rey(int fila_origen, int fila_destino, int columna_origen, int columna_destino, char campo[LADO][LADO]) {
 	if(color_rey(fila_origen, columna_origen, campo) == 'r') {
-		return es_derecha_a_rey(fila_origen, columna_origen, columna_destino, campo) && es_superior_a_rey(fila_origen, fila_destino, columna_origen, campo);
+		return columna_origen + 1 == columna_destino && fila_origen - 1 == fila_destino;
 	} else {
-		return es_izquierda_a_rey(fila_origen, columna_origen, columna_destino, campo) && es_inferior_a_rey(fila_origen, fila_destino, columna_origen, campo);
+		return columna_origen - 1 == columna_destino && fila_origen + 1 == fila_destino;
 	}
 }
 
 bool es_superior_izquierdo_a_rey(int fila_origen, int fila_destino, int columna_origen, int columna_destino, char campo[LADO][LADO]) {
 	if(color_rey(fila_origen, columna_origen, campo) == 'r') {
-		return es_izquierda_a_rey(fila_origen, columna_origen, columna_destino, campo) && es_superior_a_rey(fila_origen, fila_destino, columna_origen, campo);
+		return columna_origen == columna_destino + 1 && fila_destino == fila_origen - 1;
 	} else {
-		return es_derecha_a_rey(fila_origen, columna_origen, columna_destino, campo) && es_inferior_a_rey(fila_origen, fila_destino, columna_origen, campo);
+		return columna_origen == columna_destino - 1 && fila_destino == fila_origen + 1;
 	}
 }
 
 bool es_inferior_derecho_a_rey(int fila_origen, int fila_destino, int columna_origen, int columna_destino, char campo[LADO][LADO]) {
 	if(color_rey(fila_origen, columna_origen, campo) == 'r') {
-		return es_derecha_a_rey(fila_origen, columna_origen, columna_destino, campo) && es_inferior_a_rey(fila_origen, fila_destino, columna_origen, campo);
+		return columna_origen + 1 == columna_destino && fila_destino - 1 == fila_origen;
 	} else {
-		return es_izquierda_a_rey(fila_origen, columna_origen, columna_destino, campo) && es_superior_a_rey(fila_origen, fila_destino, columna_origen, campo);
+		return columna_origen - 1 == columna_destino && fila_destino + 1 == fila_origen;
 	}
 }
 
 bool es_inferior_izquierdo_a_rey(int fila_origen, int fila_destino, int columna_origen, int columna_destino, char campo[LADO][LADO]) {
 	if(color_rey(fila_origen, columna_origen, campo) == 'r') {
-		return es_izquierda_a_rey(fila_origen, columna_origen, columna_destino, campo) && es_inferior_a_rey(fila_origen, fila_destino, columna_origen, campo);
+		return columna_origen == columna_destino + 1 && fila_destino - 1 == fila_origen;
 	} else {
-		return es_derecha_a_rey(fila_origen, columna_origen, columna_destino, campo) && es_superior_a_rey(fila_origen, fila_destino, columna_origen, campo);
+		return columna_origen == columna_destino - 1 && fila_destino + 1 == fila_origen;
 	}
 }
 

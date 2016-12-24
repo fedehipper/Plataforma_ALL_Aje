@@ -7,6 +7,7 @@
 #include "movimientos_torre.h"
 #include "movimientos_rey.h"
 #include "movimientos_alfil.h"
+#include "movimientos_reina.h"
 
 #define LADO 8
 
@@ -47,8 +48,14 @@ void mover_pieza_a_destino(char pieza, int fila_origen, int fila_destino, int co
 				}
 			}
 			break;
-
-
+			case 'w':
+			case 'W': {
+				if(movimiento_permitido_reina(fila_origen, columna_origen, fila_destino, columna_destino, campo)) {
+					campo[fila_destino][columna_destino] = campo[fila_origen][columna_origen];
+					campo[fila_origen][columna_origen] = ' ';
+				}
+			}
+			break;
 			default: {
 				campo[fila_destino][columna_destino] = campo[fila_origen][columna_origen];
 				campo[fila_origen][columna_origen] = ' ';

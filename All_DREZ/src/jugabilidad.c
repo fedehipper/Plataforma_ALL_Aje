@@ -92,6 +92,7 @@ void seleccionar(char campo[LADO][LADO]) {
 				columna_destino = columna;
 				mover_pieza_a_destino(pieza, fila_origen, fila_destino, columna_origen, columna_destino, campo);
 				draw_selector_cuadrado(fila_destino, columna_destino, campo);
+				draw_cuadrado(fila_origen, columna_origen, campo);
 				re_draw(campo);
 				clic = 0;
 			}

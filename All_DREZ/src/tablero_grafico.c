@@ -72,6 +72,15 @@ void draw_cuadros_tablero(void) {
 	}
 }
 
+// para que no quede seleccionado el cuadro de seleccion se dibuja nuevamente el rojo o negro
+void draw_cuadrado(int fila, int columna, char campo[LADO][LADO]) {
+	if(impar_relativo(fila, columna) && fila != 8 && columna != 8)
+		rectfill(screen, 11 + 80 * columna , 11 + 80 * fila, 89 + 80 * columna, 89 + 80 * fila, COLOR_CUADRADOS);
+	else
+		rectfill(screen, 11 + 80 * columna , 11 + 80 * fila, 89 + 80 * columna, 89 + 80 * fila, 16);
+	rest(100);
+}
+
 void tablero_en_blanco(char campo[LADO][LADO]) {
 	int i, j;
 	for(i = 0 ; i < 8 ; i++) {

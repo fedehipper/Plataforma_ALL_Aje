@@ -64,7 +64,7 @@ void draw_cuadros_tablero(void) {
 	int aux_1 = 11, aux_2 = 89, i, j;
 	for(i = 0 ; i < 8 ; i++) {
 		for(j = 0 ; j < 8 ; j++) {
-			if(par_relativo(i, j))
+			if(impar_relativo(i, j))
 				rectfill(screen, aux_1 + 80 * i, aux_1 + 80 * j, aux_2 + 80 * i, aux_2 + 80 * j, 16);
 			else
 				rectfill(screen, aux_1 + 80 * i, aux_1 + 80 * j, aux_2 + 80 * i, aux_2 + 80 * j, COLOR_CUADRADOS);

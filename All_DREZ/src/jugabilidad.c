@@ -71,7 +71,7 @@ char obtener_pieza(int fila, int columna, char campo[LADO][LADO]) {
 }
 
 bool hay_pieza(int fila, int columna, char campo[LADO][LADO]) {
-	return campo[fila][columna] != ' ';
+	return fila != 8 && columna != 8 && campo[fila][columna] != ' ';
 }
 
 void seleccionar(char campo[LADO][LADO]) {

@@ -8,6 +8,7 @@
 #include "movimientos_rey.h"
 #include "movimientos_alfil.h"
 #include "movimientos_reina.h"
+#include "movimientos_caballo.h"
 
 #define LADO 8
 
@@ -56,11 +57,14 @@ void mover_pieza_a_destino(char pieza, int fila_origen, int fila_destino, int co
 				}
 			}
 			break;
-			default: {
-				campo[fila_destino][columna_destino] = campo[fila_origen][columna_origen];
-				campo[fila_origen][columna_origen] = ' ';
-
+			case 'c':
+			case 'C':{
+				if(movimiento_permitido_caballo(fila_origen, columna_origen, fila_destino, columna_destino, campo)) {
+					campo[fila_destino][columna_destino] = campo[fila_origen][columna_origen];
+					campo[fila_origen][columna_origen] = ' ';
+				}
 			}
+
 		}
 
 	}

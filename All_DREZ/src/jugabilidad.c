@@ -66,7 +66,6 @@ void mover_pieza_a_destino(char pieza, int fila_origen, int fila_destino, int co
 			}
 
 		}
-
 	}
 }
 

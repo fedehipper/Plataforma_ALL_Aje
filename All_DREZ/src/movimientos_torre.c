@@ -129,7 +129,7 @@ bool puede_ir_derecha_torre(int columna_origen, int columna_destino, int fila, c
 }
 
 
-bool movimiento_permitido_torre(int fila_origen, int columna_origen, int fila_destino, int columna_destino, char campo[LADO][LADO]) {
+bool movimiento_permitido_alfil(int fila_origen, int columna_origen, int fila_destino, int columna_destino, char campo[LADO][LADO]) {
 	if(es_arriba_de_torre(fila_origen, columna_origen, fila_destino, columna_destino, campo)) {
 		return puede_ir_arriba_torre(fila_origen, fila_destino, columna_origen, campo);
 	} else if(es_abajo_de_torre(fila_origen, columna_origen, fila_destino, columna_destino, campo)) {

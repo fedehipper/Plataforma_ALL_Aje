@@ -5,6 +5,8 @@
 #include "tablero_grafico.h"
 #include "movimientos_peon.h"
 #include "movimientos_torre.h"
+#include "movimientos_rey.h"
+#include "movimientos_alfil.h"
 
 #define LADO 8
 
@@ -32,6 +34,14 @@ void mover_pieza_a_destino(char pieza, int fila_origen, int fila_destino, int co
 			case 'r':
 			case 'R': {
 				if(movimiento_permitido_rey(fila_origen, columna_origen, fila_destino, columna_destino, campo)) {
+					campo[fila_destino][columna_destino] = campo[fila_origen][columna_origen];
+					campo[fila_origen][columna_origen] = ' ';
+				}
+			}
+			break;
+			case 'a':
+			case 'A': {
+				if(movimiento_permitido_alfil(fila_origen, columna_origen, fila_destino, columna_destino, campo)) {
 					campo[fila_destino][columna_destino] = campo[fila_origen][columna_origen];
 					campo[fila_origen][columna_origen] = ' ';
 				}

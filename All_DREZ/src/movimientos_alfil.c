@@ -218,17 +218,17 @@ bool puede_ir_inferior_izquierda_alfil(int fila_origen, int fila_destino, int co
 	return i == distancia && !es_amigo_de_alfil(campo[fila_origen][columna_origen], campo[fila_destino][columna_destino]);
 }
 
-//bool movimiento_permitido_torre(int fila_origen, int columna_origen, int fila_destino, int columna_destino, char campo[LADO][LADO]) {
-//	if(es_arriba_de_torre(fila_origen, columna_origen,  fila_destino, campo)) {
-//		return puede_ir_arriba_torre(fila_origen, fila_destino, columna_origen, campo);
-//	} else if(es_abajo_de_torre(fila_origen, columna_origen,  fila_destino, campo)) {
-//		return puede_ir_abajo_torre(fila_origen, fila_destino, columna_origen, campo);
-//	} else if(es_a_la_derecha_de_torre(fila_origen, columna_origen, columna_destino, campo)) {
-//		return puede_ir_derecha_torre(columna_origen, columna_destino, fila_origen, campo);
-//	} else if(es_a_la_izquierda_de_torre(fila_origen, columna_origen, columna_destino, campo)) {
-//		return puede_ir_izquierda_torre(columna_origen, columna_destino, fila_origen, campo);
-//	} else
-//		return false;
-//}
-//
-//
+bool movimiento_permitido_torre(int fila_origen, int columna_origen, int fila_destino, int columna_destino, char campo[LADO][LADO]) {
+	if(es_superior_derecha_de_alfil(fila_origen, columna_origen, fila_destino, columna_destino, campo)) {
+		return puede_ir_superior_derecha_alfil(fila_origen, fila_destino, columna_origen, columna_destino, campo);
+	} else if(es_superior_izquierda_de_alfil(fila_origen, columna_origen, fila_destino, columna_destino, campo)) {
+		return puede_ir_superior_izquierda_alfil(fila_origen, fila_destino, columna_origen, columna_destino, campo);
+	} else if(es_inferior_derecha_de_alfil(fila_origen, columna_origen, fila_origen, columna_destino, campo)) {
+		return puede_ir_inferior_derecha_alfil(fila_origen, fila_destino, columna_origen, columna_destino, campo);
+	} else if(es_inferior_izquierda_de_alfil(fila_origen, columna_origen, fila_destino, columna_destino, campo)) {
+		return puede_ir_inferior_izquierda_alfil(fila_origen, fila_destino, columna_origen, columna_destino, campo);
+	} else
+		return false;
+}
+
+

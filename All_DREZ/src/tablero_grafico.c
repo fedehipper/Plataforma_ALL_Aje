@@ -470,10 +470,3 @@ void draw_selector_cuadrado(int fila, int columna, char campo[LADO][LADO]) {
 	}
 }
 
-void draw_cuadrado(int fila, int columna, char campo[LADO][LADO]) {
-	if(impar_relativo(fila, columna) && fila != 8 && columna != 8)
-		rectfill(screen, 11 + 80 * columna , 11 + 80 * fila, 89 + 80 * columna, 89 + 80 * fila, COLOR_CUADRADOS);
-	else
-		rectfill(screen, 11 + 80 * columna , 11 + 80 * fila, 89 + 80 * columna, 89 + 80 * fila, 16);
-	rest(100);
-}

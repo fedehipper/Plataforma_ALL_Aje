@@ -16,19 +16,19 @@ char color_peon(int fila_origen, int columna_origen, char campo[LADO][LADO]) {
 	return campo[fila_origen][columna_origen];
 }
 
-bool es_inmediato_siguiente_a_peon(int fila_origen, int fila_destino, int columna_origen, char campo[LADO][LADO]) {
+bool es_inmediato_siguiente_a_peon(int fila_origen, int fila_destino, int columna_origen, int columna_destino, char campo[LADO][LADO]) {
 	if(color_peon(fila_origen, columna_origen, campo) == 'p') {
-		return fila_origen - 1 == fila_destino;
+		return fila_origen - 1 == fila_destino && columna_origen == columna_destino;
 	} else {
-		return fila_origen + 1 == fila_destino;
+		return fila_origen + 1 == fila_destino && columna_origen == columna_destino;
 	}
 }
 
-bool es_siguiente_saltando_uno_a_peon(int fila_origen, int fila_destino, int columna_origen, char campo[LADO][LADO]) {
+bool es_siguiente_saltando_uno_a_peon(int fila_origen, int fila_destino, int columna_origen, int columna_destino, char campo[LADO][LADO]) {
 	if(color_peon(fila_origen, columna_origen, campo) == 'p') {
-		return fila_origen - 2 == fila_destino;
+		return fila_origen - 2 == fila_destino && columna_origen == columna_destino;
 	} else {
-		return fila_origen + 2 == fila_destino;
+		return fila_origen + 2 == fila_destino && columna_origen == columna_destino;
 	}
 }
 
@@ -68,10 +68,10 @@ bool movimiento_permitido_peon(int fila_origen, int columna_origen, int fila_des
 	if(es_superior_derecho_de_peon(fila_origen, fila_destino, columna_origen, columna_destino, campo)) {
 		return puede_ir_al_superior_peon(fila_origen, columna_origen, fila_destino, columna_destino, campo);
 	}
-	if(es_inmediato_siguiente_a_peon(fila_origen, fila_destino, columna_origen, campo)) {
+	if(es_inmediato_siguiente_a_peon(fila_origen, fila_destino, columna_origen, columna_destino, campo)) {
 		return puede_ir_al_inmediato_siguiente_peon(fila_destino, columna_destino, campo);
 	}
-	if(es_siguiente_saltando_uno_a_peon(fila_origen, fila_destino, columna_origen, campo)) {
+	if(es_siguiente_saltando_uno_a_peon(fila_origen, fila_destino, columna_origen, columna_destino, campo)) {
 		return puede_ir_al_siguiente_saltando_uno_peon(fila_origen, fila_destino, columna_destino, campo);
 	} else return false;
 }

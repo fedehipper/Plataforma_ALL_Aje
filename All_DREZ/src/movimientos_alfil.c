@@ -21,7 +21,7 @@ bool es_superior_derecha_de_alfil(int fila_origen, int columna_origen, int fila_
 	if(color_alfil(fila_origen, columna_origen, campo) == 'a') {
 		if(fila_origen > fila_destino && columna_origen < columna_destino) {
 			distancia_horizontal = 7 - columna_origen;
-			distancia_vertical = fila_destino + 1;
+			distancia_vertical = fila_origen + 1;
 			distancia = (distancia_horizontal <= distancia_vertical) ? distancia_horizontal : distancia_vertical;
 
 			for(i = 0 ; i < distancia + 1 ; i++) {
@@ -33,7 +33,7 @@ bool es_superior_derecha_de_alfil(int fila_origen, int columna_origen, int fila_
 	} else {
 		if(fila_origen < fila_destino && columna_origen > columna_destino) {
 			distancia_horizontal = columna_origen;
-			distancia_vertical = fila_destino + 1;
+			distancia_vertical = 7 - fila_origen;
 			distancia = (distancia_horizontal <= distancia_vertical) ? distancia_horizontal : distancia_vertical;
 			for(i = 0 ; i < distancia + 1 ; i++) {
 				if(fila_origen + i == fila_destino && columna_origen - i == columna_destino) {
@@ -51,7 +51,7 @@ bool es_superior_izquierda_de_alfil(int fila_origen, int columna_origen, int fil
 	if(color_alfil(fila_origen, columna_origen, campo) == 'a') {
 		if(fila_origen > fila_destino && columna_origen > columna_destino) {
 			distancia_horizontal = columna_origen;
-			distancia_vertical = fila_destino + 1;
+			distancia_vertical = fila_origen + 1;
 			distancia = (distancia_horizontal <= distancia_vertical) ? distancia_horizontal : distancia_vertical;
 
 			for(i = 0 ; i < distancia + 1 ; i++) {
@@ -63,7 +63,7 @@ bool es_superior_izquierda_de_alfil(int fila_origen, int columna_origen, int fil
 	} else {
 		if(fila_origen < fila_destino && columna_origen < columna_destino) {
 			distancia_horizontal = 7 - columna_origen;
-			distancia_vertical = 7 - fila_destino;
+			distancia_vertical = 7 - fila_origen;
 			distancia = (distancia_horizontal <= distancia_vertical) ? distancia_horizontal : distancia_vertical;
 
 
@@ -83,9 +83,8 @@ bool es_inferior_derecha_de_alfil(int fila_origen, int columna_origen, int fila_
 	if(color_alfil(fila_origen, columna_origen, campo) == 'a') {
 		if(fila_origen < fila_destino && columna_origen < columna_destino) {
 			distancia_horizontal = 7 - columna_origen;
-			distancia_vertical = 7 - fila_destino;
+			distancia_vertical = 7 - fila_origen;
 			distancia = (distancia_horizontal <= distancia_vertical) ? distancia_horizontal : distancia_vertical;
-
 
 			for(i = 0 ; i < distancia + 1; i++) {
 				if(fila_origen + i == fila_destino && columna_origen + i == columna_destino) {
@@ -96,7 +95,7 @@ bool es_inferior_derecha_de_alfil(int fila_origen, int columna_origen, int fila_
 	} else {
 		if(fila_origen < fila_destino && columna_origen < columna_destino) {
 			distancia_horizontal = 7 - columna_origen;
-			distancia_vertical = 7 - fila_destino;
+			distancia_vertical = 7 - fila_origen;
 			distancia = (distancia_horizontal <= distancia_vertical) ? distancia_horizontal : distancia_vertical;
 
 
@@ -116,7 +115,7 @@ bool es_inferior_izquierda_de_alfil(int fila_origen, int columna_origen, int fil
 	if(color_alfil(fila_origen, columna_origen, campo) == 'a') {
 		if(fila_origen < fila_destino && columna_origen > columna_destino) {
 			distancia_horizontal = columna_origen;
-			distancia_vertical = fila_destino + 1;
+			distancia_vertical = 7 - fila_origen;
 			distancia = (distancia_horizontal <= distancia_vertical) ? distancia_horizontal : distancia_vertical;
 			for(i = 0 ; i < distancia + 1 ; i++) {
 				if(fila_origen + i == fila_destino && columna_origen - i == columna_destino) {
@@ -127,7 +126,7 @@ bool es_inferior_izquierda_de_alfil(int fila_origen, int columna_origen, int fil
 	} else {
 		if(fila_origen > fila_destino && columna_origen < columna_destino) {
 			distancia_horizontal = 7 - columna_origen;
-			distancia_vertical = fila_destino + 1;
+			distancia_vertical = fila_origen + 1;
 			distancia = (distancia_horizontal <= distancia_vertical) ? distancia_horizontal : distancia_vertical;
 
 			for(i = 0 ; i < distancia + 1 ; i++) {
@@ -144,18 +143,20 @@ bool puede_ir_superior_derecha_alfil(int fila_origen, int fila_destino, int colu
 	int i = 0, distancia = 0;
 	if(color_alfil(fila_origen, columna_origen, campo) == 'a') {
 		distancia = fila_origen - fila_destino;
-		for(i = 0 ; i < distancia ; i++) {
+		for(i = 1 ; i < distancia ; i++) {
 			if(campo[fila_origen - i][columna_origen + i] != ' ') {
 				break;
 			}
 		}
+		printf("%d %d\n", i, distancia);
 	} else {
 		distancia = fila_destino - fila_origen;
-		for(i = 0 ; i < distancia ; i++) {
+		for(i = 1 ; i < distancia ; i++) {
 			if(campo[fila_origen + i][columna_origen - i] != ' ') {
 				break;
 			}
 		}
+		printf("%d %d\n", i, distancia);
 	}
 	return i == distancia && !es_amigo_de_alfil(campo[fila_origen][columna_origen], campo[fila_destino][columna_destino]);
 }
@@ -164,14 +165,14 @@ bool puede_ir_superior_izquierda_alfil(int fila_origen, int fila_destino, int co
 	int i = 0, distancia = 0;
 	if(color_alfil(fila_origen, columna_origen, campo) == 'a') {
 		distancia = fila_origen - fila_destino;
-		for(i = 0 ; i < distancia ; i++) {
+		for(i = 1 ; i < distancia ; i++) {
 			if(campo[fila_origen - i][columna_origen - i] != ' ') {
 				break;
 			}
 		}
 	} else {
 		distancia = fila_destino - fila_origen;
-		for(i = 0 ; i < distancia ; i++) {
+		for(i = 1 ; i < distancia ; i++) {
 			if(campo[fila_origen + i][columna_origen + i] != ' ') {
 				break;
 			}
@@ -184,14 +185,15 @@ bool puede_ir_inferior_derecha_alfil(int fila_origen, int fila_destino, int colu
 	int i = 0, distancia = 0;
 	if(color_alfil(fila_origen, columna_origen, campo) == 'a') {
 		distancia = fila_destino - fila_origen;
-			for(i = 0 ; i < distancia ; i++) {
+			for(i = 1 ; i < distancia ; i++) {
 				if(campo[fila_origen + i][columna_origen + i] != ' ') {
 					break;
 				}
 			}
+			printf("%d %d", i, distancia);
 	} else {
 		distancia = fila_origen - fila_destino;
-			for(i = 0 ; i < distancia ; i++) {
+			for(i = 1 ; i < distancia ; i++) {
 				if(campo[fila_origen - i][columna_origen - i] != ' ') {
 					break;
 				}
@@ -204,14 +206,14 @@ bool puede_ir_inferior_izquierda_alfil(int fila_origen, int fila_destino, int co
 	int i = 0, distancia = 0;
 	if(color_alfil(fila_origen, columna_origen, campo) == 'a') {
 		distancia = fila_destino - fila_origen;
-		for(i = 0 ; i < distancia ; i++) {
+		for(i = 1 ; i < distancia ; i++) {
 			if(campo[fila_origen + i][columna_origen - i] != ' ') {
 				break;
 			}
 		}
 	} else {
 		distancia = fila_origen - fila_destino;
-		for(i = 0 ; i < distancia ; i++) {
+		for(i = 1 ; i < distancia ; i++) {
 			if(campo[fila_origen - i][columna_origen + i] != ' ') {
 				break;
 			}
@@ -224,20 +226,29 @@ bool movimiento_permitido_alfil(int fila_origen, int columna_origen, int fila_de
 	if(es_superior_derecha_de_alfil(fila_origen, columna_origen, fila_destino, columna_destino, campo)) {
 		printf("s_d\n");
 		return puede_ir_superior_derecha_alfil(fila_origen, fila_destino, columna_origen, columna_destino, campo);
-	}
-	if(es_superior_izquierda_de_alfil(fila_origen, columna_origen, fila_destino, columna_destino, campo)) {
+	} else if(es_superior_izquierda_de_alfil(fila_origen, columna_origen, fila_destino, columna_destino, campo)) {
 		printf("s_i\n");
 		return puede_ir_superior_izquierda_alfil(fila_origen, fila_destino, columna_origen, columna_destino, campo);
-	}
-	if(es_inferior_derecha_de_alfil(fila_origen, columna_origen, fila_origen, columna_destino, campo)) {
+	} else if(es_inferior_derecha_de_alfil(fila_origen, columna_origen, fila_destino, columna_destino, campo)) {
 		printf("i_d\n");
 		return puede_ir_inferior_derecha_alfil(fila_origen, fila_destino, columna_origen, columna_destino, campo);
-	}
-	if(es_inferior_izquierda_de_alfil(fila_origen, columna_origen, fila_destino, columna_destino, campo)) {
+	} else if(es_inferior_izquierda_de_alfil(fila_origen, columna_origen, fila_destino, columna_destino, campo)) {
 		printf("i_i\n");
 		return puede_ir_inferior_izquierda_alfil(fila_origen, fila_destino, columna_origen, columna_destino, campo);
 	} else
 		return false;
 }
+
+
+
+
+
+
+
+
+
+
+
+
 
 

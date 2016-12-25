@@ -17,7 +17,7 @@ void aplicar_movimiento(int fila_origen, int columna_origen, int fila_destino, i
 	campo[fila_origen][columna_origen] = ' ';
 }
 
-bool mover_pieza_a_destino(char pieza, int fila_origen, int fila_destino, int columna_origen, int columna_destino, char campo[LADO][LADO]) {
+bool mover_pieza_a_destino(int fila_origen, int fila_destino, int columna_origen, int columna_destino, char campo[LADO][LADO]) {
 	bool mover = false;
 
 	if(campo[fila_origen][columna_origen] != ' ' && columna_destino != 8 && fila_destino != 8 && columna_origen != 8 && fila_origen != 8) {
@@ -63,20 +63,9 @@ bool es_pieza_blanca(int fila, int columna, char campo[LADO][LADO]) {
 	return pieza == 'w' || pieza == 'a' || pieza == 'r' || pieza == 't' || pieza == 'c' || pieza == 'p';
 }
 
-void siguiente_turno(bool *turno_blanca, bool *turno_negra) {
-	if(turno_blanca) {
-		*turno_blanca =false;
-		*turno_negra = true;
-	} else {
-		*turno_blanca = true;
-		*turno_negra = false;
-	}
-}
-
 void seleccionar(char campo[LADO][LADO]) {
 	int fila = 0, columna = 0, fila_origen = 0, fila_destino = 0, columna_origen = 0, columna_destino = 0,
 		clic_blanca = 0, clic_negra = 0, tecla = 0;
-	char pieza = ' ';
 
 	bool turno_blanca = true;
 
@@ -96,37 +85,15 @@ void seleccionar(char campo[LADO][LADO]) {
 						clic_blanca = 1;
 					}
 				}
-			} else {
-				if(hay_pieza(fila, columna, campo) && !es_pieza_blanca(fila, columna, campo)) {
-					draw_selector_cuadrado(fila, columna, campo);
-					if(clic_negra == 0) {
-						fila_origen = fila;
-						columna_origen = columna;
-						clic_negra = 1;
-					}
-				}
-			}
-
-			if(turno_blanca) {
 
 				if(clic_blanca == 1 && (fila != fila_origen || columna != columna_origen)) {
 					fila_destino = fila;
 					columna_destino = columna;
 					clic_blanca = 2;
 				}
-			} else {
-				if(clic_negra == 1 && (fila != fila_origen || columna != columna_origen)) {
-					fila_destino = fila;
-					columna_destino = columna;
-					clic_negra = 2;
-				}
-
-			}
-
-			if(turno_blanca) {
 
 				if(clic_blanca == 2) {
-					if(mover_pieza_a_destino(pieza, fila_origen, fila_destino, columna_origen, columna_destino, campo)) {
+					if(mover_pieza_a_destino(fila_origen, fila_destino, columna_origen, columna_destino, campo)) {
 						turno_blanca = false;
 					} else {
 						turno_blanca = true;
@@ -137,10 +104,25 @@ void seleccionar(char campo[LADO][LADO]) {
 					clic_blanca = 0;
 				}
 
+
 			} else {
+				if(hay_pieza(fila, columna, campo) && !es_pieza_blanca(fila, columna, campo)) {
+					draw_selector_cuadrado(fila, columna, campo);
+					if(clic_negra == 0) {
+						fila_origen = fila;
+						columna_origen = columna;
+						clic_negra = 1;
+					}
+				}
+				if(clic_negra == 1 && (fila != fila_origen || columna != columna_origen)) {
+					fila_destino = fila;
+					columna_destino = columna;
+					clic_negra = 2;
+				}
+
 
 				if(clic_negra == 2) {
-					if(mover_pieza_a_destino(pieza, fila_origen, fila_destino, columna_origen, columna_destino, campo)) {
+					if(mover_pieza_a_destino(fila_origen, fila_destino, columna_origen, columna_destino, campo)) {
 						turno_blanca = true;
 					} else {
 						turno_blanca = false;
@@ -153,8 +135,11 @@ void seleccionar(char campo[LADO][LADO]) {
 
 			}
 
+		}
 
-
+		if(mouse_b & 2) {
+			re_draw(campo);
+			if(turno_blanca) clic_blanca = 0; else clic_negra = 0;
 		}
 
 		if(keypressed()) tecla = readkey() >> 8;

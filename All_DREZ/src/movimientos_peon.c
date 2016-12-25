@@ -26,9 +26,9 @@ bool es_inmediato_siguiente_a_peon(int fila_origen, int fila_destino, int column
 
 bool es_siguiente_saltando_uno_a_peon(int fila_origen, int fila_destino, int columna_origen, int columna_destino, char campo[LADO][LADO]) {
 	if(color_peon(fila_origen, columna_origen, campo) == 'p') {
-		return fila_origen - 2 == fila_destino && columna_origen == columna_destino;
+		return fila_origen - 2 == fila_destino && columna_origen == columna_destino && campo[fila_origen - 1][columna_origen] == ' ';
 	} else {
-		return fila_origen + 2 == fila_destino && columna_origen == columna_destino;
+		return fila_origen + 2 == fila_destino && columna_origen == columna_destino && campo[fila_origen + 1][columna_origen] == ' ';
 	}
 }
 

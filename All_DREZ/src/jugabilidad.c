@@ -12,60 +12,36 @@
 
 #define LADO 8
 
+void aplicar_movimiento(int fila_origen, int columna_origen, int fila_destino, int columna_destino, char campo[LADO][LADO]) {
+	campo[fila_destino][columna_destino] = campo[fila_origen][columna_origen];
+	campo[fila_origen][columna_origen] = ' ';
+}
+
 void mover_pieza_a_destino(char pieza, int fila_origen, int fila_destino, int columna_origen, int columna_destino, char campo[LADO][LADO]) {
+	bool mover = false;
 
 	if(campo[fila_origen][columna_origen] != ' ' && columna_destino != 8 && fila_destino != 8 && columna_origen != 8 && fila_origen != 8) {
-
 		switch(campo[fila_origen][columna_origen]) {
 			case 'p':
-			case 'P': {
-				if(movimiento_permitido_peon(fila_origen, columna_origen, fila_destino, columna_destino, campo)) {
-					campo[fila_destino][columna_destino] = campo[fila_origen][columna_origen];
-					campo[fila_origen][columna_origen] = ' ';
-				}
-			}
+			case 'P': if(movimiento_permitido_peon(fila_origen, columna_origen, fila_destino, columna_destino, campo)) mover = true;
 			break;
 			case 'T':
-			case 't': {
-				if(movimiento_permitido_torre(fila_origen, columna_origen, fila_destino, columna_destino, campo)) {
-					campo[fila_destino][columna_destino] = campo[fila_origen][columna_origen];
-					campo[fila_origen][columna_origen] = ' ';
-				}
-			}
+			case 't': if(movimiento_permitido_torre(fila_origen, columna_origen, fila_destino, columna_destino, campo)) mover = true;
 			break;
 			case 'r':
-			case 'R': {
-				if(movimiento_permitido_rey(fila_origen, columna_origen, fila_destino, columna_destino, campo)) {
-					campo[fila_destino][columna_destino] = campo[fila_origen][columna_origen];
-					campo[fila_origen][columna_origen] = ' ';
-				}
-			}
+			case 'R': if(movimiento_permitido_rey(fila_origen, columna_origen, fila_destino, columna_destino, campo)) mover = true;
 			break;
 			case 'a':
-			case 'A': {
-				if(movimiento_permitido_alfil(fila_origen, columna_origen, fila_destino, columna_destino, campo)) {
-					campo[fila_destino][columna_destino] = campo[fila_origen][columna_origen];
-					campo[fila_origen][columna_origen] = ' ';
-				}
-			}
+			case 'A': if(movimiento_permitido_alfil(fila_origen, columna_origen, fila_destino, columna_destino, campo)) mover = true;
 			break;
 			case 'w':
-			case 'W': {
-				if(movimiento_permitido_reina(fila_origen, columna_origen, fila_destino, columna_destino, campo)) {
-					campo[fila_destino][columna_destino] = campo[fila_origen][columna_origen];
-					campo[fila_origen][columna_origen] = ' ';
-				}
-			}
+			case 'W': if(movimiento_permitido_reina(fila_origen, columna_origen, fila_destino, columna_destino, campo)) mover = true;
 			break;
 			case 'c':
-			case 'C':{
-				if(movimiento_permitido_caballo(fila_origen, columna_origen, fila_destino, columna_destino, campo)) {
-					campo[fila_destino][columna_destino] = campo[fila_origen][columna_origen];
-					campo[fila_origen][columna_origen] = ' ';
-				}
-			}
-
+			case 'C': if(movimiento_permitido_caballo(fila_origen, columna_origen, fila_destino, columna_destino, campo)) mover = true;
+			break;
 		}
+		if(mover) aplicar_movimiento(fila_origen, columna_origen, fila_destino, columna_destino, campo);
 	}
 }
 
@@ -74,10 +50,7 @@ bool misma_coordenada(int fila, int columna, int nueva_fila, int nueva_columna) 
 }
 
 char obtener_pieza(int fila, int columna, char campo[LADO][LADO]) {
-	if(fila != 8 && columna != 8)
-		return campo[fila][columna];
-	else
-		return '_';
+	return (fila != 8 && columna != 8) ? campo[fila][columna] : ' ';
 }
 
 bool hay_pieza(int fila, int columna, char campo[LADO][LADO]) {

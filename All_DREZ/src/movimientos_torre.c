@@ -3,13 +3,9 @@
 #define LADO 8
 
 bool es_amigo_de_torre(char torre, char otro) {
-	if(torre == 't') {
-		return otro == 'w' || otro == 'a' || otro == 'r' || otro == 'p' || otro == 'c' || otro == 't';
-	} else {
-		return otro == 'W' || otro == 'A' || otro == 'R' || otro == 'P' || otro == 'C' || otro == 'T';
-	}
+	return torre == 't'? otro == 'w' || otro == 'a' || otro == 'r' || otro == 'p' || otro == 'c' || otro == 't' :
+		   otro == 'W' || otro == 'A' || otro == 'R' || otro == 'P' || otro == 'C' || otro == 'T';
 }
-
 
 char color_torre(int fila_origen, int columna_origen, char campo[LADO][LADO]) {
 	return campo[fila_origen][columna_origen];

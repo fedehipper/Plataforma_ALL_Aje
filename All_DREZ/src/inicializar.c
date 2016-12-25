@@ -2,13 +2,14 @@
 #include "tablero_grafico.h"
 #define LADO 8
 
-void instalar_sonidos(void) {
+SAMPLE * instalar_sonidos(void) {
 	int driver_digi = 1, driver_midi = 0;
 	detect_digi_driver(driver_digi);
 	detect_midi_driver(driver_midi);
 	reserve_voices(5, 5);
 	install_sound(driver_digi, driver_midi, "cfg_path");
 	set_volume(200, 100);
+	return load_sample("mover.wav");
 }
 
 void instalar_complementos(void) {

@@ -19,8 +19,10 @@ int main(void) {
 
 	inicializar_tablero(campo);
 
+	SAMPLE * sonido_mover = instalar_sonidos();
+
 	// h vs h
-	seleccionar(campo);
+	seleccionar(campo, sonido_mover);
 
 	allegro_exit();
 	return EXIT_SUCCESS;

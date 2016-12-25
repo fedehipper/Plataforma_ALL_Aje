@@ -17,7 +17,7 @@ void aplicar_movimiento(int fila_origen, int columna_origen, int fila_destino, i
 	campo[fila_origen][columna_origen] = ' ';
 }
 
-bool mover_pieza_a_destino(int fila_origen, int fila_destino, int columna_origen, int columna_destino, char campo[LADO][LADO]) {
+bool mover_pieza_a_destino(int fila_origen, int fila_destino, int columna_origen, int columna_destino, char campo[LADO][LADO], SAMPLE * sonido_mover) {
 	bool mover = false;
 
 	if(campo[fila_origen][columna_origen] != ' ' && columna_destino != 8 && fila_destino != 8 && columna_origen != 8 && fila_origen != 8) {
@@ -41,7 +41,10 @@ bool mover_pieza_a_destino(int fila_origen, int fila_destino, int columna_origen
 			case 'C': if(movimiento_permitido_caballo(fila_origen, columna_origen, fila_destino, columna_destino, campo)) mover = true;
 			break;
 		}
-		if(mover) aplicar_movimiento(fila_origen, columna_origen, fila_destino, columna_destino, campo);
+		if(mover) {
+			aplicar_movimiento(fila_origen, columna_origen, fila_destino, columna_destino, campo);
+			play_sample(sonido_mover, 200, 150, 1000, 0);
+		}
 	}
 	return mover;
 }
@@ -63,7 +66,7 @@ bool es_pieza_blanca(int fila, int columna, char campo[LADO][LADO]) {
 	return pieza == 'w' || pieza == 'a' || pieza == 'r' || pieza == 't' || pieza == 'c' || pieza == 'p';
 }
 
-void seleccionar(char campo[LADO][LADO]) {
+void seleccionar(char campo[LADO][LADO], SAMPLE * sonido_mover) {
 	int fila = 0, columna = 0, fila_origen = 0, fila_destino = 0, columna_origen = 0, columna_destino = 0,
 		clic_blanca = 0, clic_negra = 0, tecla = 0;
 
@@ -93,7 +96,7 @@ void seleccionar(char campo[LADO][LADO]) {
 				}
 
 				if(clic_blanca == 2) {
-					if(mover_pieza_a_destino(fila_origen, fila_destino, columna_origen, columna_destino, campo)) {
+					if(mover_pieza_a_destino(fila_origen, fila_destino, columna_origen, columna_destino, campo, sonido_mover)) {
 						turno_blanca = false;
 					} else {
 						turno_blanca = true;
@@ -122,7 +125,7 @@ void seleccionar(char campo[LADO][LADO]) {
 
 
 				if(clic_negra == 2) {
-					if(mover_pieza_a_destino(fila_origen, fila_destino, columna_origen, columna_destino, campo)) {
+					if(mover_pieza_a_destino(fila_origen, fila_destino, columna_origen, columna_destino, campo, sonido_mover)) {
 						turno_blanca = true;
 					} else {
 						turno_blanca = false;

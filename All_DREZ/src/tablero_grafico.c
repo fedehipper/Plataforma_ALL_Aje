@@ -78,7 +78,6 @@ void draw_cuadrado(int fila, int columna, char campo[LADO][LADO]) {
 		rectfill(screen, 11 + 80 * columna , 11 + 80 * fila, 89 + 80 * columna, 89 + 80 * fila, COLOR_CUADRADOS);
 	else
 		rectfill(screen, 11 + 80 * columna , 11 + 80 * fila, 89 + 80 * columna, 89 + 80 * fila, 16);
-	rest(100);
 }
 
 void tablero_en_blanco(char campo[LADO][LADO]) {
@@ -90,13 +89,12 @@ void tablero_en_blanco(char campo[LADO][LADO]) {
 	}
 }
 
-// piezas en minuscula --> blancas y mayuscula --> negras
 void inicializar_posicion_peones(char campo[LADO][LADO]) {
 	int i;
-	for(i = 0 ; i < 8 ; i++)
+	for(i = 0 ; i < 8 ; i++) {
 		campo[1][i] = 'P';
-	for(i = 0 ; i < 8 ; i++)
 		campo[6][i] = 'p';
+	}
 }
 
 void inicializar_posicion_reinas(char campo[LADO][LADO]) {

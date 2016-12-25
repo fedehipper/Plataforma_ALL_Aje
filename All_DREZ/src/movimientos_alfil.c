@@ -4,11 +4,8 @@
 #define LADO 8
 
 bool es_amigo_de_alfil(char alfil, char otro) {
-	if(alfil == 'a') {
-		return otro == 'w' || otro == 'a' || otro == 'r' || otro == 'p' || otro == 'c' || otro == 't';
-	} else {
-		return otro == 'W' || otro == 'A' || otro == 'R' || otro == 'P' || otro == 'C' || otro == 'T';
-	}
+	return (alfil == 'a') ? otro == 'w' || otro == 'a' || otro == 'r' || otro == 'p' || otro == 'c' || otro == 't':
+			otro == 'W' || otro == 'A' || otro == 'R' || otro == 'P' || otro == 'C' || otro == 'T';
 }
 
 char color_alfil(int fila_origen, int columna_origen, char campo[LADO][LADO]) {

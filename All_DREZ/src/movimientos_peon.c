@@ -5,11 +5,8 @@
 #define LADO 8
 
 bool es_amigo_de_peon(char peon, char otro) {
-	if(peon == 'p') {
-		return otro == 'w' || otro == 'a' || otro == 'r' || otro == 't' || otro == 'c' || otro == 'p';
-	} else {
-		return otro == 'W' || otro == 'A' || otro == 'R' || otro == 'T' || otro == 'C' || otro == 'P';
-	}
+	return (peon == 'p')? otro == 'w' || otro == 'a' || otro == 'r' || otro == 't' || otro == 'c' || otro == 'p':
+			otro == 'W' || otro == 'A' || otro == 'R' || otro == 'T' || otro == 'C' || otro == 'P';
 }
 
 char color_peon(int fila_origen, int columna_origen, char campo[LADO][LADO]) {

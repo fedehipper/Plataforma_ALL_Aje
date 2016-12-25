@@ -84,6 +84,11 @@ bool hay_pieza(int fila, int columna, char campo[LADO][LADO]) {
 	return fila != 8 && columna != 8 && campo[fila][columna] != ' ';
 }
 
+bool es_pieza_blanca(int fila, int columna, char campo[LADO][LADO]) {
+	char pieza = campo[fila][columna];
+	return pieza == 'w' || pieza == 'a' || pieza == 'r' || pieza == 't' || pieza == 'c' || pieza == 'p';
+}
+
 void seleccionar(char campo[LADO][LADO]) {
 	int fila = 0, columna = 0, fila_origen = 0, fila_destino = 0, columna_origen = 0, columna_destino = 0, clic = 0, tecla = 0;
 	char pieza = ' ';

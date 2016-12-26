@@ -133,11 +133,35 @@ void close_button_handler(void) {
 	close_button_pressed = TRUE;
 }
 
+void seleccionar_origen(int fila, int columna, bool turno_blanca, int *clic_blanca, int *clic_negra, int *fila_origen, int *columna_origen, char campo[LADO][LADO]) {
+	draw_selector_cuadrado(fila, columna, campo);
+	if(turno_blanca) {
+		if(*clic_blanca == 0) {
+			*fila_origen = fila;
+			*columna_origen = columna;
+			*clic_blanca = 1;
+		}
+	} else {
+		if(*clic_negra == 0) {
+			*fila_origen = fila;
+			*columna_origen = columna;
+			*clic_negra = 1;
+		}
+	}
+}
+
+void re_dibujar(int fila_origen, int columna_origen, int fila_destino, int columna_destino, char campo[LADO][LADO]) {
+	draw_selector_cuadrado(fila_destino, columna_destino, campo);
+	draw_cuadrado(fila_origen, columna_origen, campo);
+	re_draw(campo);
+}
+
 void seleccionar(char campo[LADO][LADO], SAMPLE * sonido_mover) {
 	int fila = 0, columna = 0, fila_origen = 0, fila_destino = 0, columna_origen = 0, columna_destino = 0,
 		clic_blanca = 0, clic_negra = 0 ,f_rey_b = 7, c_rey_b = 4, f_rey_n = 0, c_rey_n = 4;
 
-	bool turno_blanca = true, blanca_esta_en_jaque = false, negra_esta_en_jaque = false;
+	bool turno_blanca = true, blanca_esta_en_jaque = false, negra_esta_en_jaque = false, condicion_blanca_seleccionar = false,
+		 condicion_negra_seleccionar = false, movio_blanca = false, movio_negra = false;
 
 	char pieza = ' ';
 
@@ -152,32 +176,27 @@ void seleccionar(char campo[LADO][LADO], SAMPLE * sonido_mover) {
 			columna = (mouse_x - 11) / 80;
 
 			if(turno_blanca) {
-				if(hay_pieza(fila, columna, campo) && es_pieza_blanca(fila, columna, campo) && !blanca_esta_en_jaque) {
-					draw_selector_cuadrado(fila, columna, campo);
-					if(clic_blanca == 0) {
-						fila_origen = fila;
-						columna_origen = columna;
-						clic_blanca = 1;
-					}
-				} else if(hay_pieza(fila, columna, campo) && es_pieza_blanca(fila, columna, campo) && blanca_esta_en_jaque) {
-					if(campo[fila][columna] == 'r') {
-						draw_selector_cuadrado(fila, columna, campo);
-						if(clic_blanca == 0) {
-							fila_origen = fila;
-							columna_origen = columna;
-							clic_blanca = 1;
-						}
-					}
+
+				condicion_blanca_seleccionar = hay_pieza(fila, columna, campo) && es_pieza_blanca(fila, columna, campo);
+
+				if(condicion_blanca_seleccionar && !blanca_esta_en_jaque) {
+					seleccionar_origen(fila, columna, turno_blanca, &clic_blanca, &clic_negra, &fila_origen, &columna_origen, campo);
+				} else if(condicion_blanca_seleccionar && blanca_esta_en_jaque && campo[fila][columna] == 'r') {
+					seleccionar_origen(fila, columna, turno_blanca, &clic_blanca, &clic_negra, &fila_origen, &columna_origen, campo);
 				}
 
 				if(clic_blanca == 1 && (fila != fila_origen || columna != columna_origen)) {
 					fila_destino = fila;
 					columna_destino = columna;
 					clic_blanca = 2;
+//					if(campo[fila_origen][columna_origen] == 'r' && me_hacen_jaque(fila_destino, columna_destino, f_rey_b, c_rey_b, f_rey_n, c_rey_n, campo)) {
+//						clic_blanca = 0;
+//					}
 				}
 
 				if(clic_blanca == 2) {
-					if(mover_pieza_a_destino(fila_origen, fila_destino, columna_origen, columna_destino, campo, sonido_mover, &blanca_esta_en_jaque, &pieza)) {
+					movio_blanca = mover_pieza_a_destino(fila_origen, fila_destino, columna_origen, columna_destino, campo, sonido_mover, &blanca_esta_en_jaque, &pieza);
+					if(movio_blanca) {
 						if(campo[fila_destino][columna_destino] == 'r') {
 							f_rey_b = fila_destino;
 							c_rey_b = columna_destino;
@@ -186,42 +205,35 @@ void seleccionar(char campo[LADO][LADO], SAMPLE * sonido_mover) {
 					} else {
 						turno_blanca = true;
 					}
-					draw_selector_cuadrado(fila_destino, columna_destino, campo);
-					draw_cuadrado(fila_origen, columna_origen, campo);
-					re_draw(campo);
-					if(verificar_hacke(pieza, fila_destino, columna_destino, f_rey_b, c_rey_b, f_rey_n, c_rey_n, campo)) {
+					re_dibujar(fila_origen, columna_origen, fila_destino, columna_destino, campo);
+					if(movio_blanca && verificar_hacke(pieza, fila_destino, columna_destino, f_rey_b, c_rey_b, f_rey_n, c_rey_n, campo)) {
 						negra_esta_en_jaque = true;
 					}
 					clic_blanca = 0;
 				}
 
 			} else {
-				if(hay_pieza(fila, columna, campo) && !es_pieza_blanca(fila, columna, campo) && !negra_esta_en_jaque) {
-					draw_selector_cuadrado(fila, columna, campo);
-					if(clic_negra == 0) {
-						fila_origen = fila;
-						columna_origen = columna;
-						clic_negra = 1;
-					}
-				} else if(hay_pieza(fila, columna, campo) && !es_pieza_blanca(fila, columna, campo) && negra_esta_en_jaque) {
-					if(campo[fila][columna] == 'R') {
-						draw_selector_cuadrado(fila, columna, campo);
-						if(clic_negra == 0) {
-							fila_origen = fila;
-							columna_origen = columna;
-							clic_negra = 1;
-						}
-					}
+
+				condicion_negra_seleccionar = hay_pieza(fila, columna, campo) && !es_pieza_blanca(fila, columna, campo);
+
+				if(condicion_negra_seleccionar && !negra_esta_en_jaque) {
+					seleccionar_origen(fila, columna, turno_blanca, &clic_blanca, &clic_negra, &fila_origen, &columna_origen, campo);
+				} else if(condicion_negra_seleccionar && negra_esta_en_jaque && campo[fila][columna] == 'R') {
+					seleccionar_origen(fila, columna, turno_blanca, &clic_blanca, &clic_negra, &fila_origen, &columna_origen, campo);
 				}
 
 				if(clic_negra == 1 && (fila != fila_origen || columna != columna_origen)) {
 					fila_destino = fila;
 					columna_destino = columna;
 					clic_negra = 2;
+//					if(campo[fila_origen][columna_origen] == 'R' && me_hacen_jaque(fila_destino, columna_destino, f_rey_b, c_rey_b, f_rey_n, c_rey_n, campo)) {
+//						clic_negra = 0;
+//					}
 				}
 
 				if(clic_negra == 2) {
-					if(mover_pieza_a_destino(fila_origen, fila_destino, columna_origen, columna_destino, campo, sonido_mover, &negra_esta_en_jaque, &pieza)) {
+					movio_negra = mover_pieza_a_destino(fila_origen, fila_destino, columna_origen, columna_destino, campo, sonido_mover, &negra_esta_en_jaque, &pieza);
+					if(movio_negra) {
 						if(campo[fila_destino][columna_destino] == 'R') {
 							f_rey_n = fila_destino;
 							c_rey_n = columna_destino;
@@ -230,10 +242,8 @@ void seleccionar(char campo[LADO][LADO], SAMPLE * sonido_mover) {
 					} else {
 						turno_blanca = false;
 					}
-					draw_selector_cuadrado(fila_destino, columna_destino, campo);
-					draw_cuadrado(fila_origen, columna_origen, campo);
-					re_draw(campo);
-					if(verificar_hacke(pieza, fila_destino, columna_destino, f_rey_b, c_rey_b, f_rey_n, c_rey_n, campo)) {
+					re_dibujar(fila_origen, columna_origen, fila_destino, columna_destino, campo);
+					if(movio_negra && verificar_hacke(pieza, fila_destino, columna_destino, f_rey_b, c_rey_b, f_rey_n, c_rey_n, campo)) {
 						blanca_esta_en_jaque = true;
 					}
 					clic_negra = 0;

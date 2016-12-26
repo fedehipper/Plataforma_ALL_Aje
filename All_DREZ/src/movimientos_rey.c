@@ -36,33 +36,37 @@ bool es_jaque_rey(char pieza, int fila_destino, int columna_destino, int f_rey_b
 	return es_jaque;
 }
 
-//bool me_hacen_jaque(int fila_origen, int columna_origen, int f_rey_b, int c_rey_b, int f_rey_n, int c_rey_n, char campo[LADO][LADO]) {
-//	int i,j;
-//	bool es_jaque = false;
-//	for(i = 0 ; i < LADO ; i++) {
-//		for(j = 0 ; j < LADO ; j++) {
-//			if(campo[i][j] != ' ' && !es_amigo_de_rey(campo[fila_origen][columna_origen], campo[i][j])) {
-//				switch(campo[i][j]) {
-//					case 'p':
-//					case 'P': if(es_jaque_peon(i, j, f_rey_b, c_rey_b, f_rey_n, c_rey_n, campo)) es_jaque = true;
-//					break;
-//					case 'a':
-//					case 'A': if(es_jaque_alfil(i, j, f_rey_b, c_rey_b, f_rey_n, c_rey_n,campo)) es_jaque = true;
-//					break;
-//					case 't':
-//					case 'T': if(es_jaque_torre(i, j, f_rey_b, c_rey_b, f_rey_n, c_rey_n, campo)) es_jaque = true;
-//					break;
-//					case 'c':
-//					case 'C': if(es_jaque_caballo(i, j, f_rey_b, c_rey_b, f_rey_n, c_rey_n, campo)) es_jaque = true;
-//					break;
-//					case 'w':
-//					case 'W': if(es_jaque_reina(i, j, f_rey_b, c_rey_b, f_rey_n, c_rey_n, campo)) es_jaque = true;
-//					break;
-//				}
-//				if (es_jaque) break;
-//			}
-//
-//		}
-//	}
-//	return es_jaque;
-//}
+bool me_hacen_jaque(int fila_destino, int columna_destino, int f_rey_b, int c_rey_b, int f_rey_n, int c_rey_n, char campo[LADO][LADO]) {
+	int i,j;
+	bool es_jaque = false;
+	for(i = 0 ; i < LADO ; i++) {
+		for(j = 0 ; j < LADO ; j++) {
+			if(campo[i][j] != ' ' && !es_amigo_de_rey(campo[fila_destino][columna_destino], campo[i][j])) {
+				switch(campo[i][j]) {
+					case 'p': if(es_jaque_peon('p', i, j, f_rey_b, c_rey_b, f_rey_n, c_rey_n, campo)) es_jaque = true;
+					break;
+					case 'P': if(es_jaque_peon('P', i, j, f_rey_b, c_rey_b, f_rey_n, c_rey_n, campo)) es_jaque = true;
+					break;
+					case 'a': if(es_jaque_alfil('a', i, j, f_rey_b, c_rey_b, f_rey_n, c_rey_n,campo)) es_jaque = true;
+					break;
+					case 'A': if(es_jaque_alfil('A', i, j, f_rey_b, c_rey_b, f_rey_n, c_rey_n,campo)) es_jaque = true;
+					break;
+					case 't': if(es_jaque_torre('t', i, j, f_rey_b, c_rey_b, f_rey_n, c_rey_n, campo)) es_jaque = true;
+					break;
+					case 'T': if(es_jaque_torre('T', i, j, f_rey_b, c_rey_b, f_rey_n, c_rey_n, campo)) es_jaque = true;
+					break;
+					case 'c': if(es_jaque_caballo('c', i, j, f_rey_b, c_rey_b, f_rey_n, c_rey_n, campo)) es_jaque = true;
+					break;
+					case 'C': if(es_jaque_caballo('C', i, j, f_rey_b, c_rey_b, f_rey_n, c_rey_n, campo)) es_jaque = true;
+					break;
+					case 'w': if(es_jaque_reina('w', i, j, f_rey_b, c_rey_b, f_rey_n, c_rey_n, campo)) es_jaque = true;
+					break;
+					case 'W': if(es_jaque_reina('W', i, j, f_rey_b, c_rey_b, f_rey_n, c_rey_n, campo)) es_jaque = true;
+					break;
+				}
+				if (es_jaque) break;
+			}
+		}
+	}
+	return es_jaque;
+}

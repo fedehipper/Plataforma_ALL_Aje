@@ -121,7 +121,7 @@ bool verificar_hacke(char pieza, int fila_destino, int columna_destino, int f_re
 					es_jaque_torre(pieza, fila_destino, columna_destino, f_rey_b, c_rey_b, f_rey_n, c_rey_n, campo) ||
 					es_jaque_caballo(pieza, fila_destino, columna_destino, f_rey_b, c_rey_b, f_rey_n, c_rey_n, campo) ||
 					es_jaque_reina(pieza, fila_destino, columna_destino, f_rey_b, c_rey_b, f_rey_n, c_rey_n, campo);
-	if(es_jaque) allegro_message("          jaque          ");
+	if(es_jaque) allegro_message("\n          JAQUE          \n\n");
 
 	return es_jaque;
 }
@@ -161,7 +161,7 @@ void seleccionar(char campo[LADO][LADO], SAMPLE * sonido_mover) {
 		clic_blanca = 0, clic_negra = 0 ,f_rey_b = 7, c_rey_b = 4, f_rey_n = 0, c_rey_n = 4;
 
 	bool turno_blanca = true, blanca_esta_en_jaque = false, negra_esta_en_jaque = false, condicion_blanca_seleccionar = false,
-		 condicion_negra_seleccionar = false, movio_blanca = false, movio_negra = false, si_muevo_es_jaque = false;
+		 condicion_negra_seleccionar = false, movio_blanca = false, movio_negra = false;
 
 	char pieza = ' ';
 
@@ -176,7 +176,6 @@ void seleccionar(char campo[LADO][LADO], SAMPLE * sonido_mover) {
 			columna = (mouse_x - 11) / 80;
 
 			if(turno_blanca) {
-
 				condicion_blanca_seleccionar = hay_pieza(fila, columna, campo) && es_pieza_blanca(fila, columna, campo);
 
 				if(condicion_blanca_seleccionar && !blanca_esta_en_jaque) {
@@ -189,12 +188,7 @@ void seleccionar(char campo[LADO][LADO], SAMPLE * sonido_mover) {
 				if(clic_blanca == 1 && (fila != fila_origen || columna != columna_origen)) {
 					fila_destino = fila;
 					columna_destino = columna;
-
-					if(campo[fila_origen][columna_origen] == 'r') {
-						si_muevo_es_jaque = me_hacen_jaque(fila_origen, columna_origen, fila, columna, f_rey_b, c_rey_b, f_rey_n, c_rey_n, campo);
-						if(!si_muevo_es_jaque) clic_blanca = 2;
-					} else clic_blanca = 2;
-
+					clic_blanca = 2;
 				}
 
 				if(clic_blanca == 2) {
@@ -215,8 +209,9 @@ void seleccionar(char campo[LADO][LADO], SAMPLE * sonido_mover) {
 					clic_blanca = 0;
 				}
 
-			} else {
+				es_jaque_mate(f_rey_b, c_rey_b, campo);
 
+			} else {
 				condicion_negra_seleccionar = hay_pieza(fila, columna, campo) && !es_pieza_blanca(fila, columna, campo);
 
 				if(condicion_negra_seleccionar && !negra_esta_en_jaque) {
@@ -229,11 +224,7 @@ void seleccionar(char campo[LADO][LADO], SAMPLE * sonido_mover) {
 				if(clic_negra == 1 && (fila != fila_origen || columna != columna_origen)) {
 					fila_destino = fila;
 					columna_destino = columna;
-
-					if(campo[fila_origen][columna_origen] == 'R') {
-						si_muevo_es_jaque = me_hacen_jaque(fila_origen, columna_origen, fila, columna, f_rey_b, c_rey_b, f_rey_n, c_rey_n, campo);
-						if(!si_muevo_es_jaque) clic_negra = 2;
-					} else clic_negra = 2;
+					clic_negra = 2;
 				}
 
 				if(clic_negra == 2) {
@@ -253,9 +244,8 @@ void seleccionar(char campo[LADO][LADO], SAMPLE * sonido_mover) {
 					}
 					clic_negra = 0;
 				}
-
 			}
-
+			es_jaque_mate(f_rey_n, c_rey_n, campo);
 		}
 
 		if(mouse_b & 2) {

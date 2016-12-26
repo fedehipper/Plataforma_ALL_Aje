@@ -221,13 +221,12 @@ bool movimiento_permitido_alfil(int fila_origen, int columna_origen, int fila_de
 		return false;
 }
 
-bool es_jaque_alfil(char pieza, int fila_destino, int columna_destino, int f_rey_b, int c_rey_b, int f_rey_n, int c_rey_n, char campo[LADO][LADO]) {
+bool es_jaque_alfil(char pieza, int fila, int columna, int f_rey_b, int c_rey_b, int f_rey_n, int c_rey_n, char campo[LADO][LADO]) {
 	bool es_jaque = false;
-		if(pieza == 'a' && movimiento_permitido_alfil(fila_destino, columna_destino, f_rey_n, c_rey_n, campo)) {
+		if(pieza == 'a' && movimiento_permitido_alfil(fila, columna, f_rey_n, c_rey_n, campo)) {
 			es_jaque = true;
 		}
-
-		if(pieza == 'A' && movimiento_permitido_alfil(fila_destino, columna_destino, f_rey_b, c_rey_b, campo)) {
+		if(pieza == 'A' && movimiento_permitido_alfil(fila, columna, f_rey_b, c_rey_b, campo)) {
 			es_jaque = true;
 		}
 	return es_jaque;

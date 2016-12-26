@@ -36,9 +36,24 @@ bool es_jaque_rey(char pieza, int fila_destino, int columna_destino, int f_rey_b
 	return es_jaque;
 }
 
-bool me_hacen_jaque(int fila_destino, int columna_destino, int f_rey_b, int c_rey_b, int f_rey_n, int c_rey_n, char campo[LADO][LADO]) {
+// pasa que en fila_destino no hay nada, todavia no se movio
+bool me_hacen_jaque(int fila_origen, int columna_origen, int fila_destino, int columna_destino, int f_rey_b, int c_rey_b, int f_rey_n, int c_rey_n, char campo[LADO][LADO]) {
 	int i,j;
 	bool es_jaque = false;
+	char pieza_aux = campo[fila_destino][columna_destino], rey_original = ' ';
+	if(campo[fila_origen][columna_origen] == 'r') {
+		campo[fila_destino][columna_destino] = 'r';
+		rey_original = 'r';
+		f_rey_b = fila_destino;
+		c_rey_b = columna_destino;
+	} else {
+		campo[fila_destino][columna_destino] = 'R';
+		rey_original = 'R';
+		f_rey_n = fila_destino;
+		c_rey_n = columna_destino;
+	}
+	campo[fila_origen][columna_origen] = ' ';
+
 	for(i = 0 ; i < LADO ; i++) {
 		for(j = 0 ; j < LADO ; j++) {
 			if(campo[i][j] != ' ' && !es_amigo_de_rey(campo[fila_destino][columna_destino], campo[i][j])) {
@@ -68,5 +83,7 @@ bool me_hacen_jaque(int fila_destino, int columna_destino, int f_rey_b, int c_re
 			}
 		}
 	}
+	campo[fila_destino][columna_destino] = pieza_aux;
+	campo[fila_origen][columna_origen] = rey_original;
 	return es_jaque;
 }

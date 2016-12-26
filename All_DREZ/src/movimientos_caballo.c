@@ -19,23 +19,16 @@ bool movimiento_permitido_caballo(int fila_origen, int columna_origen, int fila_
 			!es_amigo_de_caballo(campo[fila_origen][columna_origen], campo[fila_destino][columna_destino]);
 }
 
-bool es_hacke_caballo(int fila_origen, int columna_origen, char campo[LADO][LADO]) {
-	int i, j;
-	bool es_hacke = false;
-	for(i = 0 ; i < LADO ; i++) {
-		for(j = 0 ; j < LADO ; j++) {
-			if(movimiento_permitido_caballo(fila_origen, columna_origen, i, j, campo)) {
-				if(campo[fila_origen][columna_origen] == 'c' && campo[i][j] == 'R') {
-					es_hacke = true;
-					break;
-				}
-				if(campo[fila_origen][columna_origen] == 'C' && campo[i][j] == 'r') {
-					es_hacke = true;
-					break;
-				}
-			}
+
+bool es_jaque_caballo(char pieza, int fila_destino, int columna_destino, int f_rey_b, int c_rey_b, int f_rey_n, int c_rey_n, char campo[LADO][LADO]) {
+	bool es_jaque = false;
+		if(pieza == 'c' && movimiento_permitido_caballo(fila_destino, columna_destino, f_rey_n, c_rey_n, campo)) {
+			es_jaque = true;
 		}
-		if(es_hacke) break;
-	}
-	return es_hacke;
+
+		if(pieza == 'C' && movimiento_permitido_caballo(fila_destino, columna_destino, f_rey_b, c_rey_b, campo)) {
+			es_jaque = true;
+		}
+	return es_jaque;
 }
+

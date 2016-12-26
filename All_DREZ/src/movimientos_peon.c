@@ -73,25 +73,16 @@ bool movimiento_permitido_peon(int fila_origen, int columna_origen, int fila_des
 	} else return false;
 }
 
-bool es_hacke_peon(int fila_origen, int columna_origen, char campo[LADO][LADO]) {
-	int i, j;
-	bool es_hacke = false;
-	for(i = 0 ; i < LADO ; i++) {
-		for(j = 0 ; j < LADO ; j++) {
-			if(movimiento_permitido_peon(fila_origen, columna_origen, i, j, campo)) {
-				if(campo[fila_origen][columna_origen] == 'p' && campo[i][j] == 'R') {
-					es_hacke = true;
-					break;
-				}
-				if(campo[fila_origen][columna_origen] == 'P' && campo[i][j] == 'r') {
-					es_hacke = true;
-					break;
-				}
-			}
+bool es_jaque_peon(char pieza, int fila_destino, int columna_destino, int f_rey_b, int c_rey_b, int f_rey_n, int c_rey_n, char campo[LADO][LADO]) {
+	bool es_jaque = false;
+		if(pieza == 'p' && movimiento_permitido_peon(fila_destino, columna_destino, f_rey_n, c_rey_n, campo)) {
+			es_jaque = true;
 		}
-		if(es_hacke) break;
-	}
-	return es_hacke;
+
+		if(pieza == 'P' && movimiento_permitido_peon(fila_destino, columna_destino, f_rey_b, c_rey_b, campo)) {
+			es_jaque = true;
+		}
+	return es_jaque;
 }
 
 

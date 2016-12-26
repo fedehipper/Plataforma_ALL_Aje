@@ -341,25 +341,16 @@ bool movimiento_permitido_reina(int fila_origen, int columna_origen, int fila_de
 		return false;
 }
 
-bool es_hacke_reina(int fila_origen, int columna_origen, char campo[LADO][LADO]) {
-	int i, j;
-	bool es_hacke = false;
-	for(i = 0 ; i < LADO ; i++) {
-		for(j = 0 ; j < LADO ; j++) {
-			if(movimiento_permitido_reina(fila_origen, columna_origen, i, j, campo)) {
-				if(campo[fila_origen][columna_origen] == 'w' && campo[i][j] == 'R') {
-					es_hacke = true;
-					break;
-				}
-				if(campo[fila_origen][columna_origen] == 'W' && campo[i][j] == 'r') {
-					es_hacke = true;
-					break;
-				}
-			}
+bool es_jaque_reina(char pieza, int fila_destino, int columna_destino, int f_rey_b, int c_rey_b, int f_rey_n, int c_rey_n, char campo[LADO][LADO]) {
+	bool es_jaque = false;
+		if(pieza == 'w' && movimiento_permitido_reina(fila_destino, columna_destino, f_rey_n, c_rey_n, campo)) {
+			es_jaque = true;
 		}
-		if(es_hacke) break;
-	}
-	return es_hacke;
+
+		if(pieza == 'W' && movimiento_permitido_reina(fila_destino, columna_destino, f_rey_b, c_rey_b, campo)) {
+			es_jaque = true;
+		}
+	return es_jaque;
 }
 
 

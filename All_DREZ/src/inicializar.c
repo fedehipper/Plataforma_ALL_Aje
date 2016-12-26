@@ -13,7 +13,6 @@ SAMPLE * instalar_sonidos(void) {
 }
 
 void instalar_complementos(void) {
-	install_keyboard();
 	install_mouse();
 	install_timer();
 	show_os_cursor(2);
@@ -24,7 +23,6 @@ void mostrar_display(void) {
 }
 
 void desinstalar_complementos(void) {
-	remove_keyboard();
 	remove_mouse();
 	remove_timer();
 }

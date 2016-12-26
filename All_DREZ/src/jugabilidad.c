@@ -79,17 +79,26 @@ bool verificar_hacke(int fila_origen, int columna_origen, char campo[LADO][LADO]
 					es_hacke_torre(fila_origen, columna_origen, campo) ||
 					es_hacke_caballo(fila_origen, columna_origen, campo) ||
 					es_hacke_reina(fila_origen, columna_origen, campo);
-	if(es_hacke) allegro_message("hacke");
+	if(es_hacke) allegro_message("          hacke          ");
 	return es_hacke;
 }
 
+
+volatile int close_button_pressed = FALSE;
+
+void close_button_handler(void) {
+	close_button_pressed = TRUE;
+}
+
 void seleccionar(char campo[LADO][LADO], SAMPLE * sonido_mover) {
-	int fila = 0, columna = 0, fila_origen = 0, fila_destino = 0, columna_origen = 0, columna_destino = 0,
-		clic_blanca = 0, clic_negra = 0, tecla = 0;
+	int fila = 0, columna = 0, fila_origen = 0, fila_destino = 0, columna_origen = 0, columna_destino = 0, clic_blanca = 0, clic_negra = 0;
 
-	bool turno_blanca = true, *blanca_esta_en_hacke = false, *negra_esta_en_hacke = false;
+	bool turno_blanca = true, blanca_esta_en_hacke = false, negra_esta_en_hacke = false;
 
-	while(tecla != KEY_ESC) {
+	LOCK_FUNCTION(close_button_handler);
+	set_close_button_callback(close_button_handler);
+
+	while(!close_button_pressed) {
 		rest(75);
 
 		if(mouse_b & 1) {
@@ -180,8 +189,6 @@ void seleccionar(char campo[LADO][LADO], SAMPLE * sonido_mover) {
 			re_draw(campo);
 			if(turno_blanca) clic_blanca = 0; else clic_negra = 0;
 		}
-
-		if(keypressed()) tecla = readkey() >> 8;
 	}
 
 }

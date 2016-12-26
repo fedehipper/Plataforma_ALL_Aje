@@ -8,6 +8,7 @@
 
 #define LADO 8
 
+
 int main(void) {
 	allegro_init();
 
@@ -23,6 +24,8 @@ int main(void) {
 
 	// h vs h
 	seleccionar(campo, sonido_mover);
+
+	desinstalar_complementos();
 
 	allegro_exit();
 	return EXIT_SUCCESS;

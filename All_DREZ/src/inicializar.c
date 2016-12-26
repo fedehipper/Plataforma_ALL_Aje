@@ -13,6 +13,7 @@ SAMPLE * instalar_sonidos(void) {
 }
 
 void instalar_complementos(void) {
+	set_window_close_button(1);
 	install_keyboard();
 	install_mouse();
 	install_timer();
@@ -21,6 +22,12 @@ void instalar_complementos(void) {
 
 void mostrar_display(void) {
 	set_gfx_mode(GFX_SAFE, 670, 670, 0, 0);
+}
+
+void desinstalar_complementos(void) {
+	remove_keyboard();
+	remove_mouse();
+	remove_timer();
 }
 
 void inicializar_tablero(char campo[LADO][LADO]) {

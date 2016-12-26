@@ -143,7 +143,6 @@ bool es_jaque_torre(char pieza, int fila_destino, int columna_destino, int f_rey
 		if(pieza == 't' && movimiento_permitido_torre(fila_destino, columna_destino, f_rey_n, c_rey_n, campo)) {
 			es_jaque = true;
 		}
-
 		if(pieza == 'T' && movimiento_permitido_torre(fila_destino, columna_destino, f_rey_b, c_rey_b, campo)) {
 			es_jaque = true;
 		}

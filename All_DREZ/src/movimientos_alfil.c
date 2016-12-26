@@ -1,5 +1,11 @@
 #include <stdbool.h>
 #include <stdio.h>
+#include "movimientos_peon.h"
+#include "movimientos_caballo.h"
+#include "movimientos_reina.h"
+#include "movimientos_rey.h"
+#include "movimientos_torre.h"
+
 
 #define LADO 8
 
@@ -232,13 +238,43 @@ bool es_jaque_alfil(char pieza, int fila, int columna, int f_rey_b, int c_rey_b,
 	return es_jaque;
 }
 
-
-
-
-
-
-
-
-
-
+bool si_se_mueve_es_jaque(int fila, int columna, char campo[LADO][LADO], int f_rey_b, int c_rey_b, int f_rey_n, int c_rey_n) {
+	int i,j;
+	char pieza = campo[fila][columna];
+	bool es_jaque = false;
+	// hago que desaparezca
+	campo[fila][columna] = ' ';
+	for(i = 0 ; i < LADO ; i++) {
+		for(j = 0 ; j < LADO ; j++) {
+			if(!es_amigo_de_alfil(pieza, campo[i][j])) {
+				switch(campo[i][j]) {
+					case 'p': if(es_jaque_peon('p', i, j, f_rey_b, c_rey_b, f_rey_n, c_rey_n, campo)) es_jaque = true;
+					break;
+					case 'P': if(es_jaque_peon('P', i, j, f_rey_b, c_rey_b, f_rey_n, c_rey_n, campo)) es_jaque = true;
+					break;
+					case 'a': if(es_jaque_alfil('a', i, j, f_rey_b, c_rey_b, f_rey_n, c_rey_n,campo)) es_jaque = true;
+					break;
+					case 'A': if(es_jaque_alfil('A', i, j, f_rey_b, c_rey_b, f_rey_n, c_rey_n,campo)) es_jaque = true;
+					break;
+					case 't': if(es_jaque_torre('t', i, j, f_rey_b, c_rey_b, f_rey_n, c_rey_n, campo)) es_jaque = true;
+					break;
+					case 'T': if(es_jaque_torre('T', i, j, f_rey_b, c_rey_b, f_rey_n, c_rey_n, campo)) es_jaque = true;
+					break;
+					case 'c': if(es_jaque_caballo('c', i, j, f_rey_b, c_rey_b, f_rey_n, c_rey_n, campo)) es_jaque = true;
+					break;
+					case 'C': if(es_jaque_caballo('C', i, j, f_rey_b, c_rey_b, f_rey_n, c_rey_n, campo)) es_jaque = true;
+					break;
+					case 'w': if(es_jaque_reina('w', i, j, f_rey_b, c_rey_b, f_rey_n, c_rey_n, campo)) es_jaque = true;
+					break;
+					case 'W': if(es_jaque_reina('W', i, j, f_rey_b, c_rey_b, f_rey_n, c_rey_n, campo)) es_jaque = true;
+					break;
+				}
+				if (es_jaque) break;
+			}
+		}
+	}
+	// hago que aparezca
+	campo[fila][columna] = pieza;
+	return es_jaque;
+}
 

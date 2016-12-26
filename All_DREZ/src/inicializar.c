@@ -13,7 +13,6 @@ SAMPLE * instalar_sonidos(void) {
 }
 
 void instalar_complementos(void) {
-	set_window_close_button(1);
 	install_keyboard();
 	install_mouse();
 	install_timer();

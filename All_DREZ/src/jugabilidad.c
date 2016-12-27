@@ -154,15 +154,18 @@ void seleccionar_origen(int fila, int columna, bool turno_blanca, int *clic_blan
 	}
 }
 
-void re_dibujar(int fila_origen, int columna_origen, int fila_destino, int columna_destino, char campo[LADO][LADO]) {
-	draw_selector_cuadrado(fila_destino, columna_destino, campo);
+void re_dibujar(int fila_origen, int columna_origen, int fila_destino, int columna_destino, char campo[LADO][LADO], bool se_movio) {
 	draw_cuadrado(fila_origen, columna_origen, campo);
 	re_draw(campo);
+	if(se_movio) {
+		draw_selector_cuadrado(fila_origen, columna_origen, campo);
+		draw_selector_cuadrado(fila_destino, columna_destino, campo);
+	}
 }
 
 void seleccionar(char campo[LADO][LADO], SAMPLE * sonido_mover) {
 	int fila = 0, columna = 0, fila_origen = 0, fila_destino = 0, columna_origen = 0, columna_destino = 0,
-		clic_blanca = 0, clic_negra = 0;
+		clic_blanca = 0, clic_negra = 0, columna_anterior = 0, fila_anterior = 0;
 	bool turno_blanca = true, blanca_esta_en_jaque = false, negra_esta_en_jaque = false, condicion_blanca_seleccionar = false,
 		 condicion_negra_seleccionar = false, movio_blanca = false, movio_negra = false, jaque_mate = false;
 	char pieza = ' ';
@@ -204,7 +207,7 @@ void seleccionar(char campo[LADO][LADO], SAMPLE * sonido_mover) {
 					} else {
 						turno_blanca = true;
 					}
-					re_dibujar(fila_origen, columna_origen, fila_destino, columna_destino, campo);
+					re_dibujar(fila_origen, columna_origen, fila_destino, columna_destino, campo, movio_blanca);
 					if(movio_blanca && verificar_hacke(pieza, fila_destino, columna_destino, campo)) {
 						negra_esta_en_jaque = true;
 					}
@@ -240,7 +243,7 @@ void seleccionar(char campo[LADO][LADO], SAMPLE * sonido_mover) {
 					} else {
 						turno_blanca = false;
 					}
-					re_dibujar(fila_origen, columna_origen, fila_destino, columna_destino, campo);
+					re_dibujar(fila_origen, columna_origen, fila_destino, columna_destino, campo, movio_negra);
 					if(movio_negra && verificar_hacke(pieza, fila_destino, columna_destino, campo)) {
 						blanca_esta_en_jaque = true;
 					}
@@ -250,9 +253,9 @@ void seleccionar(char campo[LADO][LADO], SAMPLE * sonido_mover) {
 			jaque_mate = es_jaque_mate(f_rey_n, c_rey_n, campo);
 		}
 
-		if(mouse_b & 2) {
-			re_draw(campo);
-			if(turno_blanca) clic_blanca = 0; else clic_negra = 0;
+		if(mouse_b == 1) {
+			fila_anterior = fila_origen;
+			columna_anterior = columna_origen;
 		}
 	}
 

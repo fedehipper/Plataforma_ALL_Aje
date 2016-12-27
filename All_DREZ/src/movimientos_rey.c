@@ -93,22 +93,76 @@ bool es_jaque_rey(char pieza, int fila_destino, int columna_destino, int f_rey_b
 }
 
 void es_jaque_mate(int fila_origen, int columna_origen, char campo[LADO][LADO]) {
+	bool es_mate = false;
 
-	int fila_mas_uno = fila_origen + 1, fila_menos_uno = fila_origen - 1,
-		columna_mas_uno = columna_origen + 1, columna_menos_uno = columna_origen - 1;
-
-	if(fila_mas_uno != 8 && fila_menos_uno != 8 && columna_mas_uno != 8 && columna_menos_uno != 8) {
-		if (me_hacen_jaque(fila_origen, columna_origen, fila_origen - 1, columna_origen - 1, campo) &&
-			me_hacen_jaque(fila_origen, columna_origen, fila_origen - 1, columna_origen, campo) &&
-			me_hacen_jaque(fila_origen, columna_origen, fila_origen - 1, columna_origen + 1, campo) &&
-			me_hacen_jaque(fila_origen, columna_origen, fila_origen, columna_origen - 1, campo) &&
-			me_hacen_jaque(fila_origen, columna_origen, fila_origen, columna_origen + 1, campo) &&
-			me_hacen_jaque(fila_origen, columna_origen, fila_origen + 1, columna_origen - 1, campo) &&
-			me_hacen_jaque(fila_origen, columna_origen, fila_origen + 1, columna_origen, campo) &&
-			me_hacen_jaque(fila_origen, columna_origen, fila_origen + 1, columna_origen + 1, campo)) {
-			allegro_message("\n          JAQUE MATE          \n\n");
-		}
+	if(fila_origen + 1 != 8 && fila_origen - 1 != -1 && columna_origen - 1 != -1 && columna_origen + 1 != 8) {
+		es_mate = me_hacen_jaque(fila_origen, columna_origen, fila_origen - 1, columna_origen -1, campo) &&
+				  me_hacen_jaque(fila_origen, columna_origen, fila_origen - 1, columna_origen, campo) &&
+				  me_hacen_jaque(fila_origen, columna_origen, fila_origen - 1, columna_origen + 1, campo) &&
+				  me_hacen_jaque(fila_origen, columna_origen, fila_origen, columna_origen -1, campo) &&
+				  me_hacen_jaque(fila_origen, columna_origen, fila_origen, columna_origen + 1, campo) &&
+				  me_hacen_jaque(fila_origen, columna_origen, fila_origen + 1, columna_origen -1, campo) &&
+				  me_hacen_jaque(fila_origen, columna_origen, fila_origen + 1, columna_origen, campo) &&
+				  me_hacen_jaque(fila_origen, columna_origen, fila_origen - 1, columna_origen + 1, campo);
 	}
+
+	if(fila_origen + 1 == 8 && fila_origen - 1 != -1 && columna_origen - 1 != -1 && columna_origen + 1 != 8) {
+		es_mate = me_hacen_jaque(fila_origen, columna_origen, fila_origen - 1, columna_origen -1, campo) &&
+				  me_hacen_jaque(fila_origen, columna_origen, fila_origen - 1, columna_origen, campo) &&
+				  me_hacen_jaque(fila_origen, columna_origen, fila_origen - 1, columna_origen + 1, campo) &&
+				  me_hacen_jaque(fila_origen, columna_origen, fila_origen, columna_origen -1, campo) &&
+				  me_hacen_jaque(fila_origen, columna_origen, fila_origen, columna_origen + 1, campo);
+	}
+
+	if(fila_origen - 1 == -1 && fila_origen + 1 != 8 && columna_origen - 1 != -1 && columna_origen + 1 != 8) {
+		es_mate = me_hacen_jaque(fila_origen, columna_origen, fila_origen, columna_origen - 1, campo) &&
+				me_hacen_jaque(fila_origen, columna_origen, fila_origen, columna_origen + 1, campo) &&
+				me_hacen_jaque(fila_origen, columna_origen, fila_origen + 1, columna_origen -1, campo) &&
+				me_hacen_jaque(fila_origen, columna_origen, fila_origen + 1, columna_origen, campo) &&
+				me_hacen_jaque(fila_origen, columna_origen, fila_origen + 1, columna_origen + 1, campo);
+	}
+
+	if(columna_origen + 1 == 8 && columna_origen - 1 != -1 && fila_origen + 1 != 8 && fila_origen -1 != -1) {
+		es_mate = me_hacen_jaque(fila_origen, columna_origen, fila_origen - 1, columna_origen -1, campo) &&
+				me_hacen_jaque(fila_origen, columna_origen, fila_origen - 1, columna_origen, campo) &&
+				me_hacen_jaque(fila_origen, columna_origen, fila_origen, columna_origen -1, campo) &&
+				me_hacen_jaque(fila_origen, columna_origen, fila_origen + 1, columna_origen -1, campo) &&
+				me_hacen_jaque(fila_origen, columna_origen, fila_origen + 1, columna_origen, campo);
+	}
+
+	if(columna_origen - 1 == -1 && columna_origen + 1 != 8 && fila_origen + 1 != 8 && fila_origen -1 != -1) {
+		es_mate = me_hacen_jaque(fila_origen, columna_origen, fila_origen - 1, columna_origen, campo) &&
+				me_hacen_jaque(fila_origen, columna_origen, fila_origen - 1, columna_origen + 1, campo) &&
+				me_hacen_jaque(fila_origen, columna_origen, fila_origen, columna_origen + 1, campo) &&
+				me_hacen_jaque(fila_origen, columna_origen, fila_origen + 1, columna_origen, campo) &&
+				me_hacen_jaque(fila_origen, columna_origen, fila_origen + 1, columna_origen + 1, campo);
+	}
+
+	if(columna_origen - 1 == -1 && fila_origen - 1 == -1) {
+		es_mate = me_hacen_jaque(fila_origen, columna_origen, fila_origen, columna_origen + 1, campo) &&
+				me_hacen_jaque(fila_origen, columna_origen, fila_origen + 1, columna_origen, campo) &&
+				me_hacen_jaque(fila_origen, columna_origen, fila_origen + 1, columna_origen + 1, campo);
+	}
+
+	if(columna_origen + 1 == 8 && fila_origen - 1 == -1) {
+		es_mate = me_hacen_jaque(fila_origen, columna_origen, fila_origen, columna_origen - 1, campo) &&
+				me_hacen_jaque(fila_origen, columna_origen, fila_origen + 1, columna_origen, campo) &&
+				me_hacen_jaque(fila_origen, columna_origen, fila_origen + 1, columna_origen - 1, campo);
+	}
+
+	if(columna_origen + 1 == 8 && fila_origen + 1 == 8) {
+		es_mate = me_hacen_jaque(fila_origen, columna_origen, fila_origen, columna_origen - 1, campo) &&
+				me_hacen_jaque(fila_origen, columna_origen, fila_origen + 1, columna_origen, campo) &&
+				me_hacen_jaque(fila_origen, columna_origen, fila_origen + 1, columna_origen, campo);
+	}
+
+	if(columna_origen - 1 == -1 && fila_origen + 1 == 8) {
+		es_mate = me_hacen_jaque(fila_origen, columna_origen, fila_origen - 1, columna_origen, campo) &&
+				me_hacen_jaque(fila_origen, columna_origen, fila_origen - 1, columna_origen + 1, campo) &&
+				me_hacen_jaque(fila_origen, columna_origen, fila_origen, columna_origen + 1, campo);
+	}
+
+	if(es_mate) allegro_message("\n          JAQUE MATE          \n\n");
 }
 
 

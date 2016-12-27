@@ -8,6 +8,73 @@
 
 #define LADO 8
 
+	char *allegico_xpm[] = {
+	/* columns rows colors chars-per-pixel */
+	"48 48 4 1",
+	"  c magenta",
+	". c navy",
+	"X c #808000000000",
+	"o c None",
+	/* pixels */
+	"XXXXX......XXXXXX......XXXXXX......XXXXXX.......",
+	"XXXXX......XXXXXX......XXXXXX......XXXXXX.......",
+	"XXXXX......XXXXXX......XXXXXX......XXXXXX.......",
+	"XXXXX......XXXXXX......XXXXXX......XXXXXX.......",
+	"XXXXX......XXXXXX......XXXXXX......XXXXXX.......",
+	"XXXXX......XXXXXX......XXXXXX......XXXXXX.......",
+	".....XXXXXX......XXXXXX......XXXXXX......XXXXXXX",
+	".....XXXXXX......XXXXXX......XXXXXX......XXXXXXX",
+	".....XXXXXX......XXXXXX......XXXXXX......XXXXXXX",
+	".....XXXXXX......XXXXXX......XXXXXX......XXXXXXX",
+	".....XXXXXX......XXXXXX......XXXXXX......XXXXXXX",
+	".....XXXXXX......XXXXXX......XXXXXX......XXXXXXX",
+	"XXXXX......XXXXXX......XXXXXX......XXXXXX.......",
+	"XXXXX......XXXXXX......XXXXXX......XXXXXX.......",
+	"XXXXX......XXXXXX......XXXXXX......XXXXXX.......",
+	"XXXXX......XXXXXX......XXXXXX......XXXXXX.......",
+	"XXXXX......XXXXXX......XXXXXX......XXXXXX.......",
+	"XXXXX......XXXXXX......XXXXXX......XXXXXX.......",
+	".....XXXXXX......XXXXXX......XXXXXX......XXXXXXX",
+	".....XXXXXX......XXXXXX......XXXXXX......XXXXXXX",
+	".....XXXXXX......XXXXXX......XXXXXX......XXXXXXX",
+	".....XXXXXX......XXXXXX......XXXXXX......XXXXXXX",
+	".....XXXXXX......XXXXXX......XXXXXX......XXXXXXX",
+	".....XXXXXX......XXXXXX......XXXXXX......XXXXXXX",
+	"XXXXX......XXXXXX......XXXXXX......XXXXXX.......",
+	"XXXXX......XXXXXX......XXXXXX......XXXXXX.......",
+	"XXXXX......XXXXXX......XXXXXX......XXXXXX.......",
+	"XXXXX......XXXXXX......XXXXXX......XXXXXX.......",
+	"XXXXX......XXXXXX......XXXXXX......XXXXXX.......",
+	"XXXXX......XXXXXX......XXXXXX......XXXXXX.......",
+	".....XXXXXX......XXXXXX......XXXXXX......XXXXXXX",
+	".....XXXXXX......XXXXXX......XXXXXX......XXXXXXX",
+	".....XXXXXX......XXXXXX......XXXXXX......XXXXXXX",
+	".....XXXXXX......XXXXXX......XXXXXX......XXXXXXX",
+	".....XXXXXX......XXXXXX......XXXXXX......XXXXXXX",
+	".....XXXXXX......XXXXXX......XXXXXX......XXXXXXX",
+	"XXXXX......XXXXXX......XXXXXX......XXXXXX.......",
+	"XXXXX......XXXXXX......XXXXXX......XXXXXX.......",
+	"XXXXX......XXXXXX......XXXXXX......XXXXXX.......",
+	"XXXXX......XXXXXX......XXXXXX......XXXXXX.......",
+	"XXXXX......XXXXXX......XXXXXX......XXXXXX.......",
+	"XXXXX......XXXXXX......XXXXXX......XXXXXX.......",
+	".....XXXXXX......XXXXXX......XXXXXX......XXXXXXX",
+	".....XXXXXX......XXXXXX......XXXXXX......XXXXXXX",
+	".....XXXXXX......XXXXXX......XXXXXX......XXXXXXX",
+	".....XXXXXX......XXXXXX......XXXXXX......XXXXXXX",
+	".....XXXXXX......XXXXXX......XXXXXX......XXXXXXX",
+	".....XXXXXX......XXXXXX......XXXXXX......XXXXXXX"
+};
+
+#if defined ALLEGRO_WITH_XWINDOWS && defined ALLEGRO_USE_CONSTRUCTOR
+	extern void *allegro_icon;
+	CONSTRUCTOR_FUNCTION(void _set_allegro_icon(void));
+	void _set_allegro_icon(void) {
+		allegro_icon = allegico_xpm;
+	}
+#endif
+
+
 
 int main(void) {
 	allegro_init();

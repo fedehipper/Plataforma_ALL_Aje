@@ -238,7 +238,7 @@ bool es_jaque_alfil(char pieza, int fila, int columna, int f_rey_b, int c_rey_b,
 	return es_jaque;
 }
 
-bool si_se_mueve_es_jaque(int fila, int columna, char campo[LADO][LADO], int f_rey_b, int c_rey_b, int f_rey_n, int c_rey_n) {
+bool si_se_mueve_es_jaque_alfil(int fila, int columna, char campo[LADO][LADO], int f_rey_b, int c_rey_b, int f_rey_n, int c_rey_n) {
 	int i,j;
 	char pieza = campo[fila][columna];
 	bool es_jaque = false;

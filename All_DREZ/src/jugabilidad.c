@@ -87,9 +87,6 @@ bool mover_pieza_a_destino(int fila_origen, int fila_destino, int columna_origen
 			break;
 		}
 
-		// * pieza esta en jaque, pero si el movimiento que hago lo saca de jaque ,
-
-
 		if(mover && !*pieza_esta_en_hacke) {
 			aplicar_movimiento(fila_origen, columna_origen, fila_destino, columna_destino, campo);
 			play_sample(sonido_mover, 200, 150, 1000, 0);
@@ -217,12 +214,11 @@ void seleccionar(char campo[LADO][LADO], SAMPLE * sonido_mover) {
 
 				condicion_negra_seleccionar = hay_pieza(fila, columna, campo) && !es_pieza_blanca(fila, columna, campo);
 
-				if(condicion_negra_seleccionar) {
-					if(!negra_esta_en_jaque) {
-						seleccionar_origen(fila, columna, turno_blanca, &clic_blanca, &clic_negra, &fila_origen, &columna_origen, campo);
-					} else {
-						seleccionar_origen(fila, columna, turno_blanca, &clic_blanca, &clic_negra, &fila_origen, &columna_origen, campo);
-					}
+				if(condicion_negra_seleccionar && !negra_esta_en_jaque) {
+					seleccionar_origen(fila, columna, turno_blanca, &clic_blanca, &clic_negra, &fila_origen, &columna_origen, campo);
+				}
+				if(condicion_negra_seleccionar && negra_esta_en_jaque) {
+					seleccionar_origen(fila, columna, turno_blanca, &clic_blanca, &clic_negra, &fila_origen, &columna_origen, campo);
 				}
 
 				if(clic_negra == 1 && (fila != fila_origen || columna != columna_origen)) {

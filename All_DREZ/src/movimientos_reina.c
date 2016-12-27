@@ -358,12 +358,13 @@ bool es_jaque_reina(char pieza, int fila_destino, int columna_destino, int f_rey
 	return es_jaque;
 }
 
-bool si_se_mueve_es_jaque_reina(int fila, int columna, char campo[LADO][LADO], int f_rey_b, int c_rey_b, int f_rey_n, int c_rey_n) {
+bool si_se_mueve_es_jaque_reina(int fila_origen, int columna_origen, int fila_destino, int columna_destino, char campo[LADO][LADO], int f_rey_b, int c_rey_b, int f_rey_n, int c_rey_n) {
 	int i,j;
-	char pieza = campo[fila][columna];
+	char pieza = campo[fila_origen][columna_origen], pieza_destino = campo[fila_destino][columna_destino];
 	bool es_jaque = false;
-	// hago que desaparezca
-	campo[fila][columna] = ' ';
+	// hago que se mueva al destino y veo si sigue el jaque
+	campo[fila_origen][columna_origen] = ' ';
+	campo[fila_destino][columna_destino] = pieza;
 	for(i = 0 ; i < LADO ; i++) {
 		for(j = 0 ; j < LADO ; j++) {
 			if(!es_amigo_de_reina(pieza, campo[i][j])) {
@@ -394,7 +395,8 @@ bool si_se_mueve_es_jaque_reina(int fila, int columna, char campo[LADO][LADO], i
 		}
 	}
 	// hago que aparezca
-	campo[fila][columna] = pieza;
+	campo[fila_origen][columna_origen] = pieza;
+	campo[fila_destino][columna_destino] = pieza_destino;
 	return es_jaque;
 }
 

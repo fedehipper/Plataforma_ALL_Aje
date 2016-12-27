@@ -36,12 +36,12 @@ bool mover_pieza_a_destino(int fila_origen, int fila_destino, int columna_origen
 			}
 			break;
 			case 'T':if(movimiento_permitido_torre(fila_origen, columna_origen, fila_destino, columna_destino, campo)) {
-				mover = !si_se_mueve_es_jaque_torre(fila_origen, columna_origen, campo, f_rey_b, c_rey_b, f_rey_n, c_rey_n);
+				mover = !si_se_mueve_es_jaque_torre(fila_origen, columna_origen,  fila_destino, columna_destino, campo, f_rey_b, c_rey_b, f_rey_n, c_rey_n);
 				*pieza = 'T';
 			}
 			break;
 			case 't': if(movimiento_permitido_torre(fila_origen, columna_origen, fila_destino, columna_destino, campo)) {
-				mover = !si_se_mueve_es_jaque_torre(fila_origen, columna_origen, campo, f_rey_b, c_rey_b, f_rey_n, c_rey_n);
+				mover = !si_se_mueve_es_jaque_torre(fila_origen, columna_origen, fila_destino, columna_destino,  campo, f_rey_b, c_rey_b, f_rey_n, c_rey_n);
 				*pieza = 't';
 			}
 			break;
@@ -56,32 +56,32 @@ bool mover_pieza_a_destino(int fila_origen, int fila_destino, int columna_origen
 			}
 			break;
 			case 'a': if(movimiento_permitido_alfil(fila_origen, columna_origen, fila_destino, columna_destino, campo)) {
-				mover = !si_se_mueve_es_jaque_alfil(fila_origen, columna_origen, campo, f_rey_b, c_rey_b, f_rey_n, c_rey_n);
+				mover = !si_se_mueve_es_jaque_alfil(fila_origen, columna_origen, fila_destino, columna_destino, campo, f_rey_b, c_rey_b, f_rey_n, c_rey_n);
 				*pieza = 'a';
 			}
 			break;
 			case 'A': if(movimiento_permitido_alfil(fila_origen, columna_origen, fila_destino, columna_destino, campo)) {
-				mover = !si_se_mueve_es_jaque_alfil(fila_origen, columna_origen, campo, f_rey_b, c_rey_b, f_rey_n, c_rey_n);
+				mover = !si_se_mueve_es_jaque_alfil(fila_origen, columna_origen, fila_destino, columna_destino,  campo, f_rey_b, c_rey_b, f_rey_n, c_rey_n);
 				*pieza = 'A';
 			}
 			break;
 			case 'w': if(movimiento_permitido_reina(fila_origen, columna_origen, fila_destino, columna_destino, campo)) {
-				mover = !si_se_mueve_es_jaque_reina(fila_origen, columna_origen, campo, f_rey_b, c_rey_b, f_rey_n, c_rey_n);
+				mover = !si_se_mueve_es_jaque_reina(fila_origen, columna_origen, fila_destino, columna_destino,  campo, f_rey_b, c_rey_b, f_rey_n, c_rey_n);
 				*pieza = 'w';
 			}
 			break;
 			case 'W': if(movimiento_permitido_reina(fila_origen, columna_origen, fila_destino, columna_destino, campo)) {
-				mover = !si_se_mueve_es_jaque_reina(fila_origen, columna_origen, campo, f_rey_b, c_rey_b, f_rey_n, c_rey_n);
+				mover = !si_se_mueve_es_jaque_reina(fila_origen, columna_origen, fila_destino, columna_destino,  campo, f_rey_b, c_rey_b, f_rey_n, c_rey_n);
 				*pieza = 'W';
 			}
 			break;
 			case 'c': if(movimiento_permitido_caballo(fila_origen, columna_origen, fila_destino, columna_destino, campo)) {
-				mover = !si_se_mueve_es_jaque_caballo(fila_origen, columna_origen, campo, f_rey_b, c_rey_b, f_rey_n, c_rey_n);
+				mover = !si_se_mueve_es_jaque_caballo(fila_origen, columna_origen, fila_destino, columna_destino,  campo, f_rey_b, c_rey_b, f_rey_n, c_rey_n);
 				*pieza = 'c';
 			}
 			break;
 			case 'C': if(movimiento_permitido_caballo(fila_origen, columna_origen, fila_destino, columna_destino, campo)) {
-				mover = !si_se_mueve_es_jaque_caballo(fila_origen, columna_origen, campo, f_rey_b, c_rey_b, f_rey_n, c_rey_n);
+				mover = !si_se_mueve_es_jaque_caballo(fila_origen, columna_origen, fila_destino, columna_destino,  campo, f_rey_b, c_rey_b, f_rey_n, c_rey_n);
 				*pieza = 'C';
 			}
 			break;

@@ -92,7 +92,7 @@ bool es_jaque_rey(char pieza, int fila_destino, int columna_destino, int f_rey_b
 	return es_jaque;
 }
 
-void es_jaque_mate(int fila_origen, int columna_origen, char campo[LADO][LADO]) {
+bool es_jaque_mate(int fila_origen, int columna_origen, char campo[LADO][LADO]) {
 	bool es_mate = false;
 
 	if(fila_origen + 1 != 8 && fila_origen - 1 != -1 && columna_origen - 1 != -1 && columna_origen + 1 != 8) {
@@ -163,6 +163,7 @@ void es_jaque_mate(int fila_origen, int columna_origen, char campo[LADO][LADO]) 
 	}
 
 	if(es_mate) allegro_message("\n          JAQUE MATE          \n\n");
+	return es_mate;
 }
 
 

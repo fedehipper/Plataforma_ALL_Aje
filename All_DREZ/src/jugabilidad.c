@@ -124,7 +124,9 @@ bool verificar_hacke(char pieza, int fila_destino, int columna_destino, char cam
 					es_jaque_torre(pieza, fila_destino, columna_destino, f_rey_b, c_rey_b, f_rey_n, c_rey_n, campo) ||
 					es_jaque_caballo(pieza, fila_destino, columna_destino, f_rey_b, c_rey_b, f_rey_n, c_rey_n, campo) ||
 					es_jaque_reina(pieza, fila_destino, columna_destino, f_rey_b, c_rey_b, f_rey_n, c_rey_n, campo);
-	if(es_jaque) allegro_message("\n          JAQUE          \n\n");
+	if(es_jaque && !es_jaque_mate(f_rey_b, c_rey_b, campo) && !es_jaque_mate(f_rey_n, c_rey_n, campo)) {
+		allegro_message("\n          JAQUE          \n\n");
+	}
 	return es_jaque;
 }
 
@@ -162,7 +164,7 @@ void seleccionar(char campo[LADO][LADO], SAMPLE * sonido_mover) {
 	int fila = 0, columna = 0, fila_origen = 0, fila_destino = 0, columna_origen = 0, columna_destino = 0,
 		clic_blanca = 0, clic_negra = 0;
 	bool turno_blanca = true, blanca_esta_en_jaque = false, negra_esta_en_jaque = false, condicion_blanca_seleccionar = false,
-		 condicion_negra_seleccionar = false, movio_blanca = false, movio_negra = false;
+		 condicion_negra_seleccionar = false, movio_blanca = false, movio_negra = false, jaque_mate = false;
 	char pieza = ' ';
 
 	LOCK_FUNCTION(close_button_handler);
@@ -171,7 +173,7 @@ void seleccionar(char campo[LADO][LADO], SAMPLE * sonido_mover) {
 	while(!close_button_pressed) {
 		rest(75);
 
-		if(mouse_b & 1) {
+		if((mouse_b & 1) && !jaque_mate) {
 			fila = (mouse_y - 11) / 80;
 			columna = (mouse_x - 11) / 80;
 
@@ -208,7 +210,7 @@ void seleccionar(char campo[LADO][LADO], SAMPLE * sonido_mover) {
 					}
 					clic_blanca = 0;
 				}
-				es_jaque_mate(f_rey_b, c_rey_b, campo);
+				jaque_mate = es_jaque_mate(f_rey_b, c_rey_b, campo);
 
 			} else {
 
@@ -245,7 +247,7 @@ void seleccionar(char campo[LADO][LADO], SAMPLE * sonido_mover) {
 					clic_negra = 0;
 				}
 			}
-			es_jaque_mate(f_rey_n, c_rey_n, campo);
+			jaque_mate = es_jaque_mate(f_rey_n, c_rey_n, campo);
 		}
 
 		if(mouse_b & 2) {

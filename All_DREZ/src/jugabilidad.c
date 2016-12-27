@@ -165,7 +165,7 @@ void re_dibujar(int fila_origen, int columna_origen, int fila_destino, int colum
 
 void seleccionar(char campo[LADO][LADO], SAMPLE * sonido_mover) {
 	int fila = 0, columna = 0, fila_origen = 0, fila_destino = 0, columna_origen = 0, columna_destino = 0,
-		clic_blanca = 0, clic_negra = 0, columna_anterior = 0, fila_anterior = 0;
+		clic_blanca = 0, clic_negra = 0;
 	bool turno_blanca = true, blanca_esta_en_jaque = false, negra_esta_en_jaque = false, condicion_blanca_seleccionar = false,
 		 condicion_negra_seleccionar = false, movio_blanca = false, movio_negra = false, jaque_mate = false;
 	char pieza = ' ';
@@ -253,10 +253,6 @@ void seleccionar(char campo[LADO][LADO], SAMPLE * sonido_mover) {
 			jaque_mate = es_jaque_mate(f_rey_n, c_rey_n, campo);
 		}
 
-		if(mouse_b == 1) {
-			fila_anterior = fila_origen;
-			columna_anterior = columna_origen;
-		}
 	}
 
 }

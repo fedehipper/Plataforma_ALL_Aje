@@ -72,13 +72,6 @@ void draw_cuadros_tablero(void) {
 	}
 }
 
-// para que no quede seleccionado el cuadro de seleccion se dibuja nuevamente el rojo o negro
-void draw_cuadrado(int fila, int columna, char campo[LADO][LADO]) {
-	if(impar_relativo(fila, columna) && fila != 8 && columna != 8)
-		rectfill(screen, 11 + 80 * columna , 11 + 80 * fila, 89 + 80 * columna, 89 + 80 * fila, COLOR_CUADRADOS);
-	else
-		rectfill(screen, 11 + 80 * columna , 11 + 80 * fila, 89 + 80 * columna, 89 + 80 * fila, 16);
-}
 
 void tablero_en_blanco(char campo[LADO][LADO]) {
 	int i, j;
@@ -476,4 +469,44 @@ void draw_selector_cuadrado(int fila, int columna, char campo[LADO][LADO]) {
 		}
 	}
 }
+
+// para que no quede seleccionado el cuadro de seleccion se dibuja nuevamente el rojo o negro
+void draw_cuadrado(int fila, int columna, char campo[LADO][LADO]) {
+	if(par_relativo(fila, columna) && fila != 8 && columna != 8)
+		rectfill(screen, 11 + 80 * columna , 11 + 80 * fila, 89 + 80 * columna, 89 + 80 * fila, COLOR_CUADRADOS);
+	else
+		rectfill(screen, 11 + 80 * columna , 11 + 80 * fila, 89 + 80 * columna, 89 + 80 * fila, 16);
+	// si hay una pieza la dibuja
+	char pieza = campo[fila][columna];
+	switch(pieza) {
+		case 'p': draw_peon_blanco(campo);
+		break;
+		case 'P': draw_peon_negro(campo);
+		break;
+		case 't': draw_torre_blanca(campo);
+		break;
+		case 'T': draw_torre_negra(campo);
+		break;
+		case 'a': draw_alfil_blanco(campo);
+		break;
+		case 'A': draw_alfil_negro(campo);
+		break;
+		case 'c': draw_caballo_blanco(campo);
+		break;
+		case 'C': draw_caballo_negro(campo);
+		break;
+		case 'r': draw_rey_blanco(campo);
+		break;
+		case 'R': draw_rey_negro(campo);
+		break;
+		case 'w': draw_reina_blanca(campo);
+		break;
+		case 'W': draw_reina_negra(campo);
+		break;
+	}
+}
+
+
+
+
 

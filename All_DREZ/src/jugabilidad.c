@@ -204,10 +204,12 @@ void seleccionar(char campo[LADO][LADO], SAMPLE * sonido_mover) {
 							c_rey_b = columna_destino;
 						}
 						turno_blanca = false;
+						re_dibujar(fila_origen, columna_origen, fila_destino, columna_destino, campo, movio_blanca);
 					} else {
 						turno_blanca = true;
+						draw_cuadrado(fila_origen, columna_origen, campo);
+						draw_cuadrado(fila_destino, columna_destino, campo);
 					}
-					re_dibujar(fila_origen, columna_origen, fila_destino, columna_destino, campo, movio_blanca);
 					if(movio_blanca && verificar_hacke(pieza, fila_destino, columna_destino, campo)) {
 						negra_esta_en_jaque = true;
 					}
@@ -240,10 +242,13 @@ void seleccionar(char campo[LADO][LADO], SAMPLE * sonido_mover) {
 							c_rey_n = columna_destino;
 						}
 						turno_blanca = true;
+						re_dibujar(fila_origen, columna_origen, fila_destino, columna_destino, campo, movio_negra);
 					} else {
 						turno_blanca = false;
+						draw_cuadrado(fila_origen, columna_origen, campo);
+						draw_cuadrado(fila_destino, columna_destino, campo);
 					}
-					re_dibujar(fila_origen, columna_origen, fila_destino, columna_destino, campo, movio_negra);
+
 					if(movio_negra && verificar_hacke(pieza, fila_destino, columna_destino, campo)) {
 						blanca_esta_en_jaque = true;
 					}

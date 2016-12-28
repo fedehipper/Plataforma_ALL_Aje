@@ -161,8 +161,6 @@ bool es_jaque_mate(int fila_origen, int columna_origen, char campo[LADO][LADO]) 
 				me_hacen_jaque(fila_origen, columna_origen, fila_origen - 1, columna_origen + 1, campo) &&
 				me_hacen_jaque(fila_origen, columna_origen, fila_origen, columna_origen + 1, campo);
 	}
-
-	if(es_mate) allegro_message("\n          JAQUE MATE          \n\n");
 	return es_mate;
 }
 

@@ -163,6 +163,15 @@ void re_dibujar(int fila_origen, int columna_origen, int fila_destino, int colum
 	}
 }
 
+void verificar_jaque_mate(bool *jaque_mate, char campo[LADO][LADO]) {
+	if(!*jaque_mate) {
+		*jaque_mate = es_jaque_mate(f_rey_b, c_rey_b, campo) || es_jaque_mate(f_rey_n, c_rey_n, campo);
+		if(*jaque_mate) {
+			allegro_message("\n          JAQUE MATE          \n\n");
+		}
+	}
+}
+
 void seleccionar(char campo[LADO][LADO], SAMPLE * sonido_mover) {
 	int fila = 0, columna = 0, fila_origen = 0, fila_destino = 0, columna_origen = 0, columna_destino = 0,
 		clic_blanca = 0, clic_negra = 0;
@@ -176,7 +185,7 @@ void seleccionar(char campo[LADO][LADO], SAMPLE * sonido_mover) {
 	while(!close_button_pressed) {
 		rest(75);
 
-		if((mouse_b & 1) && !jaque_mate) {
+		if((mouse_b & 1)  && !jaque_mate) {
 			fila = (mouse_y - 11) / 80;
 			columna = (mouse_x - 11) / 80;
 
@@ -215,7 +224,6 @@ void seleccionar(char campo[LADO][LADO], SAMPLE * sonido_mover) {
 					}
 					clic_blanca = 0;
 				}
-				jaque_mate = es_jaque_mate(f_rey_b, c_rey_b, campo);
 
 			} else {
 
@@ -255,9 +263,8 @@ void seleccionar(char campo[LADO][LADO], SAMPLE * sonido_mover) {
 					clic_negra = 0;
 				}
 			}
-			jaque_mate = es_jaque_mate(f_rey_n, c_rey_n, campo);
 		}
-
+		verificar_jaque_mate(&jaque_mate, campo);
 	}
 
 }

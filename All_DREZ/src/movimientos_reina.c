@@ -246,6 +246,7 @@ bool es_a_la_derecha_de_reina(int fila_origen, int columna_origen, int fila_dest
 
 bool puede_ir_arriba_reina(int fila_origen, int fila_destino, int columna, char campo[LADO][LADO]) {
 	int i = 0, distancia = 0;
+	bool p = false;
 	if(color_reina(fila_origen, columna, campo) == 'w') {
 		distancia = fila_origen - fila_destino;
 		for(i = 1 ; i < distancia ; i++) {
@@ -261,7 +262,8 @@ bool puede_ir_arriba_reina(int fila_origen, int fila_destino, int columna, char 
 			}
 		}
 	}
-	return i == distancia && !es_amigo_de_reina(campo[fila_origen][columna], campo[fila_destino][columna]);
+	p = i == distancia && !es_amigo_de_reina(campo[fila_origen][columna], campo[fila_destino][columna]);
+	return p;
 }
 
 bool puede_ir_abajo_reina(int fila_origen, int fila_destino, int columna, char campo[LADO][LADO]) {

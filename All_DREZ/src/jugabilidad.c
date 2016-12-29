@@ -15,6 +15,71 @@
 int f_rey_b = 7, c_rey_b = 4, f_rey_n = 0, c_rey_n = 4;
 
 
+
+bool es_pieza_blanca(char pieza) {
+	return pieza == 'w' || pieza == 'a' || pieza == 'r' || pieza == 't' || pieza == 'c' || pieza == 'p';
+}
+
+
+bool verificar_jaque_intermedio_blancas(char pieza_movida, char campo[LADO][LADO]) {
+	int i,j;
+	bool es_jaque = false;
+	for(i = 0 ; i < LADO ; i++) {
+		for(j = 0 ; j < LADO ; j++) {
+			if(campo[i][j] != ' ' && es_pieza_blanca(campo[i][j])) {
+				switch(campo[i][j]) {
+				case 'a': es_jaque = movimiento_permitido_alfil(i, j, f_rey_n , c_rey_n, campo);
+						  if(es_jaque) allegro_message("\n          JAQUE          \n\n");
+						  break;
+				case 'p': es_jaque = movimiento_permitido_peon(i, j, f_rey_n, c_rey_n, campo);
+						  if(es_jaque) allegro_message("\n          JAQUE          \n\n");
+						  break;
+				case 'c': es_jaque = movimiento_permitido_caballo(i, j, f_rey_n, c_rey_n, campo);
+						  if(es_jaque) allegro_message("\n          JAQUE          \n\n");
+						  break;
+				case 'w': es_jaque = movimiento_permitido_reina(i, j, f_rey_n, c_rey_n, campo);
+						  if(es_jaque) allegro_message("\n          JAQUE          \n\n");
+						  break;
+				case 't': es_jaque = movimiento_permitido_torre(i, j, f_rey_n, c_rey_n, campo);
+						  if(es_jaque) allegro_message("\n          JAQUE          \n\n");
+						  break;
+				}
+			}
+		}
+	}
+	return es_jaque;
+}
+
+
+bool verificar_jaque_intermedio_negras(char pieza_movida, char campo[LADO][LADO]) {
+	int i,j;
+	bool es_jaque = false;
+	for(i = 0 ; i < LADO ; i++) {
+		for(j = 0 ; j < LADO ; j++) {
+			if(campo[i][j] != ' ' && !es_pieza_blanca(campo[i][j])) {
+				switch(campo[i][j]) {
+					case 'A': es_jaque = movimiento_permitido_alfil(i, j, f_rey_b , c_rey_b, campo);
+							  if(es_jaque) allegro_message("\n          JAQUE          \n\n");
+							  break;
+					case 'P': es_jaque = movimiento_permitido_peon(i, j, f_rey_b , c_rey_b, campo);
+							  if(es_jaque) allegro_message("\n          JAQUE          \n\n");
+							  break;
+					case 'C': es_jaque = movimiento_permitido_caballo(i, j, f_rey_b , c_rey_b, campo);
+							  if(es_jaque) allegro_message("\n          JAQUE          \n\n");
+							  break;
+					case 'W': es_jaque = movimiento_permitido_reina(i, j, f_rey_b , c_rey_b, campo);
+							  if(es_jaque) allegro_message("\n          JAQUE          \n\n");
+							  break;
+					case 'T': es_jaque = movimiento_permitido_torre(i, j, f_rey_b , c_rey_b, campo);
+							  if(es_jaque) allegro_message("\n          JAQUE          \n\n");
+							  break;
+				}
+			}
+		}
+	}
+	return es_jaque;
+}
+
 void aplicar_movimiento(int fila_origen, int columna_origen, int fila_destino, int columna_destino, char campo[LADO][LADO]) {
 	campo[fila_destino][columna_destino] = campo[fila_origen][columna_origen];
 	campo[fila_origen][columna_origen] = ' ';
@@ -112,21 +177,14 @@ bool hay_pieza(int fila, int columna, char campo[LADO][LADO]) {
 	return fila != 8 && columna != 8 && campo[fila][columna] != ' ';
 }
 
-bool es_pieza_blanca(int fila, int columna, char campo[LADO][LADO]) {
-	char pieza = campo[fila][columna];
-	return pieza == 'w' || pieza == 'a' || pieza == 'r' || pieza == 't' || pieza == 'c' || pieza == 'p';
-}
 
-bool verificar_hacke(char pieza, int fila_destino, int columna_destino, char campo[LADO][LADO]) {
+bool verificar_jaque(char pieza, int fila_destino, int columna_destino, char campo[LADO][LADO]) {
 	bool es_jaque = es_jaque_rey(pieza, fila_destino, columna_destino, f_rey_b, c_rey_b, f_rey_n, c_rey_n, campo) ||
 					es_jaque_alfil(pieza, fila_destino, columna_destino, f_rey_b, c_rey_b, f_rey_n, c_rey_n, campo) ||
 					es_jaque_peon(pieza, fila_destino, columna_destino, f_rey_b, c_rey_b, f_rey_n, c_rey_n, campo) ||
 					es_jaque_torre(pieza, fila_destino, columna_destino, f_rey_b, c_rey_b, f_rey_n, c_rey_n, campo) ||
 					es_jaque_caballo(pieza, fila_destino, columna_destino, f_rey_b, c_rey_b, f_rey_n, c_rey_n, campo) ||
 					es_jaque_reina(pieza, fila_destino, columna_destino, f_rey_b, c_rey_b, f_rey_n, c_rey_n, campo);
-	if(es_jaque && !es_jaque_mate(f_rey_b, c_rey_b, campo) && !es_jaque_mate(f_rey_n, c_rey_n, campo)) {
-		allegro_message("\n          JAQUE          \n\n");
-	}
 	return es_jaque;
 }
 
@@ -172,6 +230,7 @@ void verificar_jaque_mate(bool *jaque_mate, char campo[LADO][LADO]) {
 	}
 }
 
+
 void seleccionar(char campo[LADO][LADO], SAMPLE * sonido_mover) {
 	int fila = 0, columna = 0, fila_origen = 0, fila_destino = 0, columna_origen = 0, columna_destino = 0,
 		clic_blanca = 0, clic_negra = 0;
@@ -190,7 +249,7 @@ void seleccionar(char campo[LADO][LADO], SAMPLE * sonido_mover) {
 			columna = (mouse_x - 11) / 80;
 
 			if(turno_blanca) {
-				condicion_blanca_seleccionar = hay_pieza(fila, columna, campo) && es_pieza_blanca(fila, columna, campo);
+				condicion_blanca_seleccionar = hay_pieza(fila, columna, campo) && es_pieza_blanca(campo[fila][columna]);
 
 				if(condicion_blanca_seleccionar && !blanca_esta_en_jaque) {
 					seleccionar_origen(fila, columna, turno_blanca, &clic_blanca, &clic_negra, &fila_origen, &columna_origen, campo);
@@ -214,12 +273,13 @@ void seleccionar(char campo[LADO][LADO], SAMPLE * sonido_mover) {
 						}
 						turno_blanca = false;
 						re_dibujar(fila_origen, columna_origen, fila_destino, columna_destino, campo, movio_blanca);
+						verificar_jaque_intermedio_blancas(campo[fila_destino][columna_destino], campo);
 					} else {
 						turno_blanca = true;
 						draw_cuadrado(fila_origen, columna_origen, campo);
 						draw_cuadrado(fila_destino, columna_destino, campo);
 					}
-					if(movio_blanca && verificar_hacke(pieza, fila_destino, columna_destino, campo)) {
+					if(movio_blanca && verificar_jaque(pieza, fila_destino, columna_destino, campo)) {
 						negra_esta_en_jaque = true;
 					}
 					clic_blanca = 0;
@@ -227,7 +287,7 @@ void seleccionar(char campo[LADO][LADO], SAMPLE * sonido_mover) {
 
 			} else {
 
-				condicion_negra_seleccionar = hay_pieza(fila, columna, campo) && !es_pieza_blanca(fila, columna, campo);
+				condicion_negra_seleccionar = hay_pieza(fila, columna, campo) && !es_pieza_blanca(campo[fila][columna]);
 
 				if(condicion_negra_seleccionar && !negra_esta_en_jaque) {
 					seleccionar_origen(fila, columna, turno_blanca, &clic_blanca, &clic_negra, &fila_origen, &columna_origen, campo);
@@ -251,13 +311,14 @@ void seleccionar(char campo[LADO][LADO], SAMPLE * sonido_mover) {
 						}
 						turno_blanca = true;
 						re_dibujar(fila_origen, columna_origen, fila_destino, columna_destino, campo, movio_negra);
+						verificar_jaque_intermedio_negras(campo[fila_destino][columna_destino], campo);
 					} else {
 						turno_blanca = false;
 						draw_cuadrado(fila_origen, columna_origen, campo);
 						draw_cuadrado(fila_destino, columna_destino, campo);
 					}
 
-					if(movio_negra && verificar_hacke(pieza, fila_destino, columna_destino, campo)) {
+					if(movio_negra && verificar_jaque(pieza, fila_destino, columna_destino, campo)) {
 						blanca_esta_en_jaque = true;
 					}
 					clic_negra = 0;

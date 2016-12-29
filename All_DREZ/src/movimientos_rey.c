@@ -13,8 +13,6 @@ bool es_amigo_de_rey(char rey, char otro) {
 			otro == 'W' || otro == 'A' || otro == 'R' || otro == 'T' || otro == 'C' || otro == 'P';
 }
 
-
-
 // pasa que en fila_destino no hay nada, todavia no se movio
 bool me_hacen_jaque(int fila_origen, int columna_origen, int fila_destino, int columna_destino, char campo[LADO][LADO]) {
 	int i,j, f_rey_b, c_rey_b, f_rey_n, c_rey_n;

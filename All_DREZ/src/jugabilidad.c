@@ -20,8 +20,7 @@ bool es_pieza_blanca(char pieza) {
 	return pieza == 'w' || pieza == 'a' || pieza == 'r' || pieza == 't' || pieza == 'c' || pieza == 'p';
 }
 
-
-bool verificar_jaque_intermedio_blancas(char pieza_movida, char campo[LADO][LADO]) {
+bool verificar_jaque_intermedio_blancas(char campo[LADO][LADO]) {
 	int i,j;
 	bool es_jaque = false;
 	for(i = 0 ; i < LADO ; i++) {
@@ -51,7 +50,7 @@ bool verificar_jaque_intermedio_blancas(char pieza_movida, char campo[LADO][LADO
 }
 
 
-bool verificar_jaque_intermedio_negras(char pieza_movida, char campo[LADO][LADO]) {
+bool verificar_jaque_intermedio_negras(char campo[LADO][LADO]) {
 	int i,j;
 	bool es_jaque = false;
 	for(i = 0 ; i < LADO ; i++) {
@@ -155,10 +154,12 @@ bool mover_pieza_a_destino(int fila_origen, int fila_destino, int columna_origen
 		if(mover && !*pieza_esta_en_hacke) {
 			aplicar_movimiento(fila_origen, columna_origen, fila_destino, columna_destino, campo);
 			play_sample(sonido_mover, 200, 150, 1000, 0);
+			rest(100);
 		}
 		if(mover && *pieza_esta_en_hacke) {
 			aplicar_movimiento(fila_origen, columna_origen, fila_destino, columna_destino, campo);
 			play_sample(sonido_mover, 200, 150, 1000, 0);
+			rest(100);
 			*pieza_esta_en_hacke = false;
 		}
 	}
@@ -273,7 +274,7 @@ void seleccionar(char campo[LADO][LADO], SAMPLE * sonido_mover) {
 						}
 						turno_blanca = false;
 						re_dibujar(fila_origen, columna_origen, fila_destino, columna_destino, campo, movio_blanca);
-						verificar_jaque_intermedio_blancas(campo[fila_destino][columna_destino], campo);
+						verificar_jaque_intermedio_blancas(campo);
 					} else {
 						turno_blanca = true;
 						draw_cuadrado(fila_origen, columna_origen, campo);
@@ -311,7 +312,7 @@ void seleccionar(char campo[LADO][LADO], SAMPLE * sonido_mover) {
 						}
 						turno_blanca = true;
 						re_dibujar(fila_origen, columna_origen, fila_destino, columna_destino, campo, movio_negra);
-						verificar_jaque_intermedio_negras(campo[fila_destino][columna_destino], campo);
+						verificar_jaque_intermedio_negras(campo);
 					} else {
 						turno_blanca = false;
 						draw_cuadrado(fila_origen, columna_origen, campo);

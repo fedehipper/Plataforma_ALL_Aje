@@ -172,7 +172,7 @@ void re_dibujar(int fila_origen, int columna_origen, int fila_destino, int colum
 	}
 }
 
-bool verificar_jaque_mate_de_blancas(char campo[LADO][LADO]) {
+bool no_hay_movimiento_permitido_blancas(char campo[LADO][LADO]) {
 	int i, j, k, l;
 	bool aux = false;
 	bool se_puede_mover = false;
@@ -196,7 +196,7 @@ bool verificar_jaque_mate_de_blancas(char campo[LADO][LADO]) {
 }
 
 
-bool verificar_jaque_mate_de_negras(char campo[LADO][LADO]) {
+bool no_hay_movimiento_permitido_negras(char campo[LADO][LADO]) {
 	int i, j, k, l;
 	bool aux = false;
 	bool se_puede_mover = false;
@@ -330,13 +330,20 @@ void seleccionar(char campo[LADO][LADO], SAMPLE * sonido_mover) {
 			}
 
 		}
-		if(mensaje_jaque_mate && (verificar_jaque_mate_de_negras(campo) || verificar_jaque_mate_de_blancas(campo))) {
+		if(mensaje_jaque_mate && (no_hay_movimiento_permitido_negras(campo) || no_hay_movimiento_permitido_blancas(campo)) && (negra_esta_en_jaque || blanca_esta_en_jaque)) {
 			jaque_mate = true;
 			allegro_message("\n          JAQUE MATE          \n\n");
 			mensaje_jaque_mate = false;
 		}
 
-		if(mensaje_jaque && (verificar_jaque_intermedio_negras(campo) || verificar_jaque_intermedio_blancas(campo)) && !(verificar_jaque_mate_de_negras(campo) || verificar_jaque_mate_de_blancas(campo))) {
+		if(mensaje_jaque_mate && (no_hay_movimiento_permitido_negras(campo) || no_hay_movimiento_permitido_blancas(campo)) && !negra_esta_en_jaque && !blanca_esta_en_jaque) {
+			jaque_mate = true;
+			allegro_message("\n          EMPATE POR AHOGADO          \n\n");
+			mensaje_jaque_mate = false;
+		}
+
+
+		if(mensaje_jaque && (verificar_jaque_intermedio_negras(campo) || verificar_jaque_intermedio_blancas(campo)) && !(no_hay_movimiento_permitido_negras(campo) || no_hay_movimiento_permitido_blancas(campo))) {
 			allegro_message("\n          JAQUE          \n\n");
 			mensaje_jaque = false;
 		}

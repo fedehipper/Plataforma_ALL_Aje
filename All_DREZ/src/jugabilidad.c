@@ -224,6 +224,26 @@ void obtener_fila_y_columna(int * fila, int * columna) {
 	*columna = (mouse_x - 11) / 80;
 }
 
+void verificar_estado_de_rey(bool * mensaje_jaque_mate, bool * mensaje_jaque, bool * jaque_mate, bool negra_esta_en_jaque, bool blanca_esta_en_jaque, char campo[LADO][LADO]) {
+	if(mensaje_jaque_mate && (no_hay_movimiento_permitido_negras(campo) || no_hay_movimiento_permitido_blancas(campo)) && (negra_esta_en_jaque || blanca_esta_en_jaque)) {
+				*jaque_mate = true;
+				allegro_message("\n          JAQUE MATE          \n\n");
+				*mensaje_jaque_mate = false;
+			}
+
+			if(mensaje_jaque_mate && (no_hay_movimiento_permitido_negras(campo) || no_hay_movimiento_permitido_blancas(campo)) && !negra_esta_en_jaque && !blanca_esta_en_jaque) {
+				*jaque_mate = true;
+				allegro_message("\n          EMPATE POR AHOGADO          \n\n");
+				*mensaje_jaque_mate = false;
+			}
+
+
+			if(mensaje_jaque && (verificar_jaque_intermedio_negras(campo) || verificar_jaque_intermedio_blancas(campo)) && !(no_hay_movimiento_permitido_negras(campo) || no_hay_movimiento_permitido_blancas(campo))) {
+				allegro_message("\n          JAQUE          \n\n");
+				*mensaje_jaque = false;
+			}
+}
+
 void seleccionar(char campo[LADO][LADO], SAMPLE * sonido_mover) {
 	int fila = 0, columna = 0, fila_origen = 0, fila_destino = 0, columna_origen = 0, columna_destino = 0,
 		clic_blanca = 0, clic_negra = 0;
@@ -330,23 +350,9 @@ void seleccionar(char campo[LADO][LADO], SAMPLE * sonido_mover) {
 			}
 
 		}
-		if(mensaje_jaque_mate && (no_hay_movimiento_permitido_negras(campo) || no_hay_movimiento_permitido_blancas(campo)) && (negra_esta_en_jaque || blanca_esta_en_jaque)) {
-			jaque_mate = true;
-			allegro_message("\n          JAQUE MATE          \n\n");
-			mensaje_jaque_mate = false;
-		}
 
-		if(mensaje_jaque_mate && (no_hay_movimiento_permitido_negras(campo) || no_hay_movimiento_permitido_blancas(campo)) && !negra_esta_en_jaque && !blanca_esta_en_jaque) {
-			jaque_mate = true;
-			allegro_message("\n          EMPATE POR AHOGADO          \n\n");
-			mensaje_jaque_mate = false;
-		}
+		verificar_estado_de_rey(&mensaje_jaque_mate, &mensaje_jaque, &jaque_mate, negra_esta_en_jaque, blanca_esta_en_jaque, campo);
 
-
-		if(mensaje_jaque && (verificar_jaque_intermedio_negras(campo) || verificar_jaque_intermedio_blancas(campo)) && !(no_hay_movimiento_permitido_negras(campo) || no_hay_movimiento_permitido_blancas(campo))) {
-			allegro_message("\n          JAQUE          \n\n");
-			mensaje_jaque = false;
-		}
 	}
 
 }

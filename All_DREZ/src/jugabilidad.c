@@ -28,23 +28,20 @@ bool verificar_jaque_intermedio_blancas(char campo[LADO][LADO]) {
 			if(campo[i][j] != ' ' && es_pieza_blanca(campo[i][j])) {
 				switch(campo[i][j]) {
 				case 'a': es_jaque = movimiento_permitido_alfil(i, j, f_rey_n , c_rey_n, campo);
-						  if(es_jaque) allegro_message("\n          JAQUE          \n\n");
-						  break;
+				break;
 				case 'p': es_jaque = movimiento_permitido_peon(i, j, f_rey_n, c_rey_n, campo);
-						  if(es_jaque) allegro_message("\n          JAQUE          \n\n");
-						  break;
+				break;
 				case 'c': es_jaque = movimiento_permitido_caballo(i, j, f_rey_n, c_rey_n, campo);
-						  if(es_jaque) allegro_message("\n          JAQUE          \n\n");
-						  break;
+				break;
 				case 'w': es_jaque = movimiento_permitido_reina(i, j, f_rey_n, c_rey_n, campo);
-						  if(es_jaque) allegro_message("\n          JAQUE          \n\n");
-						  break;
+				break;
 				case 't': es_jaque = movimiento_permitido_torre(i, j, f_rey_n, c_rey_n, campo);
-						  if(es_jaque) allegro_message("\n          JAQUE          \n\n");
-						  break;
+				break;
 				}
 			}
+			if(es_jaque) break;
 		}
+		if(es_jaque) break;
 	}
 	return es_jaque;
 }
@@ -58,23 +55,20 @@ bool verificar_jaque_intermedio_negras(char campo[LADO][LADO]) {
 			if(campo[i][j] != ' ' && !es_pieza_blanca(campo[i][j])) {
 				switch(campo[i][j]) {
 					case 'A': es_jaque = movimiento_permitido_alfil(i, j, f_rey_b , c_rey_b, campo);
-							  if(es_jaque) allegro_message("\n          JAQUE          \n\n");
-							  break;
+					break;
 					case 'P': es_jaque = movimiento_permitido_peon(i, j, f_rey_b , c_rey_b, campo);
-							  if(es_jaque) allegro_message("\n          JAQUE          \n\n");
-							  break;
+					break;
 					case 'C': es_jaque = movimiento_permitido_caballo(i, j, f_rey_b , c_rey_b, campo);
-							  if(es_jaque) allegro_message("\n          JAQUE          \n\n");
-							  break;
+					break;
 					case 'W': es_jaque = movimiento_permitido_reina(i, j, f_rey_b , c_rey_b, campo);
-							  if(es_jaque) allegro_message("\n          JAQUE          \n\n");
-							  break;
+					break;
 					case 'T': es_jaque = movimiento_permitido_torre(i, j, f_rey_b , c_rey_b, campo);
-							  if(es_jaque) allegro_message("\n          JAQUE          \n\n");
-							  break;
+					break;
 				}
 			}
+			if(es_jaque) break;
 		}
+		if(es_jaque) break;
 	}
 	return es_jaque;
 }
@@ -251,7 +245,8 @@ void seleccionar(char campo[LADO][LADO], SAMPLE * sonido_mover) {
 	int fila = 0, columna = 0, fila_origen = 0, fila_destino = 0, columna_origen = 0, columna_destino = 0,
 		clic_blanca = 0, clic_negra = 0;
 	bool turno_blanca = true, blanca_esta_en_jaque = false, negra_esta_en_jaque = false, condicion_blanca_seleccionar = false,
-		 condicion_negra_seleccionar = false, movio_blanca = false, movio_negra = false, jaque_mate = false;
+		 condicion_negra_seleccionar = false, movio_blanca = false, movio_negra = false, jaque_mate = false,
+		 mensaje_jaque = true, mensaje_jaque_mate = true;
 	char pieza = ' ';
 
 	LOCK_FUNCTION(close_button_handler);
@@ -293,6 +288,8 @@ void seleccionar(char campo[LADO][LADO], SAMPLE * sonido_mover) {
 						turno_blanca = false;
 						re_dibujar(fila_origen, columna_origen, fila_destino, columna_destino, campo, movio_blanca);
 						verificar_jaque_intermedio_blancas(campo);
+						mensaje_jaque = true;
+						mensaje_jaque_mate = true;
 					} else {
 						turno_blanca = true;
 						draw_cuadrado(fila_origen, columna_origen, campo);
@@ -333,7 +330,8 @@ void seleccionar(char campo[LADO][LADO], SAMPLE * sonido_mover) {
 						}
 						turno_blanca = true;
 						re_dibujar(fila_origen, columna_origen, fila_destino, columna_destino, campo, movio_negra);
-						verificar_jaque_intermedio_negras(campo);
+						mensaje_jaque = true;
+						mensaje_jaque_mate = true;
 					} else {
 						turno_blanca = false;
 						draw_cuadrado(fila_origen, columna_origen, campo);
@@ -348,9 +346,15 @@ void seleccionar(char campo[LADO][LADO], SAMPLE * sonido_mover) {
 			}
 
 		}
-		if(verificar_jaque_mate_de_negras(campo) || verificar_jaque_mate_de_blancas(campo)) {
+		if(mensaje_jaque_mate && (verificar_jaque_mate_de_negras(campo) || verificar_jaque_mate_de_blancas(campo))) {
 			jaque_mate = true;
 			allegro_message("\n          JAQUE MATE          \n\n");
+			mensaje_jaque_mate = false;
+		}
+
+		if(mensaje_jaque && (verificar_jaque_intermedio_negras(campo) || verificar_jaque_intermedio_blancas(campo)) && !(verificar_jaque_mate_de_negras(campo) || verificar_jaque_mate_de_blancas(campo))) {
+			allegro_message("\n          JAQUE          \n\n");
+			mensaje_jaque = false;
 		}
 	}
 

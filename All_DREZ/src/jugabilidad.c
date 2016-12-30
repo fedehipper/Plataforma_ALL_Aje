@@ -83,55 +83,37 @@ bool mover_pieza_a_destino(int fila_origen, int fila_destino, int columna_origen
 
 	if(campo[fila_origen][columna_origen] != ' ' && columna_destino != 8 && fila_destino != 8 && columna_origen != 8 && fila_origen != 8) {
 		switch(campo[fila_origen][columna_origen]) {
-			case 'p': if(movimiento_permitido_peon(fila_origen, columna_origen, fila_destino, columna_destino, campo)) {
-				mover = !si_se_mueve_es_jaque_peon(fila_origen, columna_origen, fila_destino, columna_destino, campo, f_rey_b, c_rey_b, f_rey_n, c_rey_n);
-			}
-			break;
+			case 'p':
 			case 'P': if(movimiento_permitido_peon(fila_origen, columna_origen, fila_destino, columna_destino, campo)) {
 				mover = !si_se_mueve_es_jaque_peon(fila_origen, columna_origen, fila_destino, columna_destino, campo, f_rey_b, c_rey_b, f_rey_n, c_rey_n);
 			}
 			break;
-			case 'T':if(movimiento_permitido_torre(fila_origen, columna_origen, fila_destino, columna_destino, campo)) {
-				mover = !si_se_mueve_es_jaque_torre(fila_origen, columna_origen,  fila_destino, columna_destino, campo, f_rey_b, c_rey_b, f_rey_n, c_rey_n);
-			}
-			break;
+			case 'T':
 			case 't': if(movimiento_permitido_torre(fila_origen, columna_origen, fila_destino, columna_destino, campo)) {
 				mover = !si_se_mueve_es_jaque_torre(fila_origen, columna_origen, fila_destino, columna_destino,  campo, f_rey_b, c_rey_b, f_rey_n, c_rey_n);
 			}
 			break;
-			case 'r': if(movimiento_permitido_rey(fila_origen, columna_origen, fila_destino, columna_destino, campo)) mover = true;
-			break;
+			case 'r':
 			case 'R': if(movimiento_permitido_rey(fila_origen, columna_origen, fila_destino, columna_destino, campo)) mover = true;
 			break;
-			case 'a': if(movimiento_permitido_alfil(fila_origen, columna_origen, fila_destino, columna_destino, campo)) {
-				mover = !si_se_mueve_es_jaque_alfil(fila_origen, columna_origen, fila_destino, columna_destino, campo, f_rey_b, c_rey_b, f_rey_n, c_rey_n);
-			}
-			break;
+			case 'a':
 			case 'A': if(movimiento_permitido_alfil(fila_origen, columna_origen, fila_destino, columna_destino, campo)) {
 				mover = !si_se_mueve_es_jaque_alfil(fila_origen, columna_origen, fila_destino, columna_destino,  campo, f_rey_b, c_rey_b, f_rey_n, c_rey_n);
 			}
 			break;
-			case 'w': if(movimiento_permitido_reina(fila_origen, columna_origen, fila_destino, columna_destino, campo)) {
-				mover = !si_se_mueve_es_jaque_reina(fila_origen, columna_origen, fila_destino, columna_destino,  campo, f_rey_b, c_rey_b, f_rey_n, c_rey_n);
-			}
-			break;
+			case 'w':
 			case 'W': if(movimiento_permitido_reina(fila_origen, columna_origen, fila_destino, columna_destino, campo)) {
 				mover = !si_se_mueve_es_jaque_reina(fila_origen, columna_origen, fila_destino, columna_destino,  campo, f_rey_b, c_rey_b, f_rey_n, c_rey_n);
 			}
 			break;
-			case 'c': if(movimiento_permitido_caballo(fila_origen, columna_origen, fila_destino, columna_destino, campo)) {
-				mover = !si_se_mueve_es_jaque_caballo(fila_origen, columna_origen, fila_destino, columna_destino,  campo, f_rey_b, c_rey_b, f_rey_n, c_rey_n);
-			}
-			break;
+			case 'c':
 			case 'C': if(movimiento_permitido_caballo(fila_origen, columna_origen, fila_destino, columna_destino, campo)) {
 				mover = !si_se_mueve_es_jaque_caballo(fila_origen, columna_origen, fila_destino, columna_destino,  campo, f_rey_b, c_rey_b, f_rey_n, c_rey_n);
 			}
 			break;
 		}
 
-		if(mover && *pieza_esta_en_hacke) {
-			*pieza_esta_en_hacke = false;
-		}
+		if(mover && *pieza_esta_en_hacke) *pieza_esta_en_hacke = false;
 	}
 	return mover;
 }
@@ -203,7 +185,6 @@ bool verificar_jaque_mate_de_blancas(char campo[LADO][LADO]) {
 					for(l = 0 ; l < LADO ; l++) {
 						se_puede_mover = mover_pieza_a_destino(i, k, j, l, campo, &aux);
 						if(se_puede_mover) break;
-						// encuentro al menos un posible movimiento entonces, no es jaque porque se pudo mover la negra
 					}
 					if(se_puede_mover) break;
 				}
@@ -228,7 +209,6 @@ bool verificar_jaque_mate_de_negras(char campo[LADO][LADO]) {
 					for(l = 0 ; l < LADO ; l++) {
 						se_puede_mover = mover_pieza_a_destino(i, k, j, l, campo, &aux);
 						if(se_puede_mover) break;
-						// encuentro al menos un posible movimiento entonces, no es jaque porque se pudo mover la blanca
 					}
 					if(se_puede_mover) break;
 				}
@@ -239,6 +219,11 @@ bool verificar_jaque_mate_de_negras(char campo[LADO][LADO]) {
 		if(se_puede_mover) break;
 	}
 	return !se_puede_mover;
+}
+
+void obtener_fila_y_columna(int * fila, int * columna) {
+	*fila = (mouse_y - 11) / 80;
+	*columna = (mouse_x - 11) / 80;
 }
 
 void seleccionar(char campo[LADO][LADO], SAMPLE * sonido_mover) {
@@ -256,8 +241,7 @@ void seleccionar(char campo[LADO][LADO], SAMPLE * sonido_mover) {
 		rest(75);
 
 		if((mouse_b & 1)  && !jaque_mate) {
-			fila = (mouse_y - 11) / 80;
-			columna = (mouse_x - 11) / 80;
+			obtener_fila_y_columna(&fila, &columna);
 
 			if(turno_blanca) {
 				condicion_blanca_seleccionar = hay_pieza(fila, columna, campo) && es_pieza_blanca(campo[fila][columna]);
@@ -280,6 +264,7 @@ void seleccionar(char campo[LADO][LADO], SAMPLE * sonido_mover) {
 					movio_blanca = mover_pieza_a_destino(fila_origen, fila_destino, columna_origen, columna_destino, campo, &blanca_esta_en_jaque);
 					if(movio_blanca) {
 						play_sample(sonido_mover, 200, 150, 1000, 0);
+						rest(100);
 						aplicar_movimiento(fila_origen, columna_origen, fila_destino, columna_destino, campo);
 						if(campo[fila_destino][columna_destino] == 'r') {
 							f_rey_b = fila_destino;
@@ -323,6 +308,7 @@ void seleccionar(char campo[LADO][LADO], SAMPLE * sonido_mover) {
 					movio_negra = mover_pieza_a_destino(fila_origen, fila_destino, columna_origen, columna_destino, campo, &negra_esta_en_jaque);
 					if(movio_negra) {
 						play_sample(sonido_mover, 200, 150, 1000, 0);
+						rest(100);
 						aplicar_movimiento(fila_origen, columna_origen, fila_destino, columna_destino, campo);
 						if(campo[fila_destino][columna_destino] == 'R') {
 							f_rey_n = fila_destino;

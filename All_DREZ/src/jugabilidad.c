@@ -225,20 +225,20 @@ void obtener_fila_y_columna(int * fila, int * columna) {
 }
 
 void verificar_estado_de_rey(bool * mensaje_jaque_mate, bool * mensaje_jaque, bool * jaque_mate, bool negra_esta_en_jaque, bool blanca_esta_en_jaque, char campo[LADO][LADO]) {
-	if(mensaje_jaque_mate && (no_hay_movimiento_permitido_negras(campo) || no_hay_movimiento_permitido_blancas(campo)) && (negra_esta_en_jaque || blanca_esta_en_jaque)) {
+	if(*mensaje_jaque_mate && (no_hay_movimiento_permitido_negras(campo) || no_hay_movimiento_permitido_blancas(campo)) && (negra_esta_en_jaque || blanca_esta_en_jaque)) {
 				*jaque_mate = true;
 				allegro_message("\n          JAQUE MATE          \n\n");
 				*mensaje_jaque_mate = false;
 			}
 
-			if(mensaje_jaque_mate && (no_hay_movimiento_permitido_negras(campo) || no_hay_movimiento_permitido_blancas(campo)) && !negra_esta_en_jaque && !blanca_esta_en_jaque) {
+			if(*mensaje_jaque_mate && (no_hay_movimiento_permitido_negras(campo) || no_hay_movimiento_permitido_blancas(campo)) && !negra_esta_en_jaque && !blanca_esta_en_jaque) {
 				*jaque_mate = true;
 				allegro_message("\n          EMPATE POR AHOGADO          \n\n");
 				*mensaje_jaque_mate = false;
 			}
 
 
-			if(mensaje_jaque && (verificar_jaque_intermedio_negras(campo) || verificar_jaque_intermedio_blancas(campo)) && !(no_hay_movimiento_permitido_negras(campo) || no_hay_movimiento_permitido_blancas(campo))) {
+			if(*mensaje_jaque && (verificar_jaque_intermedio_negras(campo) || verificar_jaque_intermedio_blancas(campo)) && !(no_hay_movimiento_permitido_negras(campo) || no_hay_movimiento_permitido_blancas(campo))) {
 				allegro_message("\n          JAQUE          \n\n");
 				*mensaje_jaque = false;
 			}

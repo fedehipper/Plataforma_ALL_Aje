@@ -408,6 +408,7 @@ void dibujar_peon_en_movimiento(BITMAP * pantalla, char pieza, int x, int y, cha
 		draw_sprite(pantalla, b_peon_negro, x, y);
 		masked_blit(b_peon_negro, screen, 0, 0, x, y, 80, 80);
 	}
+	rest(50);
 }
 
 void dibujar_alfil_en_movimiento(BITMAP * pantalla, char pieza, int x, int y, char campo[LADO][LADO]) {
@@ -419,6 +420,7 @@ void dibujar_alfil_en_movimiento(BITMAP * pantalla, char pieza, int x, int y, ch
 		draw_sprite(pantalla, b_alfil_negro, x, y);
 		masked_blit(b_alfil_negro, screen, 0, 0, x, y, 80, 80);
 	}
+	rest(50);
 }
 
 void dibujar_caballo_en_movimiento(BITMAP * pantalla, char pieza, int x, int y, char campo[LADO][LADO]) {
@@ -430,6 +432,7 @@ void dibujar_caballo_en_movimiento(BITMAP * pantalla, char pieza, int x, int y, 
 		draw_sprite(pantalla, b_caballo_negro, x, y);
 		masked_blit(b_caballo_negro, screen, 0, 0, x, y, 80, 80);
 	}
+	rest(50);
 }
 
 void dibujar_torre_en_movimiento(BITMAP * pantalla, char pieza, int x, int y, char campo[LADO][LADO]) {
@@ -441,6 +444,7 @@ void dibujar_torre_en_movimiento(BITMAP * pantalla, char pieza, int x, int y, ch
 		draw_sprite(pantalla, b_torre_negra, x, y);
 		masked_blit(b_torre_negra, screen, 0, 0, x, y, 80, 80);
 	}
+	rest(50);
 }
 
 void dibujar_reina_en_movimiento(BITMAP * pantalla, char pieza, int x, int y, char campo[LADO][LADO]) {
@@ -452,6 +456,7 @@ void dibujar_reina_en_movimiento(BITMAP * pantalla, char pieza, int x, int y, ch
 		draw_sprite(pantalla, b_reina_negra, x, y);
 		masked_blit(b_reina_negra, screen, 0, 0, x, y, 80, 80);
 	}
+	rest(50);
 }
 
 void dibujar_rey_en_movimiento(BITMAP * pantalla, char pieza, int x, int y, char campo[LADO][LADO]) {
@@ -463,6 +468,7 @@ void dibujar_rey_en_movimiento(BITMAP * pantalla, char pieza, int x, int y, char
 		draw_sprite(pantalla, b_rey_negro, x, y);
 		masked_blit(b_rey_negro, screen, 0, 0, x, y, 80, 80);
 	}
+	rest(50);
 }
 
 

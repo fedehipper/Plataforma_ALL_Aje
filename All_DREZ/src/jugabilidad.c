@@ -357,7 +357,6 @@ void seleccionar(char campo[LADO][LADO], SAMPLE * sonido_mover, BITMAP * pantall
 					while((mouse_b & 1)) {
 						obtener_fila_y_columna(&fila_destino, &columna_destino);
 						seleccionar_pieza_negra_a_mover(pantalla,fila_origen, columna_origen, campo);
-						//rest(65);
 						re_draw(pantalla, campo);
 						clic_negra += 1;
 					}

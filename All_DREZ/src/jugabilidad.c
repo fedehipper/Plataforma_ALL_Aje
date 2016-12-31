@@ -315,7 +315,7 @@ void seleccionar(char campo[LADO][LADO], SAMPLE * sonido_mover, BITMAP * pantall
 	set_close_button_callback(close_button_handler);
 
 	while(!close_button_pressed) {
-		rest(200);
+		rest(100);
 		if(!jaque_mate && (mouse_b & 1)) {
 
 			obtener_fila_y_columna(&fila, &columna);
@@ -401,10 +401,9 @@ void seleccionar(char campo[LADO][LADO], SAMPLE * sonido_mover, BITMAP * pantall
 					clic_negra = 0;
 				}
 			}
-
 		}
+		blit(pantalla, screen, 0, 0, 0, 0, 670, 670);
 		verificar_estado_de_rey(&mensaje_jaque_mate, &mensaje_jaque, &jaque_mate, negra_en_jaque, blanca_en_jaque, campo);
 	}
-
 }
 

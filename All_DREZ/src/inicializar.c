@@ -22,9 +22,10 @@ void mostrar_display(void) {
 	set_gfx_mode(GFX_SAFE, 670, 670, 0, 0);
 }
 
-void desinstalar_complementos(void) {
+void desinstalar_complementos(SAMPLE * sonido) {
 	remove_mouse();
 	remove_timer();
+	destroy_sample(sonido);
 }
 
 void inicializar_tablero(BITMAP *pantalla, char campo[LADO][LADO]) {

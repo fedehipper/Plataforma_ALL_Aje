@@ -79,6 +79,7 @@ BITMAP *pantalla;
 int main(void) {
 	allegro_init();
 
+	set_color_depth(8);
 	pantalla = create_bitmap(670, 670);
 	clear_bitmap(pantalla);
 
@@ -97,9 +98,10 @@ int main(void) {
 	// h vs h
 	seleccionar(campo, sonido_mover, pantalla);
 
-	desinstalar_complementos();
-
+	desinstalar_complementos(sonido_mover);
+	liberar_memoria_piezas(pantalla);
 	allegro_exit();
+
 	return EXIT_SUCCESS;
 }
 END_OF_MAIN();

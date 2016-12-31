@@ -545,10 +545,24 @@ void draw_cuadrado(int fila, int columna, char campo[LADO][LADO], int color_clar
 				switcheo_draw_piezas(pantalla, campo[fila][columna], campo);
 			}
 		}
-		blit(pantalla, screen, 0, 0, 0, 0, 670, 670);
 	}
 }
 
+void liberar_memoria_piezas(BITMAP * pantalla) {
+	destroy_bitmap(b_alfil_blanco);
+	destroy_bitmap(b_alfil_negro);
+	destroy_bitmap(b_peon_blanco);
+	destroy_bitmap(b_peon_negro);
+	destroy_bitmap(b_reina_blanca);
+	destroy_bitmap(b_reina_negra);
+	destroy_bitmap(b_caballo_blanco);
+	destroy_bitmap(b_caballo_negro);
+	destroy_bitmap(b_rey_blanco);
+	destroy_bitmap(b_rey_negro);
+	destroy_bitmap(b_torre_blanca);
+	destroy_bitmap(b_torre_negra);
+	destroy_bitmap(pantalla);
+}
 
 
 

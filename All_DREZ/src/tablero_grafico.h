@@ -16,7 +16,6 @@ void dibujar_caballo_en_movimiento(BITMAP * pantalla,char pieza, int x, int y, c
 void dibujar_alfil_en_movimiento(BITMAP * pantalla,char pieza, int x, int y, char campo[LADO][LADO]);
 void dibujar_reina_en_movimiento(BITMAP * pantalla,char pieza, int x, int y, char campo[LADO][LADO]);
 void dibujar_rey_en_movimiento(BITMAP * pantalla,char pieza, int x, int y, char campo[LADO][LADO]);
-
-
+void liberar_memoria_piezas(BITMAP * pantalla);
 
 #endif /* TABLERO_GRAFICO_H_ */

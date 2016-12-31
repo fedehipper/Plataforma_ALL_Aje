@@ -305,7 +305,7 @@ void seleccionar_origen_negra(BITMAP *pantalla, bool condicion_negra_seleccionar
 
 void seleccionar(char campo[LADO][LADO], SAMPLE * sonido_mover, BITMAP * pantalla) {
 	int fila = 0, columna = 0, fila_origen = 0, fila_destino = -1, columna_origen = 0, columna_destino = -1,
-		clic_blanca = 0, clic_negra = 0;
+		clic_blanca = 0, clic_negra = 0, f_origen_anterior = 0, c_origen_anterior = 0, f_destino_anterior = 0, c_destino_anterior = 0;
 	bool turno_blanca = true, blanca_en_jaque = false, negra_en_jaque = false, condicion_blanca_seleccionar = false,
 		 condicion_negra_seleccionar = false, movio_blanca = false, movio_negra = false, jaque_mate = false,
 		 mensaje_jaque = true, mensaje_jaque_mate = true;
@@ -331,6 +331,10 @@ void seleccionar(char campo[LADO][LADO], SAMPLE * sonido_mover, BITMAP * pantall
 						seleccionar_pieza_blanca_a_mover(pantalla, pieza, campo);
 						re_draw(pantalla, campo);
 						clic_blanca += 1;
+						draw_cuadrado(fila_origen, columna_origen, campo, ROJO_SELECCION, NEGRO_SELECCION, true, pantalla);
+						draw_cuadrado(fila_destino, columna_destino, campo, ROJO_SELECCION, NEGRO_SELECCION, true, pantalla);
+						draw_cuadrado(f_origen_anterior, c_origen_anterior, campo, ROJO_SELECCION, NEGRO_SELECCION, true, pantalla);
+						draw_cuadrado(f_destino_anterior, c_destino_anterior, campo, ROJO_SELECCION, NEGRO_SELECCION, true, pantalla);
 					}
 					campo[fila_origen][columna_origen] = pieza;
 				}
@@ -349,6 +353,11 @@ void seleccionar(char campo[LADO][LADO], SAMPLE * sonido_mover, BITMAP * pantall
 						verificar_jaque_intermedio_blancas(campo);
 						mensaje_jaque = true;
 						mensaje_jaque_mate = true;
+						f_origen_anterior = fila_origen;
+						c_origen_anterior = columna_origen;
+						f_destino_anterior = fila_destino;
+						c_destino_anterior = columna_destino;
+
 					} else {
 						turno_blanca = true;
 						draw_cuadrado(fila_origen, columna_origen, campo, ROJO, NEGRO, true, pantalla);
@@ -372,6 +381,10 @@ void seleccionar(char campo[LADO][LADO], SAMPLE * sonido_mover, BITMAP * pantall
 						seleccionar_pieza_negra_a_mover(pantalla, pieza, campo);
 						re_draw(pantalla, campo);
 						clic_negra += 1;
+						draw_cuadrado(fila_origen, columna_origen, campo, ROJO_SELECCION, NEGRO_SELECCION, true, pantalla);
+						draw_cuadrado(fila_destino, columna_destino, campo, ROJO_SELECCION, NEGRO_SELECCION, true, pantalla);
+						draw_cuadrado(f_origen_anterior, c_origen_anterior, campo, ROJO_SELECCION, NEGRO_SELECCION, true, pantalla);
+						draw_cuadrado(f_destino_anterior, c_destino_anterior, campo, ROJO_SELECCION, NEGRO_SELECCION, true, pantalla);
 					}
 					campo[fila_origen][columna_origen] = pieza;
 				}
@@ -389,6 +402,10 @@ void seleccionar(char campo[LADO][LADO], SAMPLE * sonido_mover, BITMAP * pantall
 						re_dibujar(pantalla, fila_origen, columna_origen, fila_destino, columna_destino, campo, movio_negra);
 						mensaje_jaque = true;
 						mensaje_jaque_mate = true;
+						f_origen_anterior = fila_origen;
+						c_origen_anterior = columna_origen;
+						f_destino_anterior = fila_destino;
+						c_destino_anterior = columna_destino;
 					} else {
 						turno_blanca = false;
 						draw_cuadrado(fila_origen, columna_origen, campo, ROJO, NEGRO, true, pantalla);
@@ -402,6 +419,9 @@ void seleccionar(char campo[LADO][LADO], SAMPLE * sonido_mover, BITMAP * pantall
 				}
 			}
 		}
+		draw_cuadrado(f_origen_anterior, c_origen_anterior, campo, ROJO_SELECCION, NEGRO_SELECCION, true, pantalla);
+		draw_cuadrado(f_destino_anterior, c_destino_anterior, campo, ROJO_SELECCION, NEGRO_SELECCION, true, pantalla);
+
 		blit(pantalla, screen, 0, 0, 0, 0, 670, 670);
 		verificar_estado_de_rey(&mensaje_jaque_mate, &mensaje_jaque, &jaque_mate, negra_en_jaque, blanca_en_jaque, campo);
 	}

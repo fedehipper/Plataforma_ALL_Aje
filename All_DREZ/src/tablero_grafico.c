@@ -11,7 +11,7 @@
 #define COLOR_LINEAS 42
 #define COLOR_CUADRADOS 4
 #define CARACTER_A_ENTERO 97
-#define RETARDO_MOVIMIENTO_PIEZA 10
+#define RETARDO_MOVIMIENTO_PIEZA 15
 
 BITMAP *b_peon_blanco, *b_peon_negro, *b_torre_blanca, *b_torre_negra, *b_alfil_blanco, *b_alfil_negro, *b_caballo_blanco,
 	   *b_caballo_negro, *b_reina_blanca, *b_reina_negra, *b_rey_blanco, *b_rey_negro;
@@ -433,7 +433,7 @@ void dibujar_caballo_en_movimiento(BITMAP * pantalla, char pieza, int x, int y, 
 		draw_sprite(pantalla, b_caballo_negro, x, y);
 		masked_blit(b_caballo_negro, screen, 0, 0, x, y, 80, 80);
 	}
-	rest(50);
+	rest(RETARDO_MOVIMIENTO_PIEZA);
 }
 
 void dibujar_torre_en_movimiento(BITMAP * pantalla, char pieza, int x, int y, char campo[LADO][LADO]) {

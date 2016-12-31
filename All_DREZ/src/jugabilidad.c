@@ -243,8 +243,8 @@ void verificar_estado_de_rey(bool * mensaje_jaque_mate, bool * mensaje_jaque, bo
 	}
 }
 
-void seleccionar_pieza_negra_a_mover(BITMAP * pantalla, int fila_origen, int columna_origen, char campo[LADO][LADO]) {
-	switch(campo[fila_origen][columna_origen]) {
+void seleccionar_pieza_negra_a_mover(BITMAP * pantalla, char pieza, char campo[LADO][LADO]) {
+	switch(pieza) {
 		case 'P': dibujar_peon_en_movimiento(pantalla,'P', mouse_x - 40 , mouse_y - 40, campo);
 		break;
 		case 'A': dibujar_alfil_en_movimiento(pantalla,'A', mouse_x - 40 , mouse_y - 40, campo);
@@ -260,8 +260,8 @@ void seleccionar_pieza_negra_a_mover(BITMAP * pantalla, int fila_origen, int col
 	}
 }
 
-void seleccionar_pieza_blanca_a_mover(BITMAP * pantalla, int fila_origen, int columna_origen, char campo[LADO][LADO]) {
-	switch(campo[fila_origen][columna_origen]) {
+void seleccionar_pieza_blanca_a_mover(BITMAP * pantalla, char pieza, char campo[LADO][LADO]) {
+	switch(pieza) {
 		case 'p': dibujar_peon_en_movimiento(pantalla, 'p', mouse_x - 40 , mouse_y - 40, campo);
 		break;
 		case 'a': dibujar_alfil_en_movimiento(pantalla,'a', mouse_x - 40 , mouse_y - 40, campo);
@@ -277,12 +277,36 @@ void seleccionar_pieza_blanca_a_mover(BITMAP * pantalla, int fila_origen, int co
 	}
 }
 
+void seleccionar_origen_blanca(BITMAP *pantalla, bool condicion_blanca_seleccionar, bool blanca_en_jaque, int fila, int columna, char *pieza, bool turno_blanca, int *clic_blanca, int *clic_negra, int *fila_origen, int *columna_origen, char campo[LADO][LADO]) {
+	if(condicion_blanca_seleccionar && !blanca_en_jaque) {
+		seleccionar_origen(pantalla, fila, columna, turno_blanca, clic_blanca, clic_negra, fila_origen, columna_origen, campo);
+		*pieza = campo[*fila_origen][*columna_origen];
+		campo[*fila_origen][*columna_origen] = ' ';
+	}
+	if(condicion_blanca_seleccionar && blanca_en_jaque) {
+		seleccionar_origen(pantalla, fila, columna, turno_blanca, clic_blanca, clic_negra, fila_origen, columna_origen, campo);
+		*pieza = campo[*fila_origen][*columna_origen];
+		campo[*fila_origen][*columna_origen] = ' ';
+	}
+}
 
+void seleccionar_origen_negra(BITMAP *pantalla, bool condicion_negra_seleccionar, bool negra_en_jaque, int fila, int columna, char *pieza, bool turno_blanca, int *clic_blanca, int *clic_negra, int *fila_origen, int *columna_origen, char campo[LADO][LADO]) {
+	if(condicion_negra_seleccionar && !negra_en_jaque) {
+		seleccionar_origen(pantalla, fila, columna, turno_blanca, clic_blanca, clic_negra, fila_origen, columna_origen, campo);
+		*pieza = campo[*fila_origen][*columna_origen];
+		campo[*fila_origen][*columna_origen] = ' ';
+	}
+	if(condicion_negra_seleccionar && negra_en_jaque) {
+		seleccionar_origen(pantalla, fila, columna, turno_blanca, clic_blanca, clic_negra, fila_origen, columna_origen, campo);
+		*pieza = campo[*fila_origen][*columna_origen];
+		campo[*fila_origen][*columna_origen] = ' ';
+	}
+}
 
 void seleccionar(char campo[LADO][LADO], SAMPLE * sonido_mover, BITMAP * pantalla) {
 	int fila = 0, columna = 0, fila_origen = 0, fila_destino = 0, columna_origen = 0, columna_destino = 0,
 		clic_blanca = 0, clic_negra = 0;
-	bool turno_blanca = true, blanca_esta_en_jaque = false, negra_esta_en_jaque = false, condicion_blanca_seleccionar = false,
+	bool turno_blanca = true, blanca_en_jaque = false, negra_en_jaque = false, condicion_blanca_seleccionar = false,
 		 condicion_negra_seleccionar = false, movio_blanca = false, movio_negra = false, jaque_mate = false,
 		 mensaje_jaque = true, mensaje_jaque_mate = true;
 	char pieza = ' ';
@@ -291,7 +315,7 @@ void seleccionar(char campo[LADO][LADO], SAMPLE * sonido_mover, BITMAP * pantall
 	set_close_button_callback(close_button_handler);
 
 	while(!close_button_pressed) {
-
+		rest(200);
 		if(!jaque_mate && (mouse_b & 1)) {
 
 			obtener_fila_y_columna(&fila, &columna);
@@ -299,26 +323,20 @@ void seleccionar(char campo[LADO][LADO], SAMPLE * sonido_mover, BITMAP * pantall
 			if(turno_blanca) {
 				condicion_blanca_seleccionar = hay_pieza(fila, columna, campo) && es_pieza_blanca(campo[fila][columna]);
 
-				if(condicion_blanca_seleccionar && !blanca_esta_en_jaque) {
-					seleccionar_origen(pantalla, fila, columna, turno_blanca, &clic_blanca, &clic_negra, &fila_origen, &columna_origen, campo);
-				}
-				if(condicion_blanca_seleccionar && blanca_esta_en_jaque) {
-					seleccionar_origen(pantalla, fila, columna, turno_blanca, &clic_blanca, &clic_negra, &fila_origen, &columna_origen, campo);
-				}
+				seleccionar_origen_blanca(pantalla, condicion_blanca_seleccionar, blanca_en_jaque, fila, columna, &pieza, turno_blanca, &clic_blanca, &clic_negra, &fila_origen, &columna_origen, campo);
 
 				if(clic_blanca > 0) {
-					while((mouse_b & 1)) {
+					while(mouse_b & 1) {
 						obtener_fila_y_columna(&fila_destino, &columna_destino);
-						seleccionar_pieza_blanca_a_mover(pantalla, fila_origen, columna_origen, campo);
-						//rest(65);
+						seleccionar_pieza_blanca_a_mover(pantalla, pieza, campo);
 						re_draw(pantalla, campo);
 						clic_blanca += 1;
 					}
+					campo[fila_origen][columna_origen] = pieza;
 				}
 
 				if(fila_destino != 0 || columna_destino != 0) {
-					pieza = campo[fila_origen][columna_origen];
-					movio_blanca = mover_pieza_a_destino(fila_origen, fila_destino, columna_origen, columna_destino, campo, &blanca_esta_en_jaque);
+					movio_blanca = mover_pieza_a_destino(fila_origen, fila_destino, columna_origen, columna_destino, campo, &blanca_en_jaque);
 					if(movio_blanca) {
 						play_sample(sonido_mover, 200, 150, 1000, 0);
 						aplicar_movimiento(fila_origen, columna_origen, fila_destino, columna_destino, campo);
@@ -337,7 +355,7 @@ void seleccionar(char campo[LADO][LADO], SAMPLE * sonido_mover, BITMAP * pantall
 						draw_cuadrado(fila_destino, columna_destino, campo, ROJO, NEGRO,true, pantalla);
 					}
 					if(movio_blanca && verificar_jaque(pieza, fila_destino, columna_destino, campo)) {
-						negra_esta_en_jaque = true;
+						negra_en_jaque = true;
 					}
 					clic_blanca = 0;
 				}
@@ -346,25 +364,20 @@ void seleccionar(char campo[LADO][LADO], SAMPLE * sonido_mover, BITMAP * pantall
 
 				condicion_negra_seleccionar = hay_pieza(fila, columna, campo) && !es_pieza_blanca(campo[fila][columna]);
 
-				if(condicion_negra_seleccionar && !negra_esta_en_jaque) {
-					seleccionar_origen(pantalla, fila, columna, turno_blanca, &clic_blanca, &clic_negra, &fila_origen, &columna_origen, campo);
-				}
-				if(condicion_negra_seleccionar && negra_esta_en_jaque) {
-					seleccionar_origen(pantalla, fila, columna, turno_blanca, &clic_blanca, &clic_negra, &fila_origen, &columna_origen, campo);
-				}
+				seleccionar_origen_negra(pantalla, condicion_negra_seleccionar, negra_en_jaque, fila, columna, &pieza, turno_blanca, &clic_blanca, &clic_negra, &fila_origen, &columna_origen, campo);
 
 				if(clic_negra > 0) {
-					while((mouse_b & 1)) {
+					while(mouse_b & 1) {
 						obtener_fila_y_columna(&fila_destino, &columna_destino);
-						seleccionar_pieza_negra_a_mover(pantalla,fila_origen, columna_origen, campo);
+						seleccionar_pieza_negra_a_mover(pantalla, pieza, campo);
 						re_draw(pantalla, campo);
 						clic_negra += 1;
 					}
+					campo[fila_origen][columna_origen] = pieza;
 				}
 
 				if(fila_destino != 0 || columna_destino != 0) {
-					pieza = campo[fila_origen][columna_origen];
-					movio_negra = mover_pieza_a_destino(fila_origen, fila_destino, columna_origen, columna_destino, campo, &negra_esta_en_jaque);
+					movio_negra = mover_pieza_a_destino(fila_origen, fila_destino, columna_origen, columna_destino, campo, &negra_en_jaque);
 					if(movio_negra) {
 						play_sample(sonido_mover, 200, 150, 1000, 0);
 						aplicar_movimiento(fila_origen, columna_origen, fila_destino, columna_destino, campo);
@@ -383,14 +396,14 @@ void seleccionar(char campo[LADO][LADO], SAMPLE * sonido_mover, BITMAP * pantall
 					}
 
 					if(movio_negra && verificar_jaque(pieza, fila_destino, columna_destino, campo)) {
-						blanca_esta_en_jaque = true;
+						blanca_en_jaque = true;
 					}
 					clic_negra = 0;
 				}
 			}
 
 		}
-		verificar_estado_de_rey(&mensaje_jaque_mate, &mensaje_jaque, &jaque_mate, negra_esta_en_jaque, blanca_esta_en_jaque, campo);
+		verificar_estado_de_rey(&mensaje_jaque_mate, &mensaje_jaque, &jaque_mate, negra_en_jaque, blanca_en_jaque, campo);
 	}
 
 }

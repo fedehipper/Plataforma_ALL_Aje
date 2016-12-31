@@ -304,7 +304,7 @@ void seleccionar_origen_negra(BITMAP *pantalla, bool condicion_negra_seleccionar
 }
 
 void seleccionar(char campo[LADO][LADO], SAMPLE * sonido_mover, BITMAP * pantalla) {
-	int fila = 0, columna = 0, fila_origen = 0, fila_destino = 0, columna_origen = 0, columna_destino = 0,
+	int fila = 0, columna = 0, fila_origen = 0, fila_destino = -1, columna_origen = 0, columna_destino = -1,
 		clic_blanca = 0, clic_negra = 0;
 	bool turno_blanca = true, blanca_en_jaque = false, negra_en_jaque = false, condicion_blanca_seleccionar = false,
 		 condicion_negra_seleccionar = false, movio_blanca = false, movio_negra = false, jaque_mate = false,
@@ -335,7 +335,7 @@ void seleccionar(char campo[LADO][LADO], SAMPLE * sonido_mover, BITMAP * pantall
 					campo[fila_origen][columna_origen] = pieza;
 				}
 
-				if(fila_destino != 0 || columna_destino != 0) {
+				if(fila_destino != -1 && columna_destino != -1) {
 					movio_blanca = mover_pieza_a_destino(fila_origen, fila_destino, columna_origen, columna_destino, campo, &blanca_en_jaque);
 					if(movio_blanca) {
 						play_sample(sonido_mover, 200, 150, 1000, 0);
@@ -376,7 +376,7 @@ void seleccionar(char campo[LADO][LADO], SAMPLE * sonido_mover, BITMAP * pantall
 					campo[fila_origen][columna_origen] = pieza;
 				}
 
-				if(fila_destino != 0 || columna_destino != 0) {
+				if(fila_destino != -1 && columna_destino != -1) {
 					movio_negra = mover_pieza_a_destino(fila_origen, fila_destino, columna_origen, columna_destino, campo, &negra_en_jaque);
 					if(movio_negra) {
 						play_sample(sonido_mover, 200, 150, 1000, 0);

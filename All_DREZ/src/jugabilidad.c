@@ -315,7 +315,7 @@ void seleccionar(char campo[LADO][LADO], SAMPLE * sonido_mover, BITMAP * pantall
 	set_close_button_callback(close_button_handler);
 
 	while(!close_button_pressed) {
-		rest(100);
+		rest(75);
 		if(!jaque_mate && (mouse_b & 1)) {
 
 			obtener_fila_y_columna(&fila, &columna);

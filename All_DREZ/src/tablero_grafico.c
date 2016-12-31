@@ -11,6 +11,7 @@
 #define COLOR_LINEAS 42
 #define COLOR_CUADRADOS 4
 #define CARACTER_A_ENTERO 97
+#define RETARDO_MOVIMIENTO_PIEZA 10
 
 BITMAP *b_peon_blanco, *b_peon_negro, *b_torre_blanca, *b_torre_negra, *b_alfil_blanco, *b_alfil_negro, *b_caballo_blanco,
 	   *b_caballo_negro, *b_reina_blanca, *b_reina_negra, *b_rey_blanco, *b_rey_negro;
@@ -408,7 +409,7 @@ void dibujar_peon_en_movimiento(BITMAP * pantalla, char pieza, int x, int y, cha
 		draw_sprite(pantalla, b_peon_negro, x, y);
 		masked_blit(b_peon_negro, screen, 0, 0, x, y, 80, 80);
 	}
-	rest(50);
+	rest(RETARDO_MOVIMIENTO_PIEZA);
 }
 
 void dibujar_alfil_en_movimiento(BITMAP * pantalla, char pieza, int x, int y, char campo[LADO][LADO]) {
@@ -420,7 +421,7 @@ void dibujar_alfil_en_movimiento(BITMAP * pantalla, char pieza, int x, int y, ch
 		draw_sprite(pantalla, b_alfil_negro, x, y);
 		masked_blit(b_alfil_negro, screen, 0, 0, x, y, 80, 80);
 	}
-	rest(50);
+	rest(RETARDO_MOVIMIENTO_PIEZA);
 }
 
 void dibujar_caballo_en_movimiento(BITMAP * pantalla, char pieza, int x, int y, char campo[LADO][LADO]) {
@@ -444,7 +445,7 @@ void dibujar_torre_en_movimiento(BITMAP * pantalla, char pieza, int x, int y, ch
 		draw_sprite(pantalla, b_torre_negra, x, y);
 		masked_blit(b_torre_negra, screen, 0, 0, x, y, 80, 80);
 	}
-	rest(50);
+	rest(RETARDO_MOVIMIENTO_PIEZA);
 }
 
 void dibujar_reina_en_movimiento(BITMAP * pantalla, char pieza, int x, int y, char campo[LADO][LADO]) {
@@ -456,7 +457,7 @@ void dibujar_reina_en_movimiento(BITMAP * pantalla, char pieza, int x, int y, ch
 		draw_sprite(pantalla, b_reina_negra, x, y);
 		masked_blit(b_reina_negra, screen, 0, 0, x, y, 80, 80);
 	}
-	rest(50);
+	rest(RETARDO_MOVIMIENTO_PIEZA);
 }
 
 void dibujar_rey_en_movimiento(BITMAP * pantalla, char pieza, int x, int y, char campo[LADO][LADO]) {
@@ -468,7 +469,7 @@ void dibujar_rey_en_movimiento(BITMAP * pantalla, char pieza, int x, int y, char
 		draw_sprite(pantalla, b_rey_negro, x, y);
 		masked_blit(b_rey_negro, screen, 0, 0, x, y, 80, 80);
 	}
-	rest(50);
+	rest(RETARDO_MOVIMIENTO_PIEZA);
 }
 
 

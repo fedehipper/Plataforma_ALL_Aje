@@ -27,12 +27,12 @@ void desinstalar_complementos(void) {
 	remove_timer();
 }
 
-void inicializar_tablero(char campo[LADO][LADO]) {
+void inicializar_tablero(BITMAP *pantalla, char campo[LADO][LADO]) {
 	crear_piezas();
 
-	draw_tablero();
+	draw_tablero(pantalla);
 
 	tablero_en_blanco(campo);
 	inicializar_posicion_piezas(campo);
-	re_draw(campo);
+	re_draw(pantalla, campo);
 }

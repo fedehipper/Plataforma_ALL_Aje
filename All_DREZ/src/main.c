@@ -74,10 +74,13 @@
 	}
 #endif
 
-
+BITMAP *pantalla;
 
 int main(void) {
 	allegro_init();
+
+	pantalla = create_bitmap(670, 670);
+	clear_bitmap(pantalla);
 
 	instalar_complementos();
 
@@ -85,12 +88,14 @@ int main(void) {
 
 	char campo[LADO][LADO];
 
-	inicializar_tablero(campo);
+	inicializar_tablero(pantalla, campo);
+
+	blit(pantalla, screen, 0, 0, 0, 0, 670, 670);
 
 	SAMPLE * sonido_mover = instalar_sonidos();
 
 	// h vs h
-	seleccionar(campo, sonido_mover);
+	seleccionar(campo, sonido_mover, pantalla);
 
 	desinstalar_complementos();
 

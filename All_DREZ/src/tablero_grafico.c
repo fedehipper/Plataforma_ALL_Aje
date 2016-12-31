@@ -15,40 +15,40 @@
 BITMAP *b_peon_blanco, *b_peon_negro, *b_torre_blanca, *b_torre_negra, *b_alfil_blanco, *b_alfil_negro, *b_caballo_blanco,
 	   *b_caballo_negro, *b_reina_blanca, *b_reina_negra, *b_rey_blanco, *b_rey_negro;
 
-void draw_bordes(void) {
-	rect(screen, ESCALA, ESCALA, 650, 650, palette_color[COLOR_LINEAS]);
+void draw_bordes(BITMAP *pantalla) {
+	rect(pantalla, ESCALA, ESCALA, 650, 650, palette_color[COLOR_LINEAS]);
 }
 
-void draw_lineas_verticales(void) {
-	rect(screen, ESCALA, ESCALA, 90, 650, palette_color[COLOR_LINEAS]);
-	rect(screen, ESCALA, ESCALA, 170, 650, palette_color[COLOR_LINEAS]);
-	rect(screen, ESCALA, ESCALA, 250, 650, palette_color[COLOR_LINEAS]);
-	rect(screen, ESCALA, ESCALA, 330, 650, palette_color[COLOR_LINEAS]);
-	rect(screen, ESCALA, ESCALA, 410, 650, palette_color[COLOR_LINEAS]);
-	rect(screen, ESCALA, ESCALA, 490, 650, palette_color[COLOR_LINEAS]);
-	rect(screen, ESCALA, ESCALA, 570, 650, palette_color[COLOR_LINEAS]);
+void draw_lineas_verticales(BITMAP *pantalla) {
+	rect(pantalla, ESCALA, ESCALA, 90, 650, palette_color[COLOR_LINEAS]);
+	rect(pantalla, ESCALA, ESCALA, 170, 650, palette_color[COLOR_LINEAS]);
+	rect(pantalla, ESCALA, ESCALA, 250, 650, palette_color[COLOR_LINEAS]);
+	rect(pantalla, ESCALA, ESCALA, 330, 650, palette_color[COLOR_LINEAS]);
+	rect(pantalla, ESCALA, ESCALA, 410, 650, palette_color[COLOR_LINEAS]);
+	rect(pantalla, ESCALA, ESCALA, 490, 650, palette_color[COLOR_LINEAS]);
+	rect(pantalla, ESCALA, ESCALA, 570, 650, palette_color[COLOR_LINEAS]);
 }
 
-void draw_lineas_horizontales(void) {
-	rect(screen, ESCALA, ESCALA, 650, 90, palette_color[COLOR_LINEAS]);
-	rect(screen, ESCALA, ESCALA, 650, 170, palette_color[COLOR_LINEAS]);
-	rect(screen, ESCALA, ESCALA, 650, 250, palette_color[COLOR_LINEAS]);
-	rect(screen, ESCALA, ESCALA, 650, 330, palette_color[COLOR_LINEAS]);
-	rect(screen, ESCALA, ESCALA, 650, 410, palette_color[COLOR_LINEAS]);
-	rect(screen, ESCALA, ESCALA, 650, 490, palette_color[COLOR_LINEAS]);
-	rect(screen, ESCALA, ESCALA, 650, 570, palette_color[COLOR_LINEAS]);
+void draw_lineas_horizontales(BITMAP *pantalla) {
+	rect(pantalla, ESCALA, ESCALA, 650, 90, palette_color[COLOR_LINEAS]);
+	rect(pantalla, ESCALA, ESCALA, 650, 170, palette_color[COLOR_LINEAS]);
+	rect(pantalla, ESCALA, ESCALA, 650, 250, palette_color[COLOR_LINEAS]);
+	rect(pantalla, ESCALA, ESCALA, 650, 330, palette_color[COLOR_LINEAS]);
+	rect(pantalla, ESCALA, ESCALA, 650, 410, palette_color[COLOR_LINEAS]);
+	rect(pantalla, ESCALA, ESCALA, 650, 490, palette_color[COLOR_LINEAS]);
+	rect(pantalla, ESCALA, ESCALA, 650, 570, palette_color[COLOR_LINEAS]);
 }
 
-void draw_coordenadas(void) {
-	textprintf_justify_ex(screen, font, 45, 10, 655, 0, 15, 0, "A         B         C         D         E         F         G         H");
-	textprintf_justify_ex(screen, font, 655, 10, 45, 0, 15, 0, "1");
-	textprintf_justify_ex(screen, font, 655, 10, 125, 0, 15, 0, "2");
-	textprintf_justify_ex(screen, font, 655, 10, 205, 0, 15, 0, "3");
-	textprintf_justify_ex(screen, font, 655, 10, 285, 0, 15, 0, "4");
-	textprintf_justify_ex(screen, font, 655, 10, 365, 0, 15, 0, "5");
-	textprintf_justify_ex(screen, font, 655, 10, 445, 0, 15, 0, "6");
-	textprintf_justify_ex(screen, font, 655, 10, 525, 0, 15, 0, "7");
-	textprintf_justify_ex(screen, font, 655, 10, 605, 0, 15, 0, "8");
+void draw_coordenadas(BITMAP * pantalla) {
+	textprintf_justify_ex(pantalla, font, 45, 10, 655, 0, 15, 0, "A         B         C         D         E         F         G         H");
+	textprintf_justify_ex(pantalla, font, 655, 10, 45, 0, 15, 0, "1");
+	textprintf_justify_ex(pantalla, font, 655, 10, 125, 0, 15, 0, "2");
+	textprintf_justify_ex(pantalla, font, 655, 10, 205, 0, 15, 0, "3");
+	textprintf_justify_ex(pantalla, font, 655, 10, 285, 0, 15, 0, "4");
+	textprintf_justify_ex(pantalla, font, 655, 10, 365, 0, 15, 0, "5");
+	textprintf_justify_ex(pantalla, font, 655, 10, 445, 0, 15, 0, "6");
+	textprintf_justify_ex(pantalla, font, 655, 10, 525, 0, 15, 0, "7");
+	textprintf_justify_ex(pantalla, font, 655, 10, 605, 0, 15, 0, "8");
 }
 
 bool impar_relativo(int i, int j) {
@@ -60,14 +60,14 @@ bool par_relativo(int i, int j) {
 }
 
 // si es fila impar y posicion de columna impar entonces se pinta
-void draw_cuadros_tablero(void) {
+void draw_cuadros_tablero(BITMAP *pantalla) {
 	int aux_1 = 11, aux_2 = 89, i, j;
 	for(i = 0 ; i < 8 ; i++) {
 		for(j = 0 ; j < 8 ; j++) {
 			if(impar_relativo(i, j))
-				rectfill(screen, aux_1 + 80 * i, aux_1 + 80 * j, aux_2 + 80 * i, aux_2 + 80 * j, 16);
+				rectfill(pantalla, aux_1 + 80 * i, aux_1 + 80 * j, aux_2 + 80 * i, aux_2 + 80 * j, 16);
 			else
-				rectfill(screen, aux_1 + 80 * i, aux_1 + 80 * j, aux_2 + 80 * i, aux_2 + 80 * j, COLOR_CUADRADOS);
+				rectfill(pantalla, aux_1 + 80 * i, aux_1 + 80 * j, aux_2 + 80 * i, aux_2 + 80 * j, COLOR_CUADRADOS);
 		}
 	}
 }
@@ -130,12 +130,12 @@ void inicializar_posicion_piezas(char campo[LADO][LADO]) {
 	inicializar_posicion_reyes(campo);
 }
 
-void draw_tablero(void) {
-	draw_lineas_verticales();
-	draw_lineas_horizontales();
-	draw_coordenadas();
-	draw_cuadros_tablero();
-	draw_bordes();
+void draw_tablero(BITMAP *pantalla) {
+	draw_lineas_verticales(pantalla);
+	draw_lineas_horizontales(pantalla);
+	draw_coordenadas(pantalla);
+	draw_cuadros_tablero(pantalla);
+	draw_bordes(pantalla);
 }
 
 void crear_caballo_blanco(void) {
@@ -250,7 +250,7 @@ void crear_torre_negra(void) {
 void crear_peon_blanco(void) {
 	int i, j;
 	b_peon_blanco = create_bitmap(110, 110);
-	clear_bitmap(b_peon_blanco);
+	clear(b_peon_blanco);
 	for(i = 0 ; i < LADO_PIEZA ; i++) {
 		for(j = 0 ; j < LADO_PIEZA  ; j++)
 			putpixel(b_peon_blanco, i, j, palette_color[peon_blanco[j][i]]);
@@ -267,137 +267,204 @@ void crear_peon_negro(void) {
 	}
 }
 
-void draw_peon_negro(char campo[LADO][LADO]) {
+void draw_peon_negro(BITMAP *pantalla, char campo[LADO][LADO]) {
 	int i, j;
 	for(i = 0 ; i < LADO; i++) {
 		for(j = 0 ; j < LADO ; j++) {
 			if(campo[i][j] == 'P') {
-				draw_sprite(screen, b_peon_negro, j * 80 + 15, i * 80 + 15);
+				draw_sprite(pantalla, b_peon_negro, j * 80 + 15, i * 80 + 15);
 			}
 		}
 	}
 }
 
-void draw_peon_blanco(char campo[LADO][LADO]) {
+void draw_peon_blanco(BITMAP *pantalla, char campo[LADO][LADO]) {
 	int i, j;
 	for(i = 0 ; i < LADO ; i++) {
 		for(j = 0 ; j < LADO ; j++) {
 			if(campo[i][j] == 'p') {
-				draw_sprite(screen, b_peon_blanco, j * 80 + 15, i * 80 + 15);
+				draw_sprite(pantalla, b_peon_blanco, j * 80 + 15, i * 80 + 15);
 			}
 		}
 	}
 }
 
-void draw_torre_blanca(char campo[LADO][LADO]) {
+void draw_torre_blanca(BITMAP *pantalla, char campo[LADO][LADO]) {
 	int i, j;
 	for(i = 0 ; i < LADO ; i++) {
 		for(j = 0 ; j < LADO ; j++) {
 			if(campo[i][j] == 't') {
-				draw_sprite(screen, b_torre_blanca, j * 80 + 15, i * 80 + 15);
+				draw_sprite(pantalla, b_torre_blanca, j * 80 + 15, i * 80 + 15);
 			}
 		}
 	}
 }
 
-void draw_torre_negra(char campo[LADO][LADO]) {
+void draw_torre_negra(BITMAP *pantalla, char campo[LADO][LADO]) {
 	int i, j;
 	for(i = 0 ; i < LADO ; i++) {
 		for(j = 0 ; j < LADO ; j++) {
 			if(campo[i][j] == 'T') {
-				draw_sprite(screen, b_torre_negra, j * 80 + 15, i * 80 + 15);
+				draw_sprite(pantalla, b_torre_negra, j * 80 + 15, i * 80 + 15);
 			}
 		}
 	}
 }
 
-void draw_alfil_blanco(char campo[LADO][LADO]) {
+void draw_alfil_blanco(BITMAP *pantalla, char campo[LADO][LADO]) {
 	int i, j;
 	for(i = 0 ; i < LADO ; i++) {
 		for(j = 0 ; j < LADO ; j++) {
 			if(campo[i][j] == 'a') {
-				draw_sprite(screen, b_alfil_blanco, j * 80 + 15, i * 80 + 15);
+				draw_sprite(pantalla, b_alfil_blanco, j * 80 + 15, i * 80 + 15);
 			}
 		}
 	}
 }
 
-void draw_alfil_negro(char campo[LADO][LADO]) {
+void draw_alfil_negro(BITMAP *pantalla, char campo[LADO][LADO]) {
 	int i, j;
 	for(i = 0 ; i < LADO ; i++) {
 		for(j = 0 ; j < LADO ; j++) {
 			if(campo[i][j] == 'A') {
-				draw_sprite(screen, b_alfil_negro, j * 80 + 15, i * 80 + 15);
+				draw_sprite(pantalla, b_alfil_negro, j * 80 + 15, i * 80 + 15);
 			}
 		}
 	}
 }
 
-void draw_caballo_blanco(char campo[LADO][LADO]) {
+void draw_caballo_blanco(BITMAP *pantalla, char campo[LADO][LADO]) {
 	int i, j;
 	for(i = 0 ; i < LADO ; i++) {
 		for(j = 0 ; j < LADO ; j++) {
 			if(campo[i][j] == 'c') {
-				draw_sprite(screen, b_caballo_blanco, j * 80 + 15, i * 80 + 15);
+				draw_sprite(pantalla, b_caballo_blanco, j * 80 + 15, i * 80 + 15);
 			}
 		}
 	}
 }
 
-void draw_caballo_negro(char campo[LADO][LADO]) {
+void draw_caballo_negro(BITMAP *pantalla, char campo[LADO][LADO]) {
 	int i, j;
 	for(i = 0 ; i < LADO ; i++) {
 		for(j = 0 ; j < LADO ; j++) {
 			if(campo[i][j] == 'C') {
-				draw_sprite(screen, b_caballo_negro, j * 80 + 15, i * 80 + 15);
+				draw_sprite(pantalla, b_caballo_negro, j * 80 + 15, i * 80 + 15);
 			}
 		}
 	}
 }
 
-void draw_reina_blanca(char campo[LADO][LADO]) {
+void draw_reina_blanca(BITMAP *pantalla, char campo[LADO][LADO]) {
 	int i, j;
 	for(i = 0 ; i < LADO; i++) {
 		for(j = 0 ; j < LADO ; j++) {
 			if(campo[i][j] == 'w') {
-				draw_sprite(screen, b_reina_blanca, j * 80 + 15, i * 80 + 15);
+				draw_sprite(pantalla, b_reina_blanca, j * 80 + 15, i * 80 + 15);
 			}
 		}
 	}
 }
 
-void draw_rey_blanco(char campo[LADO][LADO]) {
+void draw_rey_blanco(BITMAP *pantalla, char campo[LADO][LADO]) {
 	int i, j;
 	for(i = 0 ; i < LADO; i++) {
 		for(j = 0 ; j < LADO ; j++) {
 			if(campo[i][j] == 'r') {
-				draw_sprite(screen, b_rey_blanco, j * 80 + 15, i * 80 + 15);
+				draw_sprite(pantalla, b_rey_blanco, j * 80 + 15, i * 80 + 15);
 			}
 		}
 	}
 }
 
-void draw_rey_negro(char campo[LADO][LADO]) {
+void draw_rey_negro(BITMAP *pantalla, char campo[LADO][LADO]) {
 	int i, j;
 	for(i = 0 ; i < LADO; i++) {
 		for(j = 0 ; j < LADO ; j++) {
 			if(campo[i][j] == 'R') {
-				draw_sprite(screen, b_rey_negro, j * 80 + 15, i * 80 + 15);
+				draw_sprite(pantalla, b_rey_negro, j * 80 + 15, i * 80 + 15);
 			}
 		}
 	}
 }
 
-void draw_reina_negra(char campo[LADO][LADO]) {
+void draw_reina_negra(BITMAP *pantalla, char campo[LADO][LADO]) {
 	int i, j;
 	for(i = 0 ; i < LADO; i++) {
 		for(j = 0 ; j < LADO ; j++) {
 			if(campo[i][j] == 'W') {
-				draw_sprite(screen, b_reina_negra, j * 80 + 15, i * 80 + 15);
+				draw_sprite(pantalla, b_reina_negra, j * 80 + 15, i * 80 + 15);
 			}
 		}
 	}
 }
+
+void dibujar_peon_en_movimiento(BITMAP * pantalla, char pieza, int x, int y, char campo[LADO][LADO]) {
+	blit(pantalla, screen, 0, 0, 0, 0, 670, 670);
+	if(pieza == 'p') {
+		draw_sprite(pantalla, b_peon_blanco, x, y);
+		blit(b_peon_blanco, screen, 0, 0, x, y, 80, 80);
+	} else {
+		draw_sprite(pantalla, b_peon_negro, x, y);
+		blit(b_peon_negro, screen, 0, 0, x, y, 80, 80);
+	}
+}
+
+void dibujar_alfil_en_movimiento(BITMAP * pantalla, char pieza, int x, int y, char campo[LADO][LADO]) {
+	blit(pantalla, screen, 0, 0, 0, 0, 670, 670);
+	if(pieza == 'a') {
+		draw_sprite(pantalla, b_alfil_blanco, x, y);
+		blit(b_alfil_blanco, screen, 0, 0, x, y, 80, 80);
+	} else {
+		draw_sprite(pantalla, b_alfil_negro, x, y);
+		blit(b_alfil_negro, screen, 0, 0, x, y, 80, 80);
+	}
+}
+
+void dibujar_caballo_en_movimiento(BITMAP * pantalla, char pieza, int x, int y, char campo[LADO][LADO]) {
+	blit(pantalla, screen, 0, 0, 0, 0, 670, 670);
+	if(pieza == 'c') {
+		draw_sprite(pantalla, b_caballo_blanco, x, y);
+		blit(b_caballo_blanco, screen, 0, 0, x, y, 80, 80);
+	} else {
+		draw_sprite(pantalla, b_caballo_negro, x, y);
+		blit(b_caballo_negro, screen, 0, 0, x, y, 80, 80);
+	}
+}
+
+void dibujar_torre_en_movimiento(BITMAP * pantalla, char pieza, int x, int y, char campo[LADO][LADO]) {
+	blit(pantalla, screen, 0, 0, 0, 0, 670, 670);
+	if(pieza == 't') {
+		draw_sprite(pantalla, b_torre_blanca, x, y);
+		blit(b_torre_blanca, screen, 0, 0, x, y, 80, 80);
+	} else {
+		draw_sprite(pantalla, b_torre_negra, x, y);
+		blit(b_torre_negra, screen, 0, 0, x, y, 80, 80);
+	}
+}
+
+void dibujar_reina_en_movimiento(BITMAP * pantalla, char pieza, int x, int y, char campo[LADO][LADO]) {
+	blit(pantalla, screen, 0, 0, 0, 0, 670, 670);
+	if(pieza == 'w') {
+		draw_sprite(pantalla, b_reina_blanca, x, y);
+		blit(b_reina_blanca, screen, 0, 0, x, y, 80, 80);
+	} else {
+		draw_sprite(pantalla, b_reina_negra, x, y);
+		blit(b_reina_negra, screen, 0, 0, x, y, 80, 80);
+	}
+}
+
+void dibujar_rey_en_movimiento(BITMAP * pantalla, char pieza, int x, int y, char campo[LADO][LADO]) {
+	blit(pantalla, screen, 0, 0, 0, 0, 670, 670);
+	if(pieza == 'r') {
+		draw_sprite(pantalla, b_rey_blanco, x, y);
+		blit(b_rey_blanco, screen, 0, 0, x, y, 80, 80);
+	} else {
+		draw_sprite(pantalla, b_rey_negro, x, y);
+		blit(b_rey_negro, screen, 0, 0, x, y, 80, 80);
+	}
+}
+
 
 void crear_piezas(void) {
 	crear_torre_blanca();
@@ -414,62 +481,65 @@ void crear_piezas(void) {
 	crear_rey_negro();
 }
 
-void re_draw(char campo[LADO][LADO]) {
-	clear_bitmap(screen);
-	draw_tablero();
-	draw_peon_blanco(campo);
-	draw_peon_negro(campo);
-	draw_torre_blanca(campo);
-	draw_torre_negra(campo);
-	draw_alfil_blanco(campo);
-	draw_alfil_negro(campo);
-	draw_caballo_blanco(campo);
-	draw_caballo_negro(campo);
-	draw_reina_blanca(campo);
-	draw_reina_negra(campo);
-	draw_rey_blanco(campo);
-	draw_rey_negro(campo);
+void re_draw(BITMAP * pantalla, char campo[LADO][LADO]) {
+	clear_bitmap(pantalla);
+	draw_tablero(pantalla);
+	draw_peon_blanco(pantalla, campo);
+	draw_peon_negro(pantalla, campo);
+	draw_torre_blanca(pantalla, campo);
+	draw_torre_negra(pantalla, campo);
+	draw_alfil_blanco(pantalla, campo);
+	draw_alfil_negro(pantalla, campo);
+	draw_caballo_blanco(pantalla, campo);
+	draw_caballo_negro(pantalla, campo);
+	draw_reina_blanca(pantalla ,campo);
+	draw_reina_negra(pantalla, campo);
+	draw_rey_blanco(pantalla, campo);
+	draw_rey_negro(pantalla, campo);
 }
 
-void switcheo_draw_piezas(char pieza, char campo[LADO][LADO]) {
+void switcheo_draw_piezas(BITMAP * pantalla, char pieza, char campo[LADO][LADO]) {
 	switch(pieza) {
-		case 'p': draw_peon_blanco(campo);
+		case 'p': draw_peon_blanco(pantalla, campo);
 		break;
-		case 'P': draw_peon_negro(campo);
+		case 'P': draw_peon_negro(pantalla, campo);
 		break;
-		case 't': draw_torre_blanca(campo);
+		case 't': draw_torre_blanca(pantalla, campo);
 		break;
-		case 'T': draw_torre_negra(campo);
+		case 'T': draw_torre_negra(pantalla, campo);
 		break;
-		case 'a': draw_alfil_blanco(campo);
+		case 'a': draw_alfil_blanco(pantalla, campo);
 		break;
-		case 'A': draw_alfil_negro(campo);
+		case 'A': draw_alfil_negro(pantalla, campo);
 		break;
-		case 'c': draw_caballo_blanco(campo);
+		case 'c': draw_caballo_blanco(pantalla, campo);
 		break;
-		case 'C': draw_caballo_negro(campo);
+		case 'C': draw_caballo_negro(pantalla, campo);
 		break;
-		case 'r': draw_rey_blanco(campo);
+		case 'r': draw_rey_blanco(pantalla, campo);
 		break;
-		case 'R': draw_rey_negro(campo);
+		case 'R': draw_rey_negro(pantalla, campo);
 		break;
-		case 'w': draw_reina_blanca(campo);
+		case 'w': draw_reina_blanca(pantalla, campo);
 		break;
-		case 'W': draw_reina_negra(campo);
+		case 'W': draw_reina_negra(pantalla, campo);
 		break;
 	}
 }
 
 // para que no quede seleccionado el cuadro de seleccion se dibuja nuevamente el rojo(4) o negro(16), rojo_claro(12), negro_claro(24)
-void draw_cuadrado(int fila, int columna, char campo[LADO][LADO], int color_claro, int color_oscuro) {
+void draw_cuadrado(int fila, int columna, char campo[LADO][LADO], int color_claro, int color_oscuro, bool dibujar_pieza, BITMAP * pantalla) {
 	if(fila != 8 && columna != 8) {
 		if(par_relativo(fila, columna))
-			rectfill(screen, 11 + 80 * columna , 11 + 80 * fila, 89 + 80 * columna, 89 + 80 * fila, color_claro);
+			rectfill(pantalla, 11 + 80 * columna , 11 + 80 * fila, 89 + 80 * columna, 89 + 80 * fila, color_claro);
 		else
-			rectfill(screen, 11 + 80 * columna , 11 + 80 * fila, 89 + 80 * columna, 89 + 80 * fila, color_oscuro);
-		if(campo[fila][columna] != ' ') {
-			switcheo_draw_piezas(campo[fila][columna], campo);
+			rectfill(pantalla, 11 + 80 * columna , 11 + 80 * fila, 89 + 80 * columna, 89 + 80 * fila, color_oscuro);
+		if(dibujar_pieza) {
+			if(campo[fila][columna] != ' ') {
+				switcheo_draw_piezas(pantalla, campo[fila][columna], campo);
+			}
 		}
+		blit(pantalla, screen, 0, 0, 0, 0, 670, 670);
 	}
 }
 

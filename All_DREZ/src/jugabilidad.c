@@ -333,8 +333,10 @@ void seleccionar(char campo[LADO][LADO], SAMPLE * sonido_mover, BITMAP * pantall
 						clic_blanca += 1;
 						draw_cuadrado(fila_origen, columna_origen, campo, ROJO_SELECCION, NEGRO_SELECCION, true, pantalla);
 						draw_cuadrado(fila_destino, columna_destino, campo, ROJO_SELECCION, NEGRO_SELECCION, true, pantalla);
-						draw_cuadrado(f_origen_anterior, c_origen_anterior, campo, ROJO_SELECCION, NEGRO_SELECCION, true, pantalla);
-						draw_cuadrado(f_destino_anterior, c_destino_anterior, campo, ROJO_SELECCION, NEGRO_SELECCION, true, pantalla);
+						if(f_origen_anterior != -1 && c_origen_anterior != -1 && f_destino_anterior != -1 && c_destino_anterior != -1) {
+							draw_cuadrado(f_origen_anterior, c_origen_anterior, campo, ROJO_SELECCION, NEGRO_SELECCION, true, pantalla);
+							draw_cuadrado(f_destino_anterior, c_destino_anterior, campo, ROJO_SELECCION, NEGRO_SELECCION, true, pantalla);
+						}
 					}
 					campo[fila_origen][columna_origen] = pieza;
 				}
@@ -383,8 +385,10 @@ void seleccionar(char campo[LADO][LADO], SAMPLE * sonido_mover, BITMAP * pantall
 						clic_negra += 1;
 						draw_cuadrado(fila_origen, columna_origen, campo, ROJO_SELECCION, NEGRO_SELECCION, true, pantalla);
 						draw_cuadrado(fila_destino, columna_destino, campo, ROJO_SELECCION, NEGRO_SELECCION, true, pantalla);
-						draw_cuadrado(f_origen_anterior, c_origen_anterior, campo, ROJO_SELECCION, NEGRO_SELECCION, true, pantalla);
-						draw_cuadrado(f_destino_anterior, c_destino_anterior, campo, ROJO_SELECCION, NEGRO_SELECCION, true, pantalla);
+						if(f_origen_anterior != -1 && c_origen_anterior != -1 && f_destino_anterior != -1 && c_destino_anterior != -1) {
+							draw_cuadrado(f_origen_anterior, c_origen_anterior, campo, ROJO_SELECCION, NEGRO_SELECCION, true, pantalla);
+							draw_cuadrado(f_destino_anterior, c_destino_anterior, campo, ROJO_SELECCION, NEGRO_SELECCION, true, pantalla);
+						}
 					}
 					campo[fila_origen][columna_origen] = pieza;
 				}

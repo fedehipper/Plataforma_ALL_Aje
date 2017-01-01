@@ -133,13 +133,6 @@ void aplicar_movimiento(int fila_origen, int columna_origen, int fila_destino, i
 	if(fila_origen == 7 && columna_origen == 7) {
 		movi_torre_der_b = true;
 	}
-	if(fila_origen == 7 && columna_origen == 4) {
-		movi_rey_b = true;
-	}
-	if(fila_origen == 0 && columna_origen == 4) {
-		movi_rey_n = true;
-	}
-
 
 	char pieza_origen = campo[fila_origen][columna_origen];
 
@@ -163,6 +156,14 @@ void aplicar_movimiento(int fila_origen, int columna_origen, int fila_destino, i
 		movi_rey_n = true;
 		movi_torre_izq_n = true;
 	}
+
+	if(fila_origen == 7 && columna_origen == 4) {
+		movi_rey_b = true;
+	}
+	if(fila_origen == 0 && columna_origen == 4) {
+		movi_rey_n = true;
+	}
+
 	campo[fila_destino][columna_destino] = pieza_origen;
 	campo[fila_origen][columna_origen] = ' ';
 }

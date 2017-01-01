@@ -333,6 +333,8 @@ void seleccionar(char campo[LADO][LADO], SAMPLE * sonido_mover, BITMAP * pantall
 	set_close_button_callback(close_button_handler);
 
 	while(!close_button_pressed) {
+		blit(pantalla, screen, 0, 0, 0, 0, 670, 670);
+		verificar_estado_de_rey(&mensaje_jaque_mate, &mensaje_jaque, &jaque_mate, negra_en_jaque, blanca_en_jaque, campo);
 		rest(75);
 		if(!jaque_mate && (mouse_b & 1)) {
 
@@ -421,8 +423,6 @@ void seleccionar(char campo[LADO][LADO], SAMPLE * sonido_mover, BITMAP * pantall
 			}
 		}
 		dibujar_cuadros_seleccion_anterior(pantalla, campo);
-		blit(pantalla, screen, 0, 0, 0, 0, 670, 670);
-		verificar_estado_de_rey(&mensaje_jaque_mate, &mensaje_jaque, &jaque_mate, negra_en_jaque, blanca_en_jaque, campo);
 	}
 }
 

@@ -91,8 +91,6 @@ int main(void) {
 
 	inicializar_tablero(pantalla, campo);
 
-	blit(pantalla, screen, 0, 0, 0, 0, 670, 670);
-
 	SAMPLE * sonido_mover = instalar_sonidos();
 
 	// h vs h

@@ -11,7 +11,7 @@
 #define COLOR_LINEAS 42
 #define COLOR_CUADRADOS 4
 #define CARACTER_A_ENTERO 97
-#define RETARDO_MOVIMIENTO_PIEZA 15
+#define RETARDO_MOVIMIENTO_PIEZA 10
 
 BITMAP *b_peon_blanco, *b_peon_negro, *b_torre_blanca, *b_torre_negra, *b_alfil_blanco, *b_alfil_negro, *b_caballo_blanco,
 	   *b_caballo_negro, *b_reina_blanca, *b_reina_negra, *b_rey_blanco, *b_rey_negro;

@@ -41,6 +41,8 @@ bool verificar_jaque_intermedio_blancas(char campo[LADO][LADO]) {
 				break;
 				case 't': es_jaque = movimiento_permitido_torre(i, j, f_rey_n, c_rey_n, campo);
 				break;
+				case 'r': es_jaque = movimiento_permitido_rey(i, j, f_rey_n, c_rey_n, campo);
+				break;
 				}
 			}
 			if(es_jaque) break;
@@ -67,6 +69,8 @@ bool verificar_jaque_intermedio_negras(char campo[LADO][LADO]) {
 					case 'W': es_jaque = movimiento_permitido_reina(i, j, f_rey_b , c_rey_b, campo);
 					break;
 					case 'T': es_jaque = movimiento_permitido_torre(i, j, f_rey_b , c_rey_b, campo);
+					break;
+					case 'R': es_jaque = movimiento_permitido_rey(i, j, f_rey_b, c_rey_b, campo);
 					break;
 				}
 			}
@@ -335,7 +339,7 @@ void seleccionar(char campo[LADO][LADO], SAMPLE * sonido_mover, BITMAP * pantall
 	while(!close_button_pressed) {
 		blit(pantalla, screen, 0, 0, 0, 0, 670, 670);
 		verificar_estado_de_rey(&mensaje_jaque_mate, &mensaje_jaque, &jaque_mate, negra_en_jaque, blanca_en_jaque, campo);
-		rest(75);
+		rest(50);
 		if(!jaque_mate && (mouse_b & 1)) {
 
 			obtener_fila_y_columna(&fila, &columna);

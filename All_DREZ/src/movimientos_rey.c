@@ -13,6 +13,17 @@ bool es_amigo_de_rey(char rey, char otro) {
 			otro == 'W' || otro == 'A' || otro == 'R' || otro == 'T' || otro == 'C' || otro == 'P';
 }
 
+bool movimiento_rey_sin_reestricciones(int fila_origen, int columna_origen, int fila_destino, int columna_destino) {
+	return ((fila_origen + 1 == fila_destino && columna_origen == columna_destino) ||
+			    (fila_origen - 1 == fila_destino && columna_origen == columna_destino) ||
+			    (columna_origen + 1 == columna_destino && fila_origen == fila_destino) ||
+			    (columna_origen - 1 == columna_destino && fila_origen == fila_destino) ||
+			    (fila_origen + 1 == fila_destino && columna_origen + 1 == columna_destino) ||
+			    (fila_origen - 1 == fila_destino && columna_origen - 1 == columna_destino) ||
+			    (fila_origen + 1 == fila_destino && columna_origen - 1 == columna_destino) ||
+			    (fila_origen - 1 == fila_destino && columna_origen + 1 == columna_destino));
+}
+
 // pasa que en fila_destino no hay nada, todavia no se movio
 bool me_hacen_jaque(int fila_origen, int columna_origen, int fila_destino, int columna_destino, char campo[LADO][LADO]) {
 	int i,j, f_rey_b, c_rey_b, f_rey_n, c_rey_n;
@@ -55,6 +66,9 @@ bool me_hacen_jaque(int fila_origen, int columna_origen, int fila_destino, int c
 					break;
 					case 'W': if(es_jaque_reina('W', i, j, f_rey_b, c_rey_b, f_rey_n, c_rey_n, campo)) es_jaque = true;
 					break;
+					case 'R':
+					case 'r': if(movimiento_rey_sin_reestricciones(i, j, fila_destino, columna_destino)) es_jaque = true;
+					break;
 				}
 				if (es_jaque) break;
 			}
@@ -66,14 +80,7 @@ bool me_hacen_jaque(int fila_origen, int columna_origen, int fila_destino, int c
 }
 
 bool movimiento_permitido_rey(int fila_origen, int columna_origen, int fila_destino, int columna_destino, char campo[LADO][LADO]) {
-	return ((fila_origen + 1 == fila_destino && columna_origen == columna_destino) ||
-		    (fila_origen - 1 == fila_destino && columna_origen == columna_destino) ||
-		    (columna_origen + 1 == columna_destino && fila_origen == fila_destino) ||
-		    (columna_origen - 1 == columna_destino && fila_origen == fila_destino) ||
-		    (fila_origen + 1 == fila_destino && columna_origen + 1 == columna_destino) ||
-		    (fila_origen - 1 == fila_destino && columna_origen - 1 == columna_destino) ||
-		    (fila_origen + 1 == fila_destino && columna_origen - 1 == columna_destino) ||
-		    (fila_origen - 1 == fila_destino && columna_origen + 1 == columna_destino)) &&
+	return movimiento_rey_sin_reestricciones(fila_origen, columna_origen, fila_destino, columna_destino) &&
 			!me_hacen_jaque(fila_origen, columna_origen, fila_destino, columna_destino, campo) &&
 			!es_amigo_de_rey(campo[fila_origen][columna_origen], campo[fila_destino][columna_destino]);
 }

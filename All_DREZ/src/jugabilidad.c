@@ -19,6 +19,9 @@
 int f_rey_b = 7, c_rey_b = 4, f_rey_n = 0, c_rey_n = 4,
 	f_origen_anterior = -1, c_origen_anterior = -1, f_destino_anterior = -1, c_destino_anterior = -1;
 
+bool movi_torre_izq_b = false, movi_torre_der_b = false, movi_torre_izq_n = false, movi_torre_der_n = false, movi_rey_b = false,
+	 movi_rey_n = false;
+
 
 bool es_pieza_blanca(char pieza) {
 	return pieza == 'w' || pieza == 'a' || pieza == 'r' || pieza == 't' || pieza == 'c' || pieza == 'p';
@@ -81,13 +84,103 @@ bool verificar_jaque_intermedio_negras(char campo[LADO][LADO]) {
 	return es_jaque;
 }
 
+bool condicion_enroque_izq_blanco(char campo[LADO][LADO]) {
+	return !movi_torre_izq_b && !movi_rey_b && campo[7][1] == ' ' && campo[7][2] == ' ' && campo[7][3] == ' ';
+}
+
+bool condicion_enroque_der_blanco(char campo[LADO][LADO]) {
+	return !movi_torre_der_b && !movi_rey_b && campo[7][5] == ' ' && campo[7][6] == ' ';
+}
+
+bool condicion_enroque_izq_negro(char campo[LADO][LADO]) {
+	return !movi_torre_izq_n && !movi_rey_n && campo[0][1] == ' ' && campo[0][2] == ' ' && campo[0][3] == ' ';
+}
+
+bool condicion_enroque_der_negro(char campo[LADO][LADO]) {
+	return !movi_torre_der_n && !movi_rey_n && campo[0][5] == ' ' && campo[0][6] == ' ';
+}
+
+void hacer_enroque_izq_blanco(char campo[LADO][LADO]) {
+	campo[7][0] = ' ';
+	campo[7][3] = 't';
+}
+
+void hacer_enroque_der_blanco(char campo[LADO][LADO]) {
+	campo[7][7] = ' ';
+	campo[7][5] = 't';
+}
+
+void hacer_enroque_izq_negro(char campo[LADO][LADO]) {
+	campo[0][0] = ' ';
+	campo[0][3] = 'T';
+}
+
+void hacer_enroque_der_negro(char campo[LADO][LADO]) {
+	campo[0][7] = ' ';
+	campo[0][5] = 'T';
+}
+
 void aplicar_movimiento(int fila_origen, int columna_origen, int fila_destino, int columna_destino, char campo[LADO][LADO]) {
-	campo[fila_destino][columna_destino] = campo[fila_origen][columna_origen];
+	if(fila_origen == 0 && columna_origen == 0) {
+		movi_torre_izq_n = true;
+	}
+	if(fila_origen == 0 && columna_origen == 7) {
+		movi_torre_der_n = true;
+	}
+	if(fila_origen == 7 && columna_origen == 0) {
+		movi_torre_izq_b = true;
+	}
+	if(fila_origen == 7 && columna_origen == 7) {
+		movi_torre_der_b = true;
+	}
+
+	char pieza_origen = campo[fila_origen][columna_origen];
+
+	if(condicion_enroque_der_blanco(campo) && pieza_origen == 'r' && fila_destino == 7 && columna_destino == 6) {
+		hacer_enroque_der_blanco(campo);
+		movi_rey_b = true;
+		movi_torre_der_b = true;
+	}
+	if(condicion_enroque_izq_blanco(campo) && pieza_origen == 'r' && fila_destino == 7 && columna_destino == 2) {
+		hacer_enroque_izq_blanco(campo);
+		movi_rey_b = true;
+		movi_torre_izq_b = true;
+	}
+	if(condicion_enroque_der_negro(campo) && pieza_origen == 'R' && fila_destino == 0 && columna_destino == 6) {
+		hacer_enroque_der_negro(campo);
+		movi_rey_n = true;
+		movi_torre_der_n = true;
+	}
+	if(condicion_enroque_izq_negro(campo) && pieza_origen == 'R' && fila_destino == 0 && columna_destino == 2) {
+		hacer_enroque_izq_negro(campo);
+		movi_rey_n = true;
+		movi_torre_izq_n = true;
+	}
+	campo[fila_destino][columna_destino] = pieza_origen;
 	campo[fila_origen][columna_origen] = ' ';
 }
 
+
+bool movimiento_enroque_izq_blanco(int fila_origen, int columna_origen, int fila_destino, int columna_destino) {
+	return fila_origen == 7 && columna_origen == 4 && fila_destino == 7 && columna_destino == 2;
+}
+
+bool movimiento_enroque_der_blanco(int fila_origen, int columna_origen, int fila_destino, int columna_destino) {
+	return fila_origen == 7 && columna_origen == 4 && fila_destino == 7 && columna_destino == 6;
+}
+
+bool movimiento_enroque_izq_negro(int fila_origen, int columna_origen, int fila_destino, int columna_destino) {
+	return fila_origen == 0 && columna_origen == 4 && fila_destino == 0 && columna_destino == 2;
+}
+
+bool movimiento_enroque_der_negro(int fila_origen, int columna_origen, int fila_destino, int columna_destino) {
+	return fila_origen == 0 && columna_origen == 4 && fila_destino == 0 && columna_destino == 6;
+}
+
+
+
 bool mover_pieza_a_destino(int fila_origen, int fila_destino, int columna_origen, int columna_destino, char campo[LADO][LADO], bool *pieza_esta_en_hacke) {
-	bool mover = false;
+	bool mover = false, enroque_der_blanca = false, enroque_izq_blanca = false, enroque_der_negra = false, enroque_izq_negra = false;
 
 	if(campo[fila_origen][columna_origen] != ' ' && columna_destino != 8 && fila_destino != 8 && columna_origen != 8 && fila_origen != 8) {
 		switch(campo[fila_origen][columna_origen]) {
@@ -100,7 +193,32 @@ bool mover_pieza_a_destino(int fila_origen, int fila_destino, int columna_origen
 				mover = !si_se_mueve_es_jaque_torre(fila_origen, columna_origen, fila_destino, columna_destino,  campo, f_rey_b, c_rey_b, f_rey_n, c_rey_n);
 			break;
 			case 'r':
-			case 'R': if(movimiento_permitido_rey(fila_origen, columna_origen, fila_destino, columna_destino, campo)) mover = true;
+				enroque_der_blanca = movimiento_enroque_der_blanco(fila_origen, columna_origen, fila_destino, columna_destino);
+				enroque_izq_blanca = movimiento_enroque_izq_blanco(fila_origen, columna_origen, fila_destino, columna_destino);
+
+				if(enroque_der_blanca) {
+					mover = condicion_enroque_der_blanco(campo);
+				}
+				if(enroque_izq_blanca) {
+					mover = condicion_enroque_izq_blanco(campo);
+				}
+				if(!enroque_der_blanca && !enroque_izq_blanca) {
+					mover = movimiento_permitido_rey(fila_origen, columna_origen, fila_destino, columna_destino, campo);
+				}
+			break;
+			case 'R':
+				enroque_der_negra = movimiento_enroque_der_negro(fila_origen, columna_origen, fila_destino, columna_destino);
+				enroque_izq_negra = movimiento_enroque_izq_negro(fila_origen, columna_origen, fila_destino, columna_destino);
+
+				if(enroque_der_negra) {
+					mover = condicion_enroque_der_negro(campo);
+				}
+				if(enroque_izq_negra) {
+					mover = condicion_enroque_izq_negro(campo);
+				}
+				if(!enroque_der_negra && !enroque_izq_negra) {
+					mover = movimiento_permitido_rey(fila_origen, columna_origen, fila_destino, columna_destino, campo);
+				}
 			break;
 			case 'a':
 			case 'A': if(movimiento_permitido_alfil(fila_origen, columna_origen, fila_destino, columna_destino, campo))
@@ -324,6 +442,7 @@ void asignacion_variables_auxiliares(bool *turno_blanca, bool valor_turno_blanca
 	f_destino_anterior = fila_destino;
 	c_destino_anterior = columna_destino;
 }
+
 
 void seleccionar(char campo[LADO][LADO], SAMPLE * sonido_mover, BITMAP * pantalla) {
 	int fila = 0, columna = 0, fila_origen = 0, fila_destino = -1, columna_origen = 0, columna_destino = -1,

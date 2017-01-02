@@ -454,7 +454,7 @@ void asignacion_variables_auxiliares(bool *turno_blanca, bool valor_turno_blanca
 
 void seleccionar(char campo[LADO][LADO], SAMPLE * sonido_mover, BITMAP * pantalla) {
 	int fila = 0, columna = 0, fila_origen = 0, fila_destino = -1, columna_origen = 0, columna_destino = -1,
-		clic_blanca = 0, clic_negra = 0;
+		clic_blanca = 0, clic_negra = 0, arr[8] = {0};
 	bool turno_blanca = true, blanca_en_jaque = false, negra_en_jaque = false, condicion_blanca_seleccionar = false,
 		 condicion_negra_seleccionar = false, movio_blanca = false, movio_negra = false, jaque_mate = false,
 		 mensaje_jaque = true, mensaje_jaque_mate = true, presione_clic_derecho = false;
@@ -564,11 +564,20 @@ void seleccionar(char campo[LADO][LADO], SAMPLE * sonido_mover, BITMAP * pantall
 		if(mouse_b & 2) {
 			re_draw(pantalla, campo);
 			dibujar_cuadros_seleccion_anterior(pantalla, campo);
-			menu(pantalla, mouse_y, mouse_x);
-
+			menu(pantalla, mouse_y, mouse_x, arr);
 
 			presione_clic_derecho = true;
 		}
+
+		if(presione_clic_derecho) {
+			if(mouse_x > arr[0] && mouse_x < arr[2] && mouse_y > arr[1] && mouse_y < arr[3])
+				menu_seleccion_promocion(pantalla, arr[0], arr[1] - 28, true);
+			else
+				menu_seleccion_promocion(pantalla, arr[0], arr[1] - 28, false);
+
+		}
+
+		printf("%d %d\n", mouse_x, mouse_y);
 
 		if((mouse_b & 1) && presione_clic_derecho) {
 			re_draw(pantalla, campo);

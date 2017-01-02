@@ -565,19 +565,32 @@ void liberar_memoria_piezas(BITMAP * pantalla) {
 	destroy_bitmap(pantalla);
 }
 
-void menu(BITMAP * pantalla, int mouse_y, int mouse_x) {
+void menu(BITMAP * pantalla, int mouse_y, int mouse_x, int *arr) {
 	rectfill(pantalla, mouse_x, mouse_y, mouse_x + 160, mouse_y + 50, 29);
+	arr[0] = mouse_x;
+	arr[1] = mouse_y + 28;
+	arr[2] = mouse_x + 160;
+	arr[3] = mouse_y + 48;
+
 	textprintf_centre_ex(pantalla, font, mouse_x + 40, mouse_y + 9, 17, 29, "Menu");
 	line(pantalla, mouse_x + 2, mouse_y + 25, mouse_x + 158 , mouse_y + 25, 27);
 	textprintf_centre_ex(pantalla, font, mouse_x + 60, mouse_y + 34, 17, 29, "Promocion");
 	triangle(pantalla, mouse_x + 150, mouse_y + 33, mouse_x + 155, mouse_y + 38, mouse_x + 150, mouse_y + 43, 21);
 
-	//	line(pantalla, mouse_x + 150, mouse_y + 44, mouse_x + 155 , mouse_y + 40, 23);
-//	line(pantalla, mouse_x + 150, mouse_y + 45, mouse_x + 155 , mouse_y + 41, 23);
-//	line(pantalla, mouse_x + 150, mouse_y + 46, mouse_x + 155 , mouse_y + 42, 23);
+}
 
-	//line(pantalla, mouse_x + 2, mouse_y + 25, mouse_x + 158 , mouse_y + 25, 27);
+void menu_seleccion_promocion(BITMAP *pantalla, int mouse_x, int mouse_y, bool seleccion) {
+	if(seleccion) {
+		rectfill(pantalla, mouse_x, mouse_y + 28, mouse_x + 160, mouse_y + 48, 15);
+		textprintf_centre_ex(pantalla, font, mouse_x + 60, mouse_y + 34, 17, 15, "Promocion");
+	}
+	else {
+		rectfill(pantalla, mouse_x, mouse_y + 28, mouse_x + 160, mouse_y + 48, 29);
+		textprintf_centre_ex(pantalla, font, mouse_x + 60, mouse_y + 34, 17, 29, "Promocion");
+	}
 
+
+	triangle(pantalla, mouse_x + 150, mouse_y + 33, mouse_x + 155, mouse_y + 38, mouse_x + 150, mouse_y + 43, 21);
 }
 
 

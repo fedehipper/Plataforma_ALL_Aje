@@ -457,7 +457,7 @@ void seleccionar(char campo[LADO][LADO], SAMPLE * sonido_mover, BITMAP * pantall
 		clic_blanca = 0, clic_negra = 0;
 	bool turno_blanca = true, blanca_en_jaque = false, negra_en_jaque = false, condicion_blanca_seleccionar = false,
 		 condicion_negra_seleccionar = false, movio_blanca = false, movio_negra = false, jaque_mate = false,
-		 mensaje_jaque = true, mensaje_jaque_mate = true;
+		 mensaje_jaque = true, mensaje_jaque_mate = true, presione_clic_derecho = false;
 	char pieza = ' ';
 
 	LOCK_FUNCTION(close_button_handler);
@@ -553,7 +553,8 @@ void seleccionar(char campo[LADO][LADO], SAMPLE * sonido_mover, BITMAP * pantall
 				}
 			}
 		}
-		dibujar_cuadros_seleccion_anterior(pantalla, campo);
+		if(!presione_clic_derecho)
+			dibujar_cuadros_seleccion_anterior(pantalla, campo);
 
 
 
@@ -561,14 +562,18 @@ void seleccionar(char campo[LADO][LADO], SAMPLE * sonido_mover, BITMAP * pantall
 
 
 		if(mouse_b & 2) {
-
+			re_draw(pantalla, campo);
+			dibujar_cuadros_seleccion_anterior(pantalla, campo);
 			menu(pantalla, mouse_y, mouse_x);
 
 
-
+			presione_clic_derecho = true;
 		}
 
-
+		if((mouse_b & 1) && presione_clic_derecho) {
+			re_draw(pantalla, campo);
+			presione_clic_derecho = false;
+		}
 		////////////
 
 	}

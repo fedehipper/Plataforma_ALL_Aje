@@ -574,9 +574,16 @@ void seleccionar(char campo[LADO][LADO], SAMPLE * sonido_mover, BITMAP * pantall
 			re_draw(pantalla, campo);
 			dibujar_cuadros_seleccion_anterior(pantalla, campo);
 
-			if(mouse_x > 480) {
+			if(mouse_x > 480 && mouse_y < 600) {
 				menu(pantalla, mouse_y, mouse_x - 165, arr);
-			} else {
+			}
+			if(mouse_x > 480 && mouse_y > 600){
+				menu(pantalla, mouse_y - 50, mouse_x - 165, arr);
+			}
+			if(mouse_y > 600 && mouse_x < 480) {
+				menu(pantalla, mouse_y - 50, mouse_x, arr);
+			}
+			if(mouse_x < 480 && mouse_y < 600){
 				menu(pantalla, mouse_y, mouse_x, arr);
 			}
 

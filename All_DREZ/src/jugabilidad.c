@@ -573,7 +573,12 @@ void seleccionar(char campo[LADO][LADO], SAMPLE * sonido_mover, BITMAP * pantall
 		if(mouse_b & 2) {
 			re_draw(pantalla, campo);
 			dibujar_cuadros_seleccion_anterior(pantalla, campo);
-			menu(pantalla, mouse_y, mouse_x, arr);
+
+			if(mouse_x > 480) {
+				menu(pantalla, mouse_y, mouse_x - 165, arr);
+			} else {
+				menu(pantalla, mouse_y, mouse_x, arr);
+			}
 
 			presione_clic_derecho = true;
 		}
@@ -592,7 +597,6 @@ void seleccionar(char campo[LADO][LADO], SAMPLE * sonido_mover, BITMAP * pantall
 			presione_clic_derecho = false;
 			presione_clic_izquierdo = false;
 		}
-		printf("%d %d %d\n", presione_clic_izquierdo, presione_clic_derecho, es_fuera_de_menu(arr, mouse_x, mouse_y));
 
 		presione_clic_izquierdo = false;
 

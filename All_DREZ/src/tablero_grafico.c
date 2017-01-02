@@ -572,7 +572,7 @@ void menu(BITMAP * pantalla, int mouse_y, int mouse_x, int *arr) {
 	arr[1] = mouse_y + 28;
 	arr[2] = mouse_x + 160;
 	arr[3] = mouse_y + 48;
-	// 4 - 7 primer menu
+	// 4 - 7 menu padre
 	arr[4] = mouse_x;
 	arr[5] = mouse_y;
 	arr[6] = mouse_x + 160;
@@ -594,9 +594,16 @@ void menu_seleccion_promocion(BITMAP *pantalla, int mouse_x, int mouse_y, bool s
 		rectfill(pantalla, mouse_x, mouse_y + 28, mouse_x + 160, mouse_y + 48, 29);
 		textprintf_centre_ex(pantalla, font, mouse_x + 60, mouse_y + 34, 17, 29, "Promocion");
 	}
-
-
 	triangle(pantalla, mouse_x + 150, mouse_y + 33, mouse_x + 155, mouse_y + 38, mouse_x + 150, mouse_y + 43, 21);
+}
+
+void menu_promocion_blanco_o_negro(BITMAP *pantalla, int mouse_x, int mouse_y, int * arr, bool supera_limite_pantalla) {
+	// el array tiene la posicion de donde se mostro el menu padre, se puede verificar con este si se va a dibujar el menu hijo
+	// en el lado izquierdo o derecho
+	rectfill(pantalla, mouse_x, mouse_y, mouse_x, mouse_y, 29);
+
+
+
 }
 
 

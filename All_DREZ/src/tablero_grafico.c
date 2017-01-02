@@ -565,6 +565,8 @@ void liberar_memoria_piezas(BITMAP * pantalla) {
 	destroy_bitmap(pantalla);
 }
 
-
+void menu(BITMAP * pantalla, int mouse_y, int mouse_x) {
+	rectfill(pantalla, mouse_x, mouse_y, mouse_x + 65, mouse_y + 25, 15);
+}
 
 

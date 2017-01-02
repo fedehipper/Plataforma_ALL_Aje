@@ -554,6 +554,23 @@ void seleccionar(char campo[LADO][LADO], SAMPLE * sonido_mover, BITMAP * pantall
 			}
 		}
 		dibujar_cuadros_seleccion_anterior(pantalla, campo);
+
+
+
+		///////////////
+
+
+		if(mouse_b & 2) {
+
+			menu(pantalla, mouse_y, mouse_x);
+
+
+
+		}
+
+
+		////////////
+
 	}
 }
 

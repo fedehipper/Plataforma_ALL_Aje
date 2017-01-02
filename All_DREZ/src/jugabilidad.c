@@ -451,6 +451,10 @@ void asignacion_variables_auxiliares(bool *turno_blanca, bool valor_turno_blanca
 	c_destino_anterior = columna_destino;
 }
 
+bool es_fuera_de_menu(int *arr, int mouse_x, int mouse_y) {
+	return !(mouse_x > arr[4] && mouse_x < arr[6] && mouse_y > arr[5] && mouse_y < arr[7]);
+}
+
 
 void seleccionar(char campo[LADO][LADO], SAMPLE * sonido_mover, BITMAP * pantalla) {
 	int fila = 0, columna = 0, fila_origen = 0, fila_destino = -1, columna_origen = 0, columna_destino = -1,
@@ -579,7 +583,7 @@ void seleccionar(char campo[LADO][LADO], SAMPLE * sonido_mover, BITMAP * pantall
 
 		printf("%d %d\n", mouse_x, mouse_y);
 
-		if((mouse_b & 1) && presione_clic_derecho) {
+		if((mouse_b & 1) && presione_clic_derecho && es_fuera_de_menu(arr, mouse_x, mouse_y)) {
 			re_draw(pantalla, campo);
 			presione_clic_derecho = false;
 		}

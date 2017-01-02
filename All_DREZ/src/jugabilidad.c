@@ -590,6 +590,8 @@ void seleccionar(char campo[LADO][LADO], SAMPLE * sonido_mover, BITMAP * pantall
 			else {
 				menu_seleccion_promocion(pantalla, arr[0], arr[1] - 28, false);
 			}
+			menu_promocion_blanco_o_negro(pantalla, arr, true);
+
 		}
 
 		if(presione_clic_izquierdo && presione_clic_derecho && es_fuera_de_menu(arr, mouse_x, mouse_y)) {

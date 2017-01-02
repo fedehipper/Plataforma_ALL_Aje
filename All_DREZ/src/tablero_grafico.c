@@ -566,10 +566,9 @@ void liberar_memoria_piezas(BITMAP * pantalla) {
 }
 
 void menu(BITMAP * pantalla, int mouse_y, int mouse_x) {
-	rectfill(pantalla, mouse_x, mouse_y, mouse_x + 160, mouse_y + 50, 15);
-	textprintf_centre_ex(pantalla, font, mouse_x + 50, mouse_y + 10, 17, 15, "M E N U");
-	line(pantalla, mouse_x + 10, mouse_y + 25, mouse_x + 150 , mouse_y + 25, 2);
-
+	rectfill(pantalla, mouse_x, mouse_y, mouse_x + 160, mouse_y + 50, 29);
+	textprintf_centre_ex(pantalla, font, mouse_x + 50, mouse_y + 10, 17, 29, "Menu");
+	line(pantalla, mouse_x + 10, mouse_y + 25, mouse_x + 150 , mouse_y + 25, 21);
 
 }
 

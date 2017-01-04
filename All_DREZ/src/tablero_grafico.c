@@ -578,7 +578,7 @@ void menu(BITMAP * pantalla, int mouse_y, int mouse_x, int *arr) {
 	arr[6] = mouse_x + 160;
 	arr[7] = mouse_y + 50;
 
-	textprintf_centre_ex(pantalla, font, mouse_x + 40, mouse_y + 9, 17, 29, "Menu");
+	textprintf_centre_ex(pantalla, font, mouse_x + 52, mouse_y + 9, 17, 29, "Guardar");
 	line(pantalla, mouse_x + 2, mouse_y + 25, mouse_x + 158 , mouse_y + 25, 27);
 	textprintf_centre_ex(pantalla, font, mouse_x + 60, mouse_y + 34, 17, 29, "Promocion");
 	triangle(pantalla, mouse_x + 150, mouse_y + 33, mouse_x + 155, mouse_y + 38, mouse_x + 150, mouse_y + 43, 21);
@@ -595,6 +595,17 @@ void menu_seleccion_promocion(BITMAP *pantalla, int mouse_x, int mouse_y, bool s
 		textprintf_centre_ex(pantalla, font, mouse_x + 60, mouse_y + 34, 17, 29, "Promocion");
 	}
 	triangle(pantalla, mouse_x + 150, mouse_y + 33, mouse_x + 155, mouse_y + 38, mouse_x + 150, mouse_y + 43, 21);
+}
+
+void menu_seleccion_guardar(BITMAP * pantalla, int mouse_x, int mouse_y, bool seleccion) {
+	if(seleccion) {
+		rectfill(pantalla, mouse_x, mouse_y + 2, mouse_x + 160, mouse_y + 22, 15);
+		textprintf_centre_ex(pantalla, font, mouse_x + 52, mouse_y + 9, 17, 15, "Guardar");
+	}
+	else {
+		rectfill(pantalla, mouse_x, mouse_y + 2, mouse_x + 160, mouse_y + 22, 29);
+		textprintf_centre_ex(pantalla, font, mouse_x + 52, mouse_y + 9, 17, 29, "Guardar");
+	}
 }
 
 void menu_promocion_blanco_o_negro(BITMAP *pantalla, int * arr, bool supera_limite_pantalla) {

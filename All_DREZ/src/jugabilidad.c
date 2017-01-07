@@ -591,20 +591,24 @@ void seleccionar(char campo[LADO][LADO], SAMPLE * sonido_mover, BITMAP * pantall
 		}
 
 		if(presione_clic_derecho) {
-			if(mouse_x > arr[0] && mouse_x < arr[2] && mouse_y > arr[1] && mouse_y < arr[3]) {
-				menu_seleccion_promocion(pantalla, arr[0], arr[1] - 28, true);
-			}
-			else {
-				menu_seleccion_promocion(pantalla, arr[0], arr[1] - 28, false);
-			}
-
 			if(mouse_x > arr[0] && mouse_x < arr[2] && mouse_y > arr[5] && mouse_y < arr[1]) {
-				menu_seleccion_guardar(pantalla, arr[0], arr[5], true);
+				menu_seleccion_promocion(pantalla, arr[0], arr[5], true);
+				menu_blanco_y_negro(pantalla, arr, true);
 			} else {
-				menu_seleccion_guardar(pantalla, arr[0], arr[5], false);
+				re_draw(pantalla, campo);
+				dibujar_cuadros_seleccion_anterior(pantalla, campo);
+				rectfill(pantalla, arr[4], arr[5], arr[6], arr[7], 29);
+				line(pantalla, arr[4] + 2, arr[5] + 25, arr[4] + 158 , arr[5] + 25, 27);
+
+				menu_seleccion_promocion(pantalla, arr[0], arr[5], false);
 			}
 
-			menu_promocion_blanco_o_negro(pantalla, arr, true);
+			if(mouse_x > arr[0] && mouse_x < arr[2] && mouse_y > arr[1] && mouse_y < arr[3]) {
+				menu_seleccion_cerrar(pantalla, arr[0],  arr[1] - 28, true);
+			} else {
+				menu_seleccion_cerrar(pantalla, arr[0],  arr[1] - 28, false);
+			}
+
 		}
 
 
@@ -617,7 +621,11 @@ void seleccionar(char campo[LADO][LADO], SAMPLE * sonido_mover, BITMAP * pantall
 		presione_clic_izquierdo = false;
 
 
+
+
 		////////////
+
+
 	}
 }
 

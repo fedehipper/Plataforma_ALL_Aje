@@ -604,24 +604,41 @@ void menu_seleccion_cerrar(BITMAP * pantalla, int mouse_x, int mouse_y, bool sel
 	}
 }
 
-void menu_blanco_y_negro(BITMAP *pantalla, int * arr, bool supera_limite_pantalla) {
-	// el array tiene la posicion de donde se mostro el menu padre, se puede verificar con este si se va a dibujar el menu hijo
-	// en el lado izquierdo o derecho
+void menu_blanco_y_negro(BITMAP *pantalla, int * arr, bool *derecha) {
 	if(arr[6] + 100 > 600) {
 		rectfill(pantalla, arr[6] - 262, arr[1] - 28, arr[6] - 162, arr[1] + 22, 29);
 		line(pantalla, arr[4] - 4, arr[5] + 25, arr[4] - 101 , arr[5] + 25, 27);
 		textprintf_centre_ex(pantalla, font, arr[4] - 58, arr[5] + 9, 17, 29, "Blanco");
 		textprintf_centre_ex(pantalla, font, arr[4] - 61, arr[5] + 35, 17, 29, "Negro");
+		triangle(pantalla, arr[4] - 10, arr[5] + 8, arr[4] - 5, arr[5] + 13, arr[4] - 10, arr[5] + 18, 21);
+		triangle(pantalla, arr[4] - 10, arr[5] + 33, arr[4] - 5, arr[5] + 38, arr[4] - 10, arr[5] + 43, 21);
+		*derecha = false;
 	} else {
 		rectfill(pantalla, arr[6] + 2, arr[1] - 28, arr[6] + 100, arr[1] + 22, 29);
 		line(pantalla, arr[4] + 163, arr[5] + 25, arr[4] + 258 , arr[5] + 25, 27);
 		textprintf_centre_ex(pantalla, font, arr[4] + 200, arr[5] + 9, 17, 29, "Blanco");
 		textprintf_centre_ex(pantalla, font, arr[4] + 197, arr[5] + 35, 17, 29, "Negro");
+		triangle(pantalla, arr[4] + 250, arr[5] + 8, arr[4] + 255, arr[5] + 13, arr[4] + 250, arr[5] + 18, 21);
+		triangle(pantalla, arr[4] + 250, arr[5] + 33, arr[4] + 255, arr[5] + 38, arr[4] + 250, arr[5] + 43, 21);
+		*derecha = true;
+	}
+}
+
+void menu_blanco_piezas_promocion(BITMAP *pantalla, int * arr, bool *derecha) {
+	if(arr[6] + 150 > 600) {
+		rectfill(pantalla, arr[6] - 262, arr[1] - 28, arr[6] - 162, arr[1] + 22, 29);
+
+
+	} else {
+
 	}
 
 
+}
 
+void menu_negro_piezas_promocion(BITMAP *pantalla, int * arr, bool *derecha) {
 
 }
+
 
 

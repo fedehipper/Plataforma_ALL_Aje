@@ -19,7 +19,10 @@ void dibujar_rey_en_movimiento(BITMAP * pantalla,char pieza, int x, int y, char 
 void liberar_memoria_piezas(BITMAP * pantalla);
 void menu(BITMAP * pantalla, int mouse_y, int mouse_x, int *arr);
 void menu_seleccion_promocion(BITMAP *pantalla, int mouse_x, int mouse_y, bool seleccion);
-void menu_blanco_y_negro(BITMAP *pantalla, int * arr, bool supera_limite_pantalla);
+void menu_blanco_y_negro(BITMAP *pantalla, int * arr, bool *derecha);
 void menu_seleccion_cerrar(BITMAP * pantalla, int mouse_x, int mouse_y, bool seleccion);
+void menu_blanco_piezas_promocion(BITMAP *pantalla, int * arr, bool *derecha);
+void menu_negro_piezas_promocion(BITMAP *pantalla, int * arr, bool *derecha);
+
 
 #endif /* TABLERO_GRAFICO_H_ */

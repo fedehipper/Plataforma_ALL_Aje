@@ -461,7 +461,8 @@ void seleccionar(char campo[LADO][LADO], SAMPLE * sonido_mover, BITMAP * pantall
 		clic_blanca = 0, clic_negra = 0, arr[8] = {0};
 	bool turno_blanca = true, blanca_en_jaque = false, negra_en_jaque = false, condicion_blanca_seleccionar = false,
 		 condicion_negra_seleccionar = false, movio_blanca = false, movio_negra = false, jaque_mate = false,
-		 mensaje_jaque = true, mensaje_jaque_mate = true, presione_clic_derecho = false, presione_clic_izquierdo = false;
+		 mensaje_jaque = true, mensaje_jaque_mate = true, presione_clic_derecho = false, presione_clic_izquierdo = false,
+		 derecha = false, derecha_2 = false;
 	char pieza = ' ';
 
 	LOCK_FUNCTION(close_button_handler);
@@ -566,6 +567,10 @@ void seleccionar(char campo[LADO][LADO], SAMPLE * sonido_mover, BITMAP * pantall
 
 		///////////////
 
+
+
+
+
 		if(mouse_b & 1) {
 			presione_clic_izquierdo = true;
 		}
@@ -591,16 +596,28 @@ void seleccionar(char campo[LADO][LADO], SAMPLE * sonido_mover, BITMAP * pantall
 		}
 
 		if(presione_clic_derecho) {
+
 			if(mouse_x > arr[0] && mouse_x < arr[2] && mouse_y > arr[5] && mouse_y < arr[1]) {
 				menu_seleccion_promocion(pantalla, arr[0], arr[5], true);
-				menu_blanco_y_negro(pantalla, arr, true);
-			} else {
-				re_draw(pantalla, campo);
-				dibujar_cuadros_seleccion_anterior(pantalla, campo);
-				rectfill(pantalla, arr[4], arr[5], arr[6], arr[7], 29);
-				line(pantalla, arr[4] + 2, arr[5] + 25, arr[4] + 158 , arr[5] + 25, 27);
+				menu_blanco_y_negro(pantalla, arr, &derecha);
+				menu_blanco_piezas_promocion(pantalla, arr, &derecha_2);
 
-				menu_seleccion_promocion(pantalla, arr[0], arr[5], false);
+			} else {
+				bool condicion = false;
+				if(derecha) {
+					condicion = !(mouse_x > arr[6] - 10 && mouse_x < arr[6] + 100 && mouse_y > arr[1] - 28 && mouse_y < arr[1] + 22);
+				} else {
+					condicion = !(mouse_x > arr[6]- 262 && mouse_x < arr[6] - 150 && mouse_y > arr[1] - 28 && mouse_y < arr[1] + 22);
+				}
+
+				if(condicion) {
+					re_draw(pantalla, campo);
+					dibujar_cuadros_seleccion_anterior(pantalla, campo);
+					rectfill(pantalla, arr[4], arr[5], arr[6], arr[7], 29);
+					line(pantalla, arr[4] + 2, arr[5] + 25, arr[4] + 158 , arr[5] + 25, 27);
+					menu_seleccion_promocion(pantalla, arr[0], arr[5], false);
+				}
+
 			}
 
 			if(mouse_x > arr[0] && mouse_x < arr[2] && mouse_y > arr[1] && mouse_y < arr[3]) {
@@ -619,6 +636,9 @@ void seleccionar(char campo[LADO][LADO], SAMPLE * sonido_mover, BITMAP * pantall
 		}
 
 		presione_clic_izquierdo = false;
+
+
+
 
 
 

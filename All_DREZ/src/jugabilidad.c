@@ -469,7 +469,7 @@ void seleccionar(char campo[LADO][LADO], SAMPLE * sonido_mover, BITMAP * pantall
 	while(!close_button_pressed) {
 		blit(pantalla, screen, 0, 0, 0, 0, 870, 667);
 		verificar_estado_de_rey(&mensaje_jaque_mate, &mensaje_jaque, &jaque_mate, negra_en_jaque, blanca_en_jaque, campo);
-		rest(50);
+		rest(75);
 		if(!jaque_mate && (mouse_b & 1)) {
 
 			obtener_fila_y_columna(&fila, &columna);

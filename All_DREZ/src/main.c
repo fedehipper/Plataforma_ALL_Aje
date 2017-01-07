@@ -80,7 +80,7 @@ int main(void) {
 	allegro_init();
 
 	set_color_depth(8);
-	pantalla = create_bitmap(670, 670);
+	pantalla = create_bitmap(850, 670);
 	clear_bitmap(pantalla);
 
 	instalar_complementos();

@@ -19,7 +19,7 @@ void instalar_complementos(void) {
 }
 
 void mostrar_display(void) {
-	set_gfx_mode(GFX_SAFE, 670, 670, 0, 0);
+	set_gfx_mode(GFX_SAFE, 850, 670, 0, 0);
 }
 
 void desinstalar_complementos(SAMPLE * sonido) {

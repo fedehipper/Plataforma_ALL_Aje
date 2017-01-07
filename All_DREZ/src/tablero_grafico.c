@@ -537,7 +537,7 @@ void switcheo_draw_piezas(BITMAP * pantalla, char pieza, char campo[LADO][LADO])
 
 // para que no quede seleccionado el cuadro de seleccion se dibuja nuevamente el rojo(4) o negro(16), rojo_claro(12), negro_claro(24)
 void draw_cuadrado(int fila, int columna, char campo[LADO][LADO], int color_claro, int color_oscuro, bool dibujar_pieza, BITMAP * pantalla) {
-	if(fila != 8 && columna != 8) {
+	if(fila < 8 && columna < 8) {
 		if(par_relativo(fila, columna))
 			rectfill(pantalla, 11 + 80 * columna , 11 + 80 * fila, 89 + 80 * columna, 89 + 80 * fila, color_claro);
 		else

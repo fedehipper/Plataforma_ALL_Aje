@@ -604,6 +604,19 @@ void menu_seleccion_cerrar(BITMAP * pantalla, int mouse_x, int mouse_y, bool sel
 	}
 }
 
+void menu_seleccion_blanco(BITMAP * pantalla, int mouse_x, int mouse_y, bool seleccion, bool derecha) {
+	if(derecha && seleccion) {
+		rectfill(pantalla, mouse_x + 162, mouse_y + 2, mouse_x + 260, mouse_y + 22, 15);
+		textprintf_centre_ex(pantalla, font, mouse_x + 200, mouse_y + 9, 17, 15, "Blanco");
+		triangle(pantalla, mouse_x + 250, mouse_y + 8, mouse_x + 255, mouse_y + 13, mouse_x + 250, mouse_y + 18, 21);
+	}
+	if(!derecha && seleccion) {
+		rectfill(pantalla, mouse_x - 262, mouse_y - 28, mouse_x - 162, mouse_y + 22, 15);
+		textprintf_centre_ex(pantalla, font, mouse_x + 200, mouse_y + 9, 17, 15, "Blanco");
+		triangle(pantalla, mouse_x - 10, mouse_y + 8, mouse_x - 5, mouse_y + 13, mouse_x - 10, mouse_y + 18, 21);
+	}
+}
+
 void menu_blanco_y_negro(BITMAP *pantalla, int * arr, bool *derecha) {
 	if(arr[6] + 100 > 600) {
 		rectfill(pantalla, arr[6] - 262, arr[1] - 28, arr[6] - 162, arr[1] + 22, 29);

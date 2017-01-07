@@ -462,7 +462,7 @@ void seleccionar(char campo[LADO][LADO], SAMPLE * sonido_mover, BITMAP * pantall
 	bool turno_blanca = true, blanca_en_jaque = false, negra_en_jaque = false, condicion_blanca_seleccionar = false,
 		 condicion_negra_seleccionar = false, movio_blanca = false, movio_negra = false, jaque_mate = false,
 		 mensaje_jaque = true, mensaje_jaque_mate = true, presione_clic_derecho = false, presione_clic_izquierdo = false,
-		 derecha = false, derecha_2 = false;
+		 derecha = false, derecha_2 = false, seleccionado_menu_promocion = false;
 	char pieza = ' ';
 
 	LOCK_FUNCTION(close_button_handler);
@@ -599,8 +599,10 @@ void seleccionar(char campo[LADO][LADO], SAMPLE * sonido_mover, BITMAP * pantall
 
 			if(mouse_x > arr[0] && mouse_x < arr[2] && mouse_y > arr[5] && mouse_y < arr[1]) {
 				menu_seleccion_promocion(pantalla, arr[0], arr[5], true);
+				seleccionado_menu_promocion = true;
 				menu_blanco_y_negro(pantalla, arr, &derecha);
-				menu_blanco_piezas_promocion(pantalla, arr, &derecha_2);
+				//menu_blanco_piezas_promocion(pantalla, arr, &derecha_2);
+
 
 			} else {
 				bool condicion = false;
@@ -624,6 +626,13 @@ void seleccionar(char campo[LADO][LADO], SAMPLE * sonido_mover, BITMAP * pantall
 				menu_seleccion_cerrar(pantalla, arr[0],  arr[1] - 28, true);
 			} else {
 				menu_seleccion_cerrar(pantalla, arr[0],  arr[1] - 28, false);
+			}
+
+			if(mouse_x > arr[6] - 5  && mouse_x < arr[6] + 100 && mouse_y > arr[1] - 28 && mouse_y < arr[1] + 22) {
+				menu_seleccion_blanco(pantalla, arr[4], arr[5], seleccionado_menu_promocion, derecha);
+				seleccionado_menu_promocion = false;
+			} else {
+
 			}
 
 		}

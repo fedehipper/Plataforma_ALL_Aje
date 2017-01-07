@@ -23,6 +23,6 @@ void menu_blanco_y_negro(BITMAP *pantalla, int * arr, bool *derecha);
 void menu_seleccion_cerrar(BITMAP * pantalla, int mouse_x, int mouse_y, bool seleccion);
 void menu_blanco_piezas_promocion(BITMAP *pantalla, int * arr, bool *derecha);
 void menu_negro_piezas_promocion(BITMAP *pantalla, int * arr, bool *derecha);
-
+void menu_seleccion_blanco(BITMAP * pantalla, int mouse_x, int mouse_y, bool seleccion, bool derecha);
 
 #endif /* TABLERO_GRAFICO_H_ */

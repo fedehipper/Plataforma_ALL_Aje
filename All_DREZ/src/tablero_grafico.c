@@ -137,6 +137,7 @@ void draw_tablero(BITMAP *pantalla) {
 	draw_coordenadas(pantalla);
 	draw_cuadros_tablero(pantalla);
 	draw_bordes(pantalla);
+	rect(pantalla, 665, 10, 860, 650, 15);
 }
 
 void crear_caballo_blanco(void) {

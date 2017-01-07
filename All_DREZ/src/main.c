@@ -74,13 +74,12 @@
 	}
 #endif
 
-BITMAP *pantalla;
 
 int main(void) {
 	allegro_init();
 
 	set_color_depth(8);
-	pantalla = create_bitmap(850, 670);
+	BITMAP * pantalla = create_bitmap(870, 667);
 	clear_bitmap(pantalla);
 
 	instalar_complementos();

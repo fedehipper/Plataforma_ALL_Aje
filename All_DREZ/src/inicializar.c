@@ -19,7 +19,7 @@ void instalar_complementos(void) {
 }
 
 void mostrar_display(void) {
-	set_gfx_mode(GFX_SAFE, 850, 670, 0, 0);
+	set_gfx_mode(GFX_SAFE, 870, 667, 0, 0);
 }
 
 void desinstalar_complementos(SAMPLE * sonido) {
@@ -30,9 +30,7 @@ void desinstalar_complementos(SAMPLE * sonido) {
 
 void inicializar_tablero(BITMAP *pantalla, char campo[LADO][LADO]) {
 	crear_piezas();
-
 	draw_tablero(pantalla);
-
 	tablero_en_blanco(campo);
 	inicializar_posicion_piezas(campo);
 	re_draw(pantalla, campo);

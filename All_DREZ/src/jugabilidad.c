@@ -458,18 +458,17 @@ bool es_fuera_de_menu(int *arr, int mouse_x, int mouse_y) {
 
 void seleccionar(char campo[LADO][LADO], SAMPLE * sonido_mover, BITMAP * pantalla) {
 	int fila = 0, columna = 0, fila_origen = 0, fila_destino = -1, columna_origen = 0, columna_destino = -1,
-		clic_blanca = 0, clic_negra = 0, arr[8] = {0};
+		clic_blanca = 0, clic_negra = 0;
 	bool turno_blanca = true, blanca_en_jaque = false, negra_en_jaque = false, condicion_blanca_seleccionar = false,
 		 condicion_negra_seleccionar = false, movio_blanca = false, movio_negra = false, jaque_mate = false,
-		 mensaje_jaque = true, mensaje_jaque_mate = true, presione_clic_derecho = false, presione_clic_izquierdo = false,
-		 derecha = false, derecha_2 = false, seleccionado_menu_promocion = false;
+		 mensaje_jaque = true, mensaje_jaque_mate = true, presione_clic_derecho = false;
 	char pieza = ' ';
 
 	LOCK_FUNCTION(close_button_handler);
 	set_close_button_callback(close_button_handler);
 
 	while(!close_button_pressed) {
-		blit(pantalla, screen, 0, 0, 0, 0, 670, 670);
+		blit(pantalla, screen, 0, 0, 0, 0, 870, 667);
 		verificar_estado_de_rey(&mensaje_jaque_mate, &mensaje_jaque, &jaque_mate, negra_en_jaque, blanca_en_jaque, campo);
 		rest(50);
 		if(!jaque_mate && (mouse_b & 1)) {
@@ -489,7 +488,6 @@ void seleccionar(char campo[LADO][LADO], SAMPLE * sonido_mover, BITMAP * pantall
 						draw_cuadrado(fila_origen, columna_origen, campo, ROJO_SELECCION, NEGRO_SELECCION, true, pantalla);
 						draw_cuadrado(fila_destino, columna_destino, campo, ROJO_SELECCION, NEGRO_SELECCION, true, pantalla);
 						dibujar_cuadros_seleccion_anterior(pantalla, campo);
-						presione_clic_izquierdo = true;
 					}
 					campo[fila_origen][columna_origen] = pieza;
 				}
@@ -531,7 +529,6 @@ void seleccionar(char campo[LADO][LADO], SAMPLE * sonido_mover, BITMAP * pantall
 						draw_cuadrado(fila_origen, columna_origen, campo, ROJO_SELECCION, NEGRO_SELECCION, true, pantalla);
 						draw_cuadrado(fila_destino, columna_destino, campo, ROJO_SELECCION, NEGRO_SELECCION, true, pantalla);
 						dibujar_cuadros_seleccion_anterior(pantalla, campo);
-						presione_clic_izquierdo = true;
 					}
 					campo[fila_origen][columna_origen] = pieza;
 				}

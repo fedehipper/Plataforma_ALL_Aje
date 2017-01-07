@@ -455,7 +455,6 @@ bool es_fuera_de_menu(int *arr, int mouse_x, int mouse_y) {
 	return !(mouse_x > arr[4] && mouse_x < arr[6] && mouse_y > arr[5] && mouse_y < arr[7]);
 }
 
-
 void seleccionar(char campo[LADO][LADO], SAMPLE * sonido_mover, BITMAP * pantalla) {
 	int fila = 0, columna = 0, fila_origen = 0, fila_destino = -1, columna_origen = 0, columna_destino = -1,
 		clic_blanca = 0, clic_negra = 0;
@@ -485,8 +484,6 @@ void seleccionar(char campo[LADO][LADO], SAMPLE * sonido_mover, BITMAP * pantall
 						seleccionar_pieza_blanca_a_mover(pantalla, pieza, campo);
 						re_draw(pantalla, campo);
 						clic_blanca += 1;
-						draw_cuadrado(fila_origen, columna_origen, campo, ROJO_SELECCION, NEGRO_SELECCION, true, pantalla);
-						draw_cuadrado(fila_destino, columna_destino, campo, ROJO_SELECCION, NEGRO_SELECCION, true, pantalla);
 						dibujar_cuadros_seleccion_anterior(pantalla, campo);
 					}
 					campo[fila_origen][columna_origen] = pieza;
@@ -526,8 +523,6 @@ void seleccionar(char campo[LADO][LADO], SAMPLE * sonido_mover, BITMAP * pantall
 						seleccionar_pieza_negra_a_mover(pantalla, pieza, campo);
 						re_draw(pantalla, campo);
 						clic_negra += 1;
-						draw_cuadrado(fila_origen, columna_origen, campo, ROJO_SELECCION, NEGRO_SELECCION, true, pantalla);
-						draw_cuadrado(fila_destino, columna_destino, campo, ROJO_SELECCION, NEGRO_SELECCION, true, pantalla);
 						dibujar_cuadros_seleccion_anterior(pantalla, campo);
 					}
 					campo[fila_origen][columna_origen] = pieza;

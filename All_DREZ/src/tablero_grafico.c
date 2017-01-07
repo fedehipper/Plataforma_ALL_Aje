@@ -402,7 +402,7 @@ void draw_reina_negra(BITMAP *pantalla, char campo[LADO][LADO]) {
 }
 
 void dibujar_peon_en_movimiento(BITMAP * pantalla, char pieza, int x, int y, char campo[LADO][LADO]) {
-	blit(pantalla, screen, 0, 0, 0, 0, 670, 670);
+	blit(pantalla, screen, 0, 0, 0, 0, 870, 667);
 	if(pieza == 'p') {
 		draw_sprite(pantalla, b_peon_blanco, x, y);
 		masked_blit(b_peon_blanco, screen, 0, 0, x, y, 80, 80);
@@ -414,7 +414,7 @@ void dibujar_peon_en_movimiento(BITMAP * pantalla, char pieza, int x, int y, cha
 }
 
 void dibujar_alfil_en_movimiento(BITMAP * pantalla, char pieza, int x, int y, char campo[LADO][LADO]) {
-	blit(pantalla, screen, 0, 0, 0, 0, 670, 670);
+	blit(pantalla, screen, 0, 0, 0, 0,870, 667);
 	if(pieza == 'a') {
 		draw_sprite(pantalla, b_alfil_blanco, x, y);
 		masked_blit(b_alfil_blanco, screen, 0, 0, x, y, 80, 80);
@@ -426,7 +426,7 @@ void dibujar_alfil_en_movimiento(BITMAP * pantalla, char pieza, int x, int y, ch
 }
 
 void dibujar_caballo_en_movimiento(BITMAP * pantalla, char pieza, int x, int y, char campo[LADO][LADO]) {
-	blit(pantalla, screen, 0, 0, 0, 0, 670, 670);
+	blit(pantalla, screen, 0, 0, 0, 0, 870, 667);
 	if(pieza == 'c') {
 		draw_sprite(pantalla, b_caballo_blanco, x, y);
 		masked_blit(b_caballo_blanco, screen, 0, 0, x, y, 80, 80);
@@ -438,7 +438,7 @@ void dibujar_caballo_en_movimiento(BITMAP * pantalla, char pieza, int x, int y, 
 }
 
 void dibujar_torre_en_movimiento(BITMAP * pantalla, char pieza, int x, int y, char campo[LADO][LADO]) {
-	blit(pantalla, screen, 0, 0, 0, 0, 670, 670);
+	blit(pantalla, screen, 0, 0, 0, 0, 870, 667);
 	if(pieza == 't') {
 		draw_sprite(pantalla, b_torre_blanca, x, y);
 		masked_blit(b_torre_blanca, screen, 0, 0, x, y, 80, 80);
@@ -450,7 +450,7 @@ void dibujar_torre_en_movimiento(BITMAP * pantalla, char pieza, int x, int y, ch
 }
 
 void dibujar_reina_en_movimiento(BITMAP * pantalla, char pieza, int x, int y, char campo[LADO][LADO]) {
-	blit(pantalla, screen, 0, 0, 0, 0, 670, 670);
+	blit(pantalla, screen, 0, 0, 0, 0, 870, 667);
 	if(pieza == 'w') {
 		draw_sprite(pantalla, b_reina_blanca, x, y);
 		masked_blit(b_reina_blanca, screen, 0, 0, x, y, 80, 80);
@@ -462,7 +462,7 @@ void dibujar_reina_en_movimiento(BITMAP * pantalla, char pieza, int x, int y, ch
 }
 
 void dibujar_rey_en_movimiento(BITMAP * pantalla, char pieza, int x, int y, char campo[LADO][LADO]) {
-	blit(pantalla, screen, 0, 0, 0, 0, 670, 670);
+	blit(pantalla, screen, 0, 0, 0, 0, 870, 667);
 	if(pieza == 'r') {
 		draw_sprite(pantalla, b_rey_blanco, x, y);
 		masked_blit(b_rey_blanco, screen, 0, 0, x, y, 80, 80);

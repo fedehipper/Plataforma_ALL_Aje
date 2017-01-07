@@ -24,7 +24,6 @@ bool movimiento_rey_sin_reestricciones(int fila_origen, int columna_origen, int 
 			    (fila_origen - 1 == fila_destino && columna_origen + 1 == columna_destino));
 }
 
-// pasa que en fila_destino no hay nada, todavia no se movio
 bool me_hacen_jaque(int fila_origen, int columna_origen, int fila_destino, int columna_destino, char campo[LADO][LADO]) {
 	int i,j, f_rey_b, c_rey_b, f_rey_n, c_rey_n;
 	bool es_jaque = false;

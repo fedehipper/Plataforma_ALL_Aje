@@ -481,16 +481,15 @@ void promocionar_peon_negro(char pieza_promocion_negra, char campo[LADO][LADO]) 
 }
 
 void tiempo_jugador_blanco(BITMAP *pantalla, int minuto, int segundo) {
-	if(segundo_b < 10 || segundo_b == 0) {
+	if(segundo < 10) {
 		textprintf_centre_ex(pantalla, font, 770, 525, 15, 0, "0%d : %d%d ", minuto, 0, segundo);
 	} else {
 		textprintf_centre_ex(pantalla, font, 770, 525, 15, 0, "0%d : %d ", minuto, segundo);
 	}
-
 }
 
 void tiempo_jugador_negro(BITMAP * pantalla, int minuto, int segundo) {
-	if(segundo_n < 10 || segundo_n == 0) {
+	if(segundo < 10) {
 		textprintf_centre_ex(pantalla, font, 770, 205, 15, 0, "0%d : %d%d ", minuto, 0, segundo);
 	} else {
 		textprintf_centre_ex(pantalla, font, 770, 205, 15, 0, "0%d : %d ", minuto, segundo);
@@ -528,6 +527,31 @@ void cronometro_jugador_negro(void) {
 }
 
 
+void timer(BITMAP *pantalla, bool turno_blanca, int minuto_n_detenido, int segundo_n_detenido, int minuto_b_detenido, int segundo_b_detenido) {
+	if(turno_blanca) {
+		tiempo_jugador_negro(pantalla, minuto_n_detenido, segundo_n_detenido);
+		tiempo_jugador_blanco(pantalla, minuto_b, segundo_b);
+	} else {
+		tiempo_jugador_blanco(pantalla, minuto_b_detenido, segundo_b_detenido);
+		tiempo_jugador_negro(pantalla, minuto_n, segundo_n);
+	}
+}
+
+void actualizacion_timer_negro(int *minuto_n_detenido, int *segundo_n_detenido, int *minuto_b_detenido, int *segundo_b_detenido) {
+	*minuto_n_detenido = minuto_n;
+	*segundo_n_detenido = segundo_n;
+	minuto_b = *minuto_b_detenido;
+	segundo_b = *segundo_b_detenido;
+}
+
+void actualizacion_timer_blanco(int *minuto_n_detenido, int *segundo_n_detenido, int *minuto_b_detenido, int *segundo_b_detenido) {
+	*minuto_b_detenido = minuto_b;
+	*segundo_b_detenido = segundo_b;
+	minuto_n = *minuto_n_detenido;
+	segundo_n = *segundo_n_detenido;
+}
+
+
 void seleccionar(char campo[LADO][LADO], SAMPLE * sonido_mover, BITMAP * pantalla) {
 	int fila = 0, columna = 0, fila_origen = 0, fila_destino = -1, columna_origen = 0, columna_destino = -1,
 		clic_blanca = 0, clic_negra = 0, minuto_b_detenido = 5, segundo_b_detenido = 0, minuto_n_detenido = 5, segundo_n_detenido = 0;
@@ -551,7 +575,7 @@ void seleccionar(char campo[LADO][LADO], SAMPLE * sonido_mover, BITMAP * pantall
 		blit(pantalla, screen, 0, 0, 0, 0, 870, 667);
 		verificar_estado_de_rey(&mensaje_jaque_mate, &mensaje_jaque, &jaque_mate, negra_en_jaque, blanca_en_jaque, campo);
 
-		rest(15);
+		rest(10);
 
 		if(!jaque_mate && (mouse_b & 1) && mouse_dentro_tablero(mouse_x, mouse_y)) {
 
@@ -582,11 +606,7 @@ void seleccionar(char campo[LADO][LADO], SAMPLE * sonido_mover, BITMAP * pantall
 						play_sample(sonido_mover, 200, 150, 1000, 0);
 						aplicar_movimiento(fila_origen, columna_origen, fila_destino, columna_destino, campo);
 						promocionar_peon_blanco(pieza_promocion_blanca, campo);
-
-						minuto_b_detenido = minuto_b;
-						segundo_b_detenido = segundo_b;
-						minuto_n = minuto_n_detenido;
-						segundo_n = segundo_n_detenido;
+						actualizacion_timer_blanco(&minuto_n_detenido, &segundo_n_detenido, &minuto_b_detenido, &segundo_b_detenido);
 
 						if(campo[fila_destino][columna_destino] == 'r') {
 							f_rey_b = fila_destino;
@@ -632,13 +652,8 @@ void seleccionar(char campo[LADO][LADO], SAMPLE * sonido_mover, BITMAP * pantall
 					if(movio_negra) {
 						play_sample(sonido_mover, 200, 150, 1000, 0);
 						aplicar_movimiento(fila_origen, columna_origen, fila_destino, columna_destino, campo);
-
 						promocionar_peon_negro(pieza_promocion_negra, campo);
-
-						minuto_n_detenido = minuto_n;
-						segundo_n_detenido = segundo_n;
-						minuto_b = minuto_b_detenido;
-						segundo_b = segundo_b_detenido;
+						actualizacion_timer_negro(&minuto_n_detenido, &segundo_n_detenido, &minuto_b_detenido, &segundo_b_detenido);
 
 						if(campo[fila_destino][columna_destino] == 'R') {
 							f_rey_n = fila_destino;
@@ -674,15 +689,8 @@ void seleccionar(char campo[LADO][LADO], SAMPLE * sonido_mover, BITMAP * pantall
 		}
 
 		dibujar_seleccion_promocion(pantalla, pieza_promocion_blanca, pieza_promocion_negra);
+		timer(pantalla, turno_blanca, minuto_n_detenido, segundo_n_detenido, minuto_b_detenido, segundo_b_detenido);
 
-
-		if(turno_blanca) {
-			tiempo_jugador_negro(pantalla, minuto_n_detenido, segundo_n_detenido);
-			tiempo_jugador_blanco(pantalla, minuto_b, segundo_b);
-		} else {
-			tiempo_jugador_blanco(pantalla, minuto_b_detenido, segundo_b_detenido);
-			tiempo_jugador_negro(pantalla, minuto_n, segundo_n);
-		}
 
 	}
 }

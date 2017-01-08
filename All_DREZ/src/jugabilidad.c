@@ -270,10 +270,10 @@ bool verificar_jaque(char pieza, int fila_destino, int columna_destino, char cam
 }
 
 
-volatile int close_button_pressed = FALSE;
+volatile int close_button_pressed = false;
 
 void close_button_handler(void) {
-	close_button_pressed = TRUE;
+	close_button_pressed = true;
 }
 
 void seleccionar_origen(BITMAP *pantalla, int fila, int columna, bool turno_blanca, int *clic_blanca, int *clic_negra, int *fila_origen, int *columna_origen, char campo[LADO][LADO]) {
@@ -455,6 +455,11 @@ bool es_fuera_de_menu(int *arr, int mouse_x, int mouse_y) {
 	return !(mouse_x > arr[4] && mouse_x < arr[6] && mouse_y > arr[5] && mouse_y < arr[7]);
 }
 
+bool mouse_dentro_tablero(int mouse_x, int mouse_y) {
+	obtener_fila_y_columna(&mouse_x, &mouse_y);
+	return mouse_x < 8 && mouse_y < 8;
+}
+
 void seleccionar(char campo[LADO][LADO], SAMPLE * sonido_mover, BITMAP * pantalla) {
 	int fila = 0, columna = 0, fila_origen = 0, fila_destino = -1, columna_origen = 0, columna_destino = -1,
 		clic_blanca = 0, clic_negra = 0;
@@ -470,7 +475,7 @@ void seleccionar(char campo[LADO][LADO], SAMPLE * sonido_mover, BITMAP * pantall
 		blit(pantalla, screen, 0, 0, 0, 0, 870, 667);
 		verificar_estado_de_rey(&mensaje_jaque_mate, &mensaje_jaque, &jaque_mate, negra_en_jaque, blanca_en_jaque, campo);
 		rest(25);
-		if(!jaque_mate && (mouse_b & 1)) {
+		if(!jaque_mate && (mouse_b & 1) && mouse_dentro_tablero(mouse_x, mouse_y)) {
 
 			obtener_fila_y_columna(&fila, &columna);
 

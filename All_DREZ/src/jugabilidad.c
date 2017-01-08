@@ -480,12 +480,21 @@ void promocionar_peon_negro(char pieza_promocion_negra, char campo[LADO][LADO]) 
 	}
 }
 
-void tiempo_jugador_blanco(BITMAP *pantalla) {
-	textprintf_centre_ex(pantalla, font, 765, 525, 15, 0, "%d : %d ", minuto_b, segundo_b);
+void tiempo_jugador_blanco(BITMAP *pantalla, int minuto, int segundo) {
+	if(segundo_b < 10 || segundo_b == 0) {
+		textprintf_centre_ex(pantalla, font, 770, 525, 15, 0, "0%d : %d%d ", minuto, 0, segundo);
+	} else {
+		textprintf_centre_ex(pantalla, font, 770, 525, 15, 0, "0%d : %d ", minuto, segundo);
+	}
+
 }
 
-void tiempo_jugador_negro(BITMAP * pantalla) {
-	textprintf_centre_ex(pantalla, font, 765, 205, 15, 0, "%d : %d ", minuto_n, segundo_n);
+void tiempo_jugador_negro(BITMAP * pantalla, int minuto, int segundo) {
+	if(segundo_n < 10 || segundo_n == 0) {
+		textprintf_centre_ex(pantalla, font, 770, 205, 15, 0, "0%d : %d%d ", minuto, 0, segundo);
+	} else {
+		textprintf_centre_ex(pantalla, font, 770, 205, 15, 0, "0%d : %d ", minuto, segundo);
+	}
 }
 
 void cronometro_jugador_blanco(void) {
@@ -503,7 +512,6 @@ void cronometro_jugador_blanco(void) {
 	}
 }
 
-
 void cronometro_jugador_negro(void) {
 	while(true) {
 		if(milesima_segundo_n < 1) {
@@ -520,11 +528,9 @@ void cronometro_jugador_negro(void) {
 }
 
 
-
 void seleccionar(char campo[LADO][LADO], SAMPLE * sonido_mover, BITMAP * pantalla) {
-
 	int fila = 0, columna = 0, fila_origen = 0, fila_destino = -1, columna_origen = 0, columna_destino = -1,
-		clic_blanca = 0, clic_negra = 0;
+		clic_blanca = 0, clic_negra = 0, minuto_b_detenido = 5, segundo_b_detenido = 0, minuto_n_detenido = 5, segundo_n_detenido = 0;
 
 	bool turno_blanca = true, blanca_en_jaque = false, negra_en_jaque = false, condicion_blanca_seleccionar = false,
 		 condicion_negra_seleccionar = false, movio_blanca = false, movio_negra = false, jaque_mate = false,
@@ -533,8 +539,10 @@ void seleccionar(char campo[LADO][LADO], SAMPLE * sonido_mover, BITMAP * pantall
 	char pieza = ' ', pieza_promocion_blanca = 'w', pieza_promocion_negra = 'W';
 
 	pthread_t hilo_timer_blanco, hilo_timer_negro;
+
 	pthread_create(&hilo_timer_blanco, NULL, (void*)cronometro_jugador_blanco, NULL);
 	pthread_create(&hilo_timer_negro, NULL, (void*)cronometro_jugador_negro, NULL);
+
 
 	LOCK_FUNCTION(close_button_handler);
 	set_close_button_callback(close_button_handler);
@@ -561,8 +569,9 @@ void seleccionar(char campo[LADO][LADO], SAMPLE * sonido_mover, BITMAP * pantall
 						clic_blanca += 1;
 						dibujar_cuadros_seleccion_anterior(pantalla, campo);
 						dibujar_seleccion_promocion(pantalla, pieza_promocion_blanca, pieza_promocion_negra);
-						tiempo_jugador_blanco(pantalla);
-						tiempo_jugador_negro(pantalla);
+
+						tiempo_jugador_blanco(pantalla, minuto_b, segundo_b);
+						tiempo_jugador_negro(pantalla, minuto_n_detenido, segundo_n_detenido);
 					}
 					campo[fila_origen][columna_origen] = pieza;
 				}
@@ -572,8 +581,12 @@ void seleccionar(char campo[LADO][LADO], SAMPLE * sonido_mover, BITMAP * pantall
 					if(movio_blanca) {
 						play_sample(sonido_mover, 200, 150, 1000, 0);
 						aplicar_movimiento(fila_origen, columna_origen, fila_destino, columna_destino, campo);
-
 						promocionar_peon_blanco(pieza_promocion_blanca, campo);
+
+						minuto_b_detenido = minuto_b;
+						segundo_b_detenido = segundo_b;
+						minuto_n = minuto_n_detenido;
+						segundo_n = segundo_n_detenido;
 
 						if(campo[fila_destino][columna_destino] == 'r') {
 							f_rey_b = fila_destino;
@@ -583,6 +596,7 @@ void seleccionar(char campo[LADO][LADO], SAMPLE * sonido_mover, BITMAP * pantall
 
 						asignacion_variables_auxiliares(&turno_blanca, false, &mensaje_jaque, &mensaje_jaque_mate, fila_origen, columna_origen, fila_destino, columna_destino);
 					} else {
+
 						turno_blanca = true;
 						draw_cuadrado(fila_origen, columna_origen, campo, ROJO, NEGRO, true, pantalla);
 						draw_cuadrado(fila_destino, columna_destino, campo, ROJO, NEGRO,true, pantalla);
@@ -606,8 +620,9 @@ void seleccionar(char campo[LADO][LADO], SAMPLE * sonido_mover, BITMAP * pantall
 						clic_negra += 1;
 						dibujar_cuadros_seleccion_anterior(pantalla, campo);
 						dibujar_seleccion_promocion(pantalla, pieza_promocion_blanca, pieza_promocion_negra);
-						tiempo_jugador_blanco(pantalla);
-						tiempo_jugador_negro(pantalla);
+
+						tiempo_jugador_negro(pantalla, minuto_n, segundo_n);
+						tiempo_jugador_blanco(pantalla, minuto_b_detenido, segundo_b_detenido);
 					}
 					campo[fila_origen][columna_origen] = pieza;
 				}
@@ -619,6 +634,11 @@ void seleccionar(char campo[LADO][LADO], SAMPLE * sonido_mover, BITMAP * pantall
 						aplicar_movimiento(fila_origen, columna_origen, fila_destino, columna_destino, campo);
 
 						promocionar_peon_negro(pieza_promocion_negra, campo);
+
+						minuto_n_detenido = minuto_n;
+						segundo_n_detenido = segundo_n;
+						minuto_b = minuto_b_detenido;
+						segundo_b = segundo_b_detenido;
 
 						if(campo[fila_destino][columna_destino] == 'R') {
 							f_rey_n = fila_destino;
@@ -654,8 +674,15 @@ void seleccionar(char campo[LADO][LADO], SAMPLE * sonido_mover, BITMAP * pantall
 		}
 
 		dibujar_seleccion_promocion(pantalla, pieza_promocion_blanca, pieza_promocion_negra);
-		tiempo_jugador_blanco(pantalla);
-		tiempo_jugador_negro(pantalla);
+
+
+		if(turno_blanca) {
+			tiempo_jugador_negro(pantalla, minuto_n_detenido, segundo_n_detenido);
+			tiempo_jugador_blanco(pantalla, minuto_b, segundo_b);
+		} else {
+			tiempo_jugador_blanco(pantalla, minuto_b_detenido, segundo_b_detenido);
+			tiempo_jugador_negro(pantalla, minuto_n, segundo_n);
+		}
 
 	}
 }

@@ -161,40 +161,29 @@ void jugador_negro(BITMAP * pantalla) {
 void seleccionar_promocion(BITMAP * pantalla, int mouse_x, int mouse_y, char *pieza_seleccionada, bool turno_blanca) {
 
 	if(!turno_blanca) {
-
 		if(mouse_x > 675 && mouse_x < 695 && mouse_y > 98 && mouse_y < 120) {
-			circlefill(pantalla, 685, 108, 4, 2); // torre
 			*pieza_seleccionada = 't';
 		}
 		if(mouse_x > 768 && mouse_x < 782 && mouse_y > 98 && mouse_y < 120) {
-			circlefill(pantalla, 775, 108, 4, 2); // caballo
 			*pieza_seleccionada = 'c';
 		}
 		if(mouse_x > 675 && mouse_x < 695 && mouse_y > 82 && mouse_y < 96) {
-			circlefill(pantalla, 685, 89, 4, 2); // reina
 			*pieza_seleccionada = 'w';
 		}
 		if(mouse_x > 768 && mouse_x < 782 && mouse_y > 82 && mouse_y < 96) {
-			circlefill(pantalla, 775, 89, 4, 2); // alfil
 			*pieza_seleccionada = 'a';
 		}
-
 	} else {
-
 		if(mouse_x > 675 && mouse_x < 695 && mouse_y > 402 && mouse_y < 416) {
-			circlefill(pantalla, 685, 409, 4, 2); // reina
 			*pieza_seleccionada = 'W';
 		}
 		if(mouse_x > 768 && mouse_x < 782 && mouse_y > 402 && mouse_y < 416) {
-			circlefill(pantalla, 775, 409, 4, 2); // alfil
 			*pieza_seleccionada = 'A';
 		}
 		if(mouse_x > 675 && mouse_x < 695 && mouse_y > 422 && mouse_y < 436) {
-			circlefill(pantalla, 685, 429, 4, 2); // torre
 			*pieza_seleccionada = 'T';
 		}
 		if(mouse_x > 768 && mouse_x < 782 && mouse_y > 422 && mouse_y < 436) {
-			circlefill(pantalla, 775, 429, 4, 2); // caballo
 			*pieza_seleccionada = 'C';
 		}
 	}

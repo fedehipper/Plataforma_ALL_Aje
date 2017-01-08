@@ -570,10 +570,11 @@ void seleccionar(char campo[LADO][LADO], SAMPLE * sonido_mover, BITMAP * pantall
 			} else {
 				seleccionar_promocion(pantalla, mouse_x, mouse_y, &pieza_promocion_negra, turno_blanca);
 			}
-			printf("%c\n", pieza_promocion_blanca);
+			re_draw(pantalla, campo);
 		}
 
 		dibujar_seleccion_promocion(pantalla, pieza_promocion_blanca, pieza_promocion_negra);
+
 
 	}
 }

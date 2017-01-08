@@ -131,6 +131,33 @@ void inicializar_posicion_piezas(char campo[LADO][LADO]) {
 	inicializar_posicion_reyes(campo);
 }
 
+void jugador_blanco(BITMAP * pantalla) {
+	textout_centre_ex(pantalla, font, "JUGADOR BLANCO", 760, 25, 15, 0);
+	textout_centre_ex(pantalla, font, "PROMOCION", 765, 65, 15, 0);
+	textout_centre_ex(pantalla, font, "reina", 720, 85, 15, 0);
+	textout_centre_ex(pantalla, font, "torre", 720, 105, 15, 0);
+	textout_centre_ex(pantalla, font, "alfil", 810, 85, 15, 0);
+	textout_centre_ex(pantalla, font, "caballo", 819, 105, 15, 0);
+	circle(pantalla, 685, 108, 7, 15);
+	circlefill(pantalla, 685, 108, 4, 15);
+	circle(pantalla, 775, 108, 7, 15);
+	circle(pantalla, 685, 89, 7, 15);
+	circle(pantalla, 775, 89, 7, 15);
+}
+
+void jugador_negro(BITMAP * pantalla) {
+	textout_centre_ex(pantalla, font, "JUGADOR NEGRO", 762, 345, 15, 0);
+	textout_centre_ex(pantalla, font, "PROMOCION", 765, 385, 15, 0);
+	textout_centre_ex(pantalla, font, "reina", 720, 405, 15, 0);
+	textout_centre_ex(pantalla, font, "torre", 720, 425, 15, 0);
+	textout_centre_ex(pantalla, font, "alfil", 810, 405, 15, 0);
+	textout_centre_ex(pantalla, font, "caballo", 819, 425, 15, 0);
+	circle(pantalla, 685, 409, 7, 15);
+	circle(pantalla, 775, 409, 7, 15);
+	circle(pantalla, 685, 429, 7, 15);
+	circle(pantalla, 775, 429, 7, 15);
+}
+
 void draw_tablero(BITMAP *pantalla) {
 	draw_lineas_verticales(pantalla);
 	draw_lineas_horizontales(pantalla);
@@ -138,6 +165,9 @@ void draw_tablero(BITMAP *pantalla) {
 	draw_cuadros_tablero(pantalla);
 	draw_bordes(pantalla);
 	rect(pantalla, 665, 10, 860, 650, 15);
+	line(pantalla, 665, 330, 860, 330, 15);
+	jugador_blanco(pantalla);
+	jugador_negro(pantalla);
 }
 
 void crear_caballo_blanco(void) {

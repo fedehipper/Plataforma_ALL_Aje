@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <allegro.h>
 #include <stdbool.h>
+#include <pthread.h>
 #include "tablero_grafico.h"
 #include "movimientos_peon.h"
 #include "movimientos_torre.h"
@@ -17,7 +18,8 @@
 #define NEGRO_SELECCION 24
 
 int f_rey_b = 7, c_rey_b = 4, f_rey_n = 0, c_rey_n = 4,
-	f_origen_anterior = -1, c_origen_anterior = -1, f_destino_anterior = -1, c_destino_anterior = -1;
+	f_origen_anterior = -1, c_origen_anterior = -1, f_destino_anterior = -1, c_destino_anterior = -1,
+	minuto_b = 5, segundo_b = 0, milesima_segundo_b = 0, minuto_n = 5, segundo_n = 0, milesima_segundo_n = 0;
 
 bool movi_torre_izq_b = false, movi_torre_der_b = false, movi_torre_izq_n = false, movi_torre_der_n = false, movi_rey_b = false,
 	 movi_rey_n = false;
@@ -478,13 +480,61 @@ void promocionar_peon_negro(char pieza_promocion_negra, char campo[LADO][LADO]) 
 	}
 }
 
+void tiempo_jugador_blanco(BITMAP *pantalla) {
+	textprintf_centre_ex(pantalla, font, 765, 525, 15, 0, "%d : %d ", minuto_b, segundo_b);
+}
+
+void tiempo_jugador_negro(BITMAP * pantalla) {
+	textprintf_centre_ex(pantalla, font, 765, 205, 15, 0, "%d : %d ", minuto_n, segundo_n);
+}
+
+void cronometro_jugador_blanco(void) {
+	while(true) {
+		if(milesima_segundo_b < 1) {
+			segundo_b--;
+			milesima_segundo_b = 10;
+			if(segundo_b < 1) {
+				minuto_b--;
+				segundo_b = 59;
+			}
+		}
+		milesima_segundo_b--;
+		rest(100);
+	}
+}
+
+
+void cronometro_jugador_negro(void) {
+	while(true) {
+		if(milesima_segundo_n < 1) {
+			segundo_n--;
+			milesima_segundo_n = 10;
+			if(segundo_n < 0) {
+				minuto_n--;
+				segundo_n = 59;
+			}
+		}
+		milesima_segundo_n--;
+		rest(100);
+	}
+}
+
+
+
 void seleccionar(char campo[LADO][LADO], SAMPLE * sonido_mover, BITMAP * pantalla) {
+
 	int fila = 0, columna = 0, fila_origen = 0, fila_destino = -1, columna_origen = 0, columna_destino = -1,
 		clic_blanca = 0, clic_negra = 0;
+
 	bool turno_blanca = true, blanca_en_jaque = false, negra_en_jaque = false, condicion_blanca_seleccionar = false,
 		 condicion_negra_seleccionar = false, movio_blanca = false, movio_negra = false, jaque_mate = false,
 		 mensaje_jaque = true, mensaje_jaque_mate = true, presione_clic_derecho = false;
+
 	char pieza = ' ', pieza_promocion_blanca = 'w', pieza_promocion_negra = 'W';
+
+	pthread_t hilo_timer_blanco, hilo_timer_negro;
+	pthread_create(&hilo_timer_blanco, NULL, (void*)cronometro_jugador_blanco, NULL);
+	pthread_create(&hilo_timer_negro, NULL, (void*)cronometro_jugador_negro, NULL);
 
 	LOCK_FUNCTION(close_button_handler);
 	set_close_button_callback(close_button_handler);
@@ -492,7 +542,9 @@ void seleccionar(char campo[LADO][LADO], SAMPLE * sonido_mover, BITMAP * pantall
 	while(!close_button_pressed) {
 		blit(pantalla, screen, 0, 0, 0, 0, 870, 667);
 		verificar_estado_de_rey(&mensaje_jaque_mate, &mensaje_jaque, &jaque_mate, negra_en_jaque, blanca_en_jaque, campo);
-		rest(25);
+
+		rest(15);
+
 		if(!jaque_mate && (mouse_b & 1) && mouse_dentro_tablero(mouse_x, mouse_y)) {
 
 			obtener_fila_y_columna(&fila, &columna);
@@ -509,6 +561,8 @@ void seleccionar(char campo[LADO][LADO], SAMPLE * sonido_mover, BITMAP * pantall
 						clic_blanca += 1;
 						dibujar_cuadros_seleccion_anterior(pantalla, campo);
 						dibujar_seleccion_promocion(pantalla, pieza_promocion_blanca, pieza_promocion_negra);
+						tiempo_jugador_blanco(pantalla);
+						tiempo_jugador_negro(pantalla);
 					}
 					campo[fila_origen][columna_origen] = pieza;
 				}
@@ -552,6 +606,8 @@ void seleccionar(char campo[LADO][LADO], SAMPLE * sonido_mover, BITMAP * pantall
 						clic_negra += 1;
 						dibujar_cuadros_seleccion_anterior(pantalla, campo);
 						dibujar_seleccion_promocion(pantalla, pieza_promocion_blanca, pieza_promocion_negra);
+						tiempo_jugador_blanco(pantalla);
+						tiempo_jugador_negro(pantalla);
 					}
 					campo[fila_origen][columna_origen] = pieza;
 				}
@@ -598,8 +654,10 @@ void seleccionar(char campo[LADO][LADO], SAMPLE * sonido_mover, BITMAP * pantall
 		}
 
 		dibujar_seleccion_promocion(pantalla, pieza_promocion_blanca, pieza_promocion_negra);
-
+		tiempo_jugador_blanco(pantalla);
+		tiempo_jugador_negro(pantalla);
 
 	}
 }
+
 

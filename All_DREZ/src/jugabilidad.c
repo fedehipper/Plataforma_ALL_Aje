@@ -466,7 +466,7 @@ void seleccionar(char campo[LADO][LADO], SAMPLE * sonido_mover, BITMAP * pantall
 	bool turno_blanca = true, blanca_en_jaque = false, negra_en_jaque = false, condicion_blanca_seleccionar = false,
 		 condicion_negra_seleccionar = false, movio_blanca = false, movio_negra = false, jaque_mate = false,
 		 mensaje_jaque = true, mensaje_jaque_mate = true, presione_clic_derecho = false;
-	char pieza = ' ';
+	char pieza = ' ', pieza_promocion_blanca = ' ', pieza_promocion_negra = ' ';
 
 	LOCK_FUNCTION(close_button_handler);
 	set_close_button_callback(close_button_handler);
@@ -490,6 +490,7 @@ void seleccionar(char campo[LADO][LADO], SAMPLE * sonido_mover, BITMAP * pantall
 						re_draw(pantalla, campo);
 						clic_blanca += 1;
 						dibujar_cuadros_seleccion_anterior(pantalla, campo);
+						dibujar_seleccion_promocion(pantalla, pieza_promocion_blanca, pieza_promocion_negra);
 					}
 					campo[fila_origen][columna_origen] = pieza;
 				}
@@ -529,6 +530,7 @@ void seleccionar(char campo[LADO][LADO], SAMPLE * sonido_mover, BITMAP * pantall
 						re_draw(pantalla, campo);
 						clic_negra += 1;
 						dibujar_cuadros_seleccion_anterior(pantalla, campo);
+						dibujar_seleccion_promocion(pantalla, pieza_promocion_blanca, pieza_promocion_negra);
 					}
 					campo[fila_origen][columna_origen] = pieza;
 				}
@@ -561,6 +563,17 @@ void seleccionar(char campo[LADO][LADO], SAMPLE * sonido_mover, BITMAP * pantall
 		if(!presione_clic_derecho) {
 			dibujar_cuadros_seleccion_anterior(pantalla, campo);
 		}
+
+		if(!mouse_dentro_tablero(mouse_x, mouse_y) && (mouse_b & 1)) {
+			if(turno_blanca) {
+				seleccionar_promocion(pantalla, mouse_x, mouse_y, &pieza_promocion_blanca, turno_blanca);
+			} else {
+				seleccionar_promocion(pantalla, mouse_x, mouse_y, &pieza_promocion_negra, turno_blanca);
+			}
+			printf("%c\n", pieza_promocion_blanca);
+		}
+
+		dibujar_seleccion_promocion(pantalla, pieza_promocion_blanca, pieza_promocion_negra);
 
 	}
 }

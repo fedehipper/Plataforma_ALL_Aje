@@ -162,45 +162,45 @@ void seleccionar_promocion(BITMAP * pantalla, int mouse_x, int mouse_y, char *pi
 
 	if(!turno_blanca) {
 		if(mouse_x > 675 && mouse_x < 695 && mouse_y > 98 && mouse_y < 120) {
-			*pieza_seleccionada = 't';
+			*pieza_seleccionada = 'T';
 		}
 		if(mouse_x > 768 && mouse_x < 782 && mouse_y > 98 && mouse_y < 120) {
-			*pieza_seleccionada = 'c';
+			*pieza_seleccionada = 'C';
 		}
 		if(mouse_x > 675 && mouse_x < 695 && mouse_y > 82 && mouse_y < 96) {
-			*pieza_seleccionada = 'w';
+			*pieza_seleccionada = 'W';
 		}
 		if(mouse_x > 768 && mouse_x < 782 && mouse_y > 82 && mouse_y < 96) {
-			*pieza_seleccionada = 'a';
+			*pieza_seleccionada = 'A';
 		}
 	} else {
 		if(mouse_x > 675 && mouse_x < 695 && mouse_y > 402 && mouse_y < 416) {
-			*pieza_seleccionada = 'W';
+			*pieza_seleccionada = 'w';
 		}
 		if(mouse_x > 768 && mouse_x < 782 && mouse_y > 402 && mouse_y < 416) {
-			*pieza_seleccionada = 'A';
+			*pieza_seleccionada = 'a';
 		}
 		if(mouse_x > 675 && mouse_x < 695 && mouse_y > 422 && mouse_y < 436) {
-			*pieza_seleccionada = 'T';
+			*pieza_seleccionada = 't';
 		}
 		if(mouse_x > 768 && mouse_x < 782 && mouse_y > 422 && mouse_y < 436) {
-			*pieza_seleccionada = 'C';
+			*pieza_seleccionada = 'c';
 		}
 	}
 }
 
 void dibujar_seleccion_promocion(BITMAP *pantalla, char pieza_promocion_blanca, char pieza_promocion_negra) {
 	switch(pieza_promocion_blanca) {
-		case 'W': circlefill(pantalla, 685, 409, 4, 2); break;
-		case 'A': circlefill(pantalla, 775, 409, 4, 2); break;
-		case 'T': circlefill(pantalla, 685, 429, 4, 2); break;
-		case 'C': circlefill(pantalla, 775, 429, 4, 2); break;
+		case 'w': circlefill(pantalla, 685, 409, 4, 2); break;
+		case 'a': circlefill(pantalla, 775, 409, 4, 2); break;
+		case 't': circlefill(pantalla, 685, 429, 4, 2); break;
+		case 'c': circlefill(pantalla, 775, 429, 4, 2); break;
 	}
 	switch(pieza_promocion_negra) {
-		case 'w': circlefill(pantalla, 685, 89, 4, 2); break;
-		case 'a': circlefill(pantalla, 775, 89, 4, 2); break;
-		case 't': circlefill(pantalla, 685, 108, 4, 2); break;
-		case 'c': circlefill(pantalla, 775, 108, 4, 2); break;
+		case 'W': circlefill(pantalla, 685, 89, 4, 2); break;
+		case 'A': circlefill(pantalla, 775, 89, 4, 2); break;
+		case 'T': circlefill(pantalla, 685, 108, 4, 2); break;
+		case 'C': circlefill(pantalla, 775, 108, 4, 2); break;
 	}
 }
 

@@ -460,13 +460,31 @@ bool mouse_dentro_tablero(int mouse_x, int mouse_y) {
 	return mouse_x < 8 && mouse_y < 8;
 }
 
+void promocionar_peon_blanco(char pieza_promocion_blanca, char campo[LADO][LADO]) {
+	int i;
+	for(i = 0 ; i < 8 ; i++) {
+		if(campo[0][i] == 'p') {
+			campo[0][i] = pieza_promocion_blanca;
+		}
+	}
+}
+
+void promocionar_peon_negro(char pieza_promocion_negra, char campo[LADO][LADO]) {
+	int i;
+	for(i = 0 ; i < 7 ; i++) {
+		if(campo[7][i] == 'P') {
+			campo[7][i] = pieza_promocion_negra;
+		}
+	}
+}
+
 void seleccionar(char campo[LADO][LADO], SAMPLE * sonido_mover, BITMAP * pantalla) {
 	int fila = 0, columna = 0, fila_origen = 0, fila_destino = -1, columna_origen = 0, columna_destino = -1,
 		clic_blanca = 0, clic_negra = 0;
 	bool turno_blanca = true, blanca_en_jaque = false, negra_en_jaque = false, condicion_blanca_seleccionar = false,
 		 condicion_negra_seleccionar = false, movio_blanca = false, movio_negra = false, jaque_mate = false,
 		 mensaje_jaque = true, mensaje_jaque_mate = true, presione_clic_derecho = false;
-	char pieza = ' ', pieza_promocion_blanca = ' ', pieza_promocion_negra = ' ';
+	char pieza = ' ', pieza_promocion_blanca = 'w', pieza_promocion_negra = 'W';
 
 	LOCK_FUNCTION(close_button_handler);
 	set_close_button_callback(close_button_handler);
@@ -500,6 +518,9 @@ void seleccionar(char campo[LADO][LADO], SAMPLE * sonido_mover, BITMAP * pantall
 					if(movio_blanca) {
 						play_sample(sonido_mover, 200, 150, 1000, 0);
 						aplicar_movimiento(fila_origen, columna_origen, fila_destino, columna_destino, campo);
+
+						promocionar_peon_blanco(pieza_promocion_blanca, campo);
+
 						if(campo[fila_destino][columna_destino] == 'r') {
 							f_rey_b = fila_destino;
 							c_rey_b = columna_destino;
@@ -540,6 +561,9 @@ void seleccionar(char campo[LADO][LADO], SAMPLE * sonido_mover, BITMAP * pantall
 					if(movio_negra) {
 						play_sample(sonido_mover, 200, 150, 1000, 0);
 						aplicar_movimiento(fila_origen, columna_origen, fila_destino, columna_destino, campo);
+
+						promocionar_peon_negro(pieza_promocion_negra, campo);
+
 						if(campo[fila_destino][columna_destino] == 'R') {
 							f_rey_n = fila_destino;
 							c_rey_n = columna_destino;

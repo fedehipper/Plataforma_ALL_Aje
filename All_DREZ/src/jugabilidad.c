@@ -480,27 +480,27 @@ void promocionar_peon_negro(char pieza_promocion_negra, char campo[LADO][LADO]) 
 }
 
 void tiempo_jugador_blanco(BITMAP *pantalla, int minuto, int segundo, bool *tiempo_limite) {
-	if(segundo < 10) {
-		textprintf_centre_ex(pantalla, font, 770, 525, 15, 0, "0%d : %d%d ", minuto, 0, segundo);
-	}
-	if(segundo >= 10) {
-		textprintf_centre_ex(pantalla, font, 770, 525, 15, 0, "0%d : %d ", minuto, segundo);
+	if(!*tiempo_limite && minuto >= 0) {
+		if(segundo < 10) {
+			textprintf_centre_ex(pantalla, font, 767, 505, 15, 0, "0%d : 0%d", minuto, segundo);
+		} else {
+			textprintf_centre_ex(pantalla, font, 767, 505, 15, 0, "0%d : %d", minuto, segundo);
+		}
 	}
 	if(minuto < 0) {
-		textprintf_centre_ex(pantalla, font, 770, 525, 15, 0, "%d : 0%d ", 0, 0);
 		*tiempo_limite = true;
 	}
 }
 
 void tiempo_jugador_negro(BITMAP * pantalla, int minuto, int segundo, bool *tiempo_limite) {
-	if(segundo < 10) {
-		textprintf_centre_ex(pantalla, font, 770, 205, 15, 0, "0%d : %d%d ", minuto, 0, segundo);
-	}
-	if(segundo >= 10) {
-		textprintf_centre_ex(pantalla, font, 770, 205, 15, 0, "0%d : %d ", minuto, segundo);
+	if(!*tiempo_limite && minuto >= 0) {
+		if(segundo < 10) {
+			textprintf_centre_ex(pantalla, font, 767, 185, 15, 0, "0%d : 0%d", minuto, segundo);
+		} else {
+			textprintf_centre_ex(pantalla, font, 767, 185, 15, 0, "0%d : %d", minuto, segundo);
+		}
 	}
 	if(minuto < 0) {
-		textprintf_centre_ex(pantalla, font, 770, 205, 15, 0, "%d : 0%d ", 0, 0);
 		*tiempo_limite = true;
 	}
 }
@@ -560,12 +560,16 @@ void actualizacion_timer_blanco(int *minuto_n_detenido, int *segundo_n_detenido,
 	segundo_n = *segundo_n_detenido;
 }
 
-void verificar_tiempo_limite_message(bool tiempo_limite_blanco, bool tiempo_limite_negro) {
-	if(tiempo_limite_blanco) {
-		allegro_message("TIEMPO LIMITE, GANA JUGADOR NEGRO");
-	}
-	if(tiempo_limite_negro) {
-		allegro_message("TIEMPO LIMITE, GANA JUGADOR BLANCO");
+void verificar_tiempo_limite_message(bool tiempo_limite_blanco, bool tiempo_limite_negro, bool *mensaje_tiempo_limite) {
+	if(!*mensaje_tiempo_limite) {
+		if(tiempo_limite_blanco) {
+			allegro_message("TIEMPO LIMITE, GANA JUGADOR NEGRO");
+			*mensaje_tiempo_limite = true;
+		}
+		if(tiempo_limite_negro) {
+			allegro_message("TIEMPO LIMITE, GANA JUGADOR BLANCO");
+			*mensaje_tiempo_limite = true;
+		}
 	}
 }
 
@@ -576,8 +580,8 @@ void seleccionar(char campo[LADO][LADO], SAMPLE * sonido_mover, BITMAP * pantall
 
 	bool turno_blanca = true, blanca_en_jaque = false, negra_en_jaque = false, condicion_blanca_seleccionar = false,
 		 condicion_negra_seleccionar = false, movio_blanca = false, movio_negra = false, jaque_mate = false,
-		 mensaje_jaque = true, mensaje_jaque_mate = true, presione_clic_derecho = false, tiempo_limite_negro = false,
-		 tiempo_limite_blanco = false;
+		 mensaje_jaque = true, mensaje_jaque_mate = true, tiempo_limite_negro = false,
+		 tiempo_limite_blanco = false, mensaje_tiempo_limite = false;
 
 	char pieza = ' ', pieza_promocion_blanca = 'w', pieza_promocion_negra = 'W';
 
@@ -594,11 +598,10 @@ void seleccionar(char campo[LADO][LADO], SAMPLE * sonido_mover, BITMAP * pantall
 		blit(pantalla, screen, 0, 0, 0, 0, 870, 667);
 		verificar_estado_de_rey(&mensaje_jaque_mate, &mensaje_jaque, &jaque_mate, negra_en_jaque, blanca_en_jaque, campo);
 
-		rest(10);
+		rest(30);
 
 		if(!jaque_mate && (mouse_b & 1) && mouse_dentro_tablero(mouse_x, mouse_y) && !tiempo_limite_blanco && !tiempo_limite_negro) {
 
-			verificar_tiempo_limite_message(tiempo_limite_blanco, tiempo_limite_negro);
 			obtener_fila_y_columna(&fila, &columna);
 
 			if(turno_blanca) {
@@ -695,9 +698,7 @@ void seleccionar(char campo[LADO][LADO], SAMPLE * sonido_mover, BITMAP * pantall
 			}
 		}
 
-		if(!presione_clic_derecho) {
-			dibujar_cuadros_seleccion_anterior(pantalla, campo);
-		}
+		dibujar_cuadros_seleccion_anterior(pantalla, campo);
 
 		if(!mouse_dentro_tablero(mouse_x, mouse_y) && (mouse_b & 1)) {
 			if(turno_blanca) {
@@ -711,6 +712,7 @@ void seleccionar(char campo[LADO][LADO], SAMPLE * sonido_mover, BITMAP * pantall
 		dibujar_seleccion_promocion(pantalla, pieza_promocion_blanca, pieza_promocion_negra);
 		timer(pantalla, turno_blanca, minuto_n_detenido, segundo_n_detenido, minuto_b_detenido, segundo_b_detenido, &tiempo_limite_blanco, &tiempo_limite_negro);
 
+		verificar_tiempo_limite_message(tiempo_limite_blanco, tiempo_limite_negro, &mensaje_tiempo_limite);
 
 	}
 }

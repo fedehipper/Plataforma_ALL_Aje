@@ -142,7 +142,7 @@ void jugador_blanco(BITMAP * pantalla) {
 	circle(pantalla, 775, 108, 7, 15);
 	circle(pantalla, 685, 89, 7, 15);
 	circle(pantalla, 775, 89, 7, 15);
-	textout_centre_ex(pantalla, font, "TIEMPO", 765, 180, 15, 0);
+	textout_centre_ex(pantalla, font, "CRONOMETRO", 765, 155, 15, 0);
 }
 
 void jugador_negro(BITMAP * pantalla) {
@@ -156,7 +156,7 @@ void jugador_negro(BITMAP * pantalla) {
 	circle(pantalla, 775, 409, 7, 15);
 	circle(pantalla, 685, 429, 7, 15);
 	circle(pantalla, 775, 429, 7, 15);
-	textout_centre_ex(pantalla, font, "TIEMPO", 765, 500, 15, 0);
+	textout_centre_ex(pantalla, font, "CRONOMETRO", 765, 475, 15, 0);
 }
 
 // ya son las coordenadas posta

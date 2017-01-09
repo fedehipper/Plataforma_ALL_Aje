@@ -510,7 +510,6 @@ void cronometro_jugador_blanco(void) {
 		milesima_segundo_b--;
 		rest(100);
 	}
-	pthread_exit(NULL);
 }
 
 void cronometro_jugador_negro(void) {
@@ -528,7 +527,6 @@ void cronometro_jugador_negro(void) {
 		milesima_segundo_n--;
 		rest(100);
 	}
-	pthread_exit(NULL);
 }
 
 

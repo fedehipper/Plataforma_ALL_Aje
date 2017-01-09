@@ -369,7 +369,6 @@ void verificar_estado_de_rey(bool * mensaje_jaque_mate, bool * mensaje_jaque, bo
 		*mensaje_jaque_mate = false;
 	}
 
-
 	if(*mensaje_jaque && (verificar_jaque_intermedio_negras(campo) || verificar_jaque_intermedio_blancas(campo)) && !(no_hay_movimiento_permitido_negras(campo) || no_hay_movimiento_permitido_blancas(campo))) {
 		allegro_message("\n          JAQUE          \n\n");
 		*mensaje_jaque = false;
@@ -473,7 +472,7 @@ void promocionar_peon_blanco(char pieza_promocion_blanca, char campo[LADO][LADO]
 
 void promocionar_peon_negro(char pieza_promocion_negra, char campo[LADO][LADO]) {
 	int i;
-	for(i = 0 ; i < 7 ; i++) {
+	for(i = 0 ; i < 8 ; i++) {
 		if(campo[7][i] == 'P') {
 			campo[7][i] = pieza_promocion_negra;
 		}
@@ -498,10 +497,12 @@ void tiempo_jugador_negro(BITMAP * pantalla, int minuto, int segundo) {
 
 void cronometro_jugador_blanco(void) {
 	while(true) {
+		if(minuto_b == 0 && segundo_b == 0) break;
+
 		if(milesima_segundo_b < 1) {
 			segundo_b--;
 			milesima_segundo_b = 10;
-			if(segundo_b < 1) {
+			if(segundo_b < 0) {
 				minuto_b--;
 				segundo_b = 59;
 			}
@@ -509,10 +510,13 @@ void cronometro_jugador_blanco(void) {
 		milesima_segundo_b--;
 		rest(100);
 	}
+	pthread_exit(NULL);
 }
 
 void cronometro_jugador_negro(void) {
 	while(true) {
+		if(minuto_n == 0 && segundo_n == 0) break;
+
 		if(milesima_segundo_n < 1) {
 			segundo_n--;
 			milesima_segundo_n = 10;
@@ -524,6 +528,7 @@ void cronometro_jugador_negro(void) {
 		milesima_segundo_n--;
 		rest(100);
 	}
+	pthread_exit(NULL);
 }
 
 

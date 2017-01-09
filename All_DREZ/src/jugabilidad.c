@@ -485,6 +485,11 @@ void tiempo_jugador_blanco(BITMAP *pantalla, int minuto, int segundo) {
 	} else {
 		textprintf_centre_ex(pantalla, font, 770, 525, 15, 0, "0%d : %d ", minuto, segundo);
 	}
+
+	if(minuto < 0) {
+		textprintf_centre_ex(pantalla, font, 770, 525, 15, 0, "%d : 0%d ", 0, 0);
+	}
+
 }
 
 void tiempo_jugador_negro(BITMAP * pantalla, int minuto, int segundo) {
@@ -493,12 +498,14 @@ void tiempo_jugador_negro(BITMAP * pantalla, int minuto, int segundo) {
 	} else {
 		textprintf_centre_ex(pantalla, font, 770, 205, 15, 0, "0%d : %d ", minuto, segundo);
 	}
+
+	if(minuto < 0) {
+		textprintf_centre_ex(pantalla, font, 770, 205, 15, 0, "%d : 0%d ", 0, 0);
+	}
 }
 
 void cronometro_jugador_blanco(void) {
 	while(true) {
-		if(minuto_b == 0 && segundo_b == 0) break;
-
 		if(milesima_segundo_b < 1) {
 			segundo_b--;
 			milesima_segundo_b = 10;
@@ -514,8 +521,6 @@ void cronometro_jugador_blanco(void) {
 
 void cronometro_jugador_negro(void) {
 	while(true) {
-		if(minuto_n == 0 && segundo_n == 0) break;
-
 		if(milesima_segundo_n < 1) {
 			segundo_n--;
 			milesima_segundo_n = 10;

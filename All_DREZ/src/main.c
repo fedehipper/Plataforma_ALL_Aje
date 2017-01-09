@@ -16,54 +16,54 @@
 	"X c #808000000000",
 	"o c None",
 	/* pixels */
-	"XXXXX......XXXXXX......XXXXXX......XXXXXX.......",
-	"XXXXX......XXXXXX......XXXXXX......XXXXXX.......",
-	"XXXXX......XXXXXX......XXXXXX......XXXXXX.......",
-	"XXXXX......XXXXXX......XXXXXX......XXXXXX.......",
-	"XXXXX......XXXXXX......XXXXXX......XXXXXX.......",
-	"XXXXX......XXXXXX......XXXXXX......XXXXXX.......",
-	".....XXXXXX......XXXXXX......XXXXXX......XXXXXXX",
-	".....XXXXXX......XXXXXX......XXXXXX......XXXXXXX",
-	".....XXXXXX......XXXXXX......XXXXXX......XXXXXXX",
-	".....XXXXXX......XXXXXX......XXXXXX......XXXXXXX",
-	".....XXXXXX......XXXXXX......XXXXXX......XXXXXXX",
-	".....XXXXXX......XXXXXX......XXXXXX......XXXXXXX",
-	"XXXXX......XXXXXX......XXXXXX......XXXXXX.......",
-	"XXXXX......XXXXXX......XXXXXX......XXXXXX.......",
-	"XXXXX......XXXXXX......XXXXXX......XXXXXX.......",
-	"XXXXX......XXXXXX......XXXXXX......XXXXXX.......",
-	"XXXXX......XXXXXX......XXXXXX......XXXXXX.......",
-	"XXXXX......XXXXXX......XXXXXX......XXXXXX.......",
-	".....XXXXXX......XXXXXX......XXXXXX......XXXXXXX",
-	".....XXXXXX......XXXXXX......XXXXXX......XXXXXXX",
-	".....XXXXXX......XXXXXX......XXXXXX......XXXXXXX",
-	".....XXXXXX......XXXXXX......XXXXXX......XXXXXXX",
-	".....XXXXXX......XXXXXX......XXXXXX......XXXXXXX",
-	".....XXXXXX......XXXXXX......XXXXXX......XXXXXXX",
-	"XXXXX......XXXXXX......XXXXXX......XXXXXX.......",
-	"XXXXX......XXXXXX......XXXXXX......XXXXXX.......",
-	"XXXXX......XXXXXX......XXXXXX......XXXXXX.......",
-	"XXXXX......XXXXXX......XXXXXX......XXXXXX.......",
-	"XXXXX......XXXXXX......XXXXXX......XXXXXX.......",
-	"XXXXX......XXXXXX......XXXXXX......XXXXXX.......",
-	".....XXXXXX......XXXXXX......XXXXXX......XXXXXXX",
-	".....XXXXXX......XXXXXX......XXXXXX......XXXXXXX",
-	".....XXXXXX......XXXXXX......XXXXXX......XXXXXXX",
-	".....XXXXXX......XXXXXX......XXXXXX......XXXXXXX",
-	".....XXXXXX......XXXXXX......XXXXXX......XXXXXXX",
-	".....XXXXXX......XXXXXX......XXXXXX......XXXXXXX",
-	"XXXXX......XXXXXX......XXXXXX......XXXXXX.......",
-	"XXXXX......XXXXXX......XXXXXX......XXXXXX.......",
-	"XXXXX......XXXXXX......XXXXXX......XXXXXX.......",
-	"XXXXX......XXXXXX......XXXXXX......XXXXXX.......",
-	"XXXXX......XXXXXX......XXXXXX......XXXXXX.......",
-	"XXXXX......XXXXXX......XXXXXX......XXXXXX.......",
-	".....XXXXXX......XXXXXX......XXXXXX......XXXXXXX",
-	".....XXXXXX......XXXXXX......XXXXXX......XXXXXXX",
-	".....XXXXXX......XXXXXX......XXXXXX......XXXXXXX",
-	".....XXXXXX......XXXXXX......XXXXXX......XXXXXXX",
-	".....XXXXXX......XXXXXX......XXXXXX......XXXXXXX",
-	".....XXXXXX......XXXXXX......XXXXXX......XXXXXXX"
+	"XXXXXX......XXXXXX......XXXXXX......XXXXXX......",
+	"XXXXXX......XXXXXX......XXXXXX......XXXXXX......",
+	"XXXXXX......XXXXXX......XXXXXX......XXXXXX......",
+	"XXXXXX......XXXXXX......XXXXXX......XXXXXX......",
+	"XXXXXX......XXXXXX......XXXXXX......XXXXXX......",
+	"XXXXXX......XXXXXX......XXXXXX......XXXXXX......",
+	"......XXXXXX......XXXXXX......XXXXXX......XXXXXX",
+	"......XXXXXX......XXXXXX......XXXXXX......XXXXXX",
+	"......XXXXXX......XXXXXX......XXXXXX......XXXXXX",
+	"......XXXXXX......XXXXXX......XXXXXX......XXXXXX",
+	"......XXXXXX......XXXXXX......XXXXXX......XXXXXX",
+	"......XXXXXX......XXXXXX......XXXXXX......XXXXXX",
+	"XXXXXX......XXXXXX......XXXXXX......XXXXXX......",
+	"XXXXXX......XXXXXX......XXXXXX......XXXXXX......",
+	"XXXXXX......XXXXXX......XXXXXX......XXXXXX......",
+	"XXXXXX......XXXXXX......XXXXXX......XXXXXX......",
+	"XXXXXX......XXXXXX......XXXXXX......XXXXXX......",
+	"XXXXXX......XXXXXX......XXXXXX......XXXXXX......",
+	"......XXXXXX......XXXXXX......XXXXXX......XXXXXX",
+	"......XXXXXX......XXXXXX......XXXXXX......XXXXXX",
+	"......XXXXXX......XXXXXX......XXXXXX......XXXXXX",
+	"......XXXXXX......XXXXXX......XXXXXX......XXXXXX",
+	"......XXXXXX......XXXXXX......XXXXXX......XXXXXX",
+	"......XXXXXX......XXXXXX......XXXXXX......XXXXXX",
+	"XXXXXX......XXXXXX......XXXXXX......XXXXXX......",
+	"XXXXXX......XXXXXX......XXXXXX......XXXXXX......",
+	"XXXXXX......XXXXXX......XXXXXX......XXXXXX......",
+	"XXXXXX......XXXXXX......XXXXXX......XXXXXX......",
+	"XXXXXX......XXXXXX......XXXXXX......XXXXXX......",
+	"XXXXXX......XXXXXX......XXXXXX......XXXXXX......",
+	"......XXXXXX......XXXXXX......XXXXXX......XXXXXX",
+	"......XXXXXX......XXXXXX......XXXXXX......XXXXXX",
+	"......XXXXXX......XXXXXX......XXXXXX......XXXXXX",
+	"......XXXXXX......XXXXXX......XXXXXX......XXXXXX",
+	"......XXXXXX......XXXXXX......XXXXXX......XXXXXX",
+	"......XXXXXX......XXXXXX......XXXXXX......XXXXXX",
+	"XXXXXX......XXXXXX......XXXXXX......XXXXXX......",
+	"XXXXXX......XXXXXX......XXXXXX......XXXXXX......",
+	"XXXXXX......XXXXXX......XXXXXX......XXXXXX......",
+	"XXXXXX......XXXXXX......XXXXXX......XXXXXX......",
+	"XXXXXX......XXXXXX......XXXXXX......XXXXXX......",
+	"XXXXXX......XXXXXX......XXXXXX......XXXXXX......",
+	"......XXXXXX......XXXXXX......XXXXXX......XXXXXX",
+	"......XXXXXX......XXXXXX......XXXXXX......XXXXXX",
+	"......XXXXXX......XXXXXX......XXXXXX......XXXXXX",
+	"......XXXXXX......XXXXXX......XXXXXX......XXXXXX",
+	"......XXXXXX......XXXXXX......XXXXXX......XXXXXX",
+	"......XXXXXX......XXXXXX......XXXXXX......XXXXXX"
 };
 
 #if defined ALLEGRO_WITH_XWINDOWS && defined ALLEGRO_USE_CONSTRUCTOR
@@ -75,9 +75,12 @@
 #endif
 
 
-
 int main(void) {
 	allegro_init();
+
+	set_color_depth(8);
+	BITMAP * pantalla = create_bitmap(870, 667);
+	clear_bitmap(pantalla);
 
 	instalar_complementos();
 
@@ -85,16 +88,17 @@ int main(void) {
 
 	char campo[LADO][LADO];
 
-	inicializar_tablero(campo);
+	inicializar_tablero(pantalla, campo);
 
 	SAMPLE * sonido_mover = instalar_sonidos();
 
 	// h vs h
-	seleccionar(campo, sonido_mover);
+	seleccionar(campo, sonido_mover, pantalla);
 
-	desinstalar_complementos();
-
+	desinstalar_complementos(sonido_mover);
+	liberar_memoria_piezas(pantalla);
 	allegro_exit();
+
 	return EXIT_SUCCESS;
 }
 END_OF_MAIN();

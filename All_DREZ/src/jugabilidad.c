@@ -16,6 +16,7 @@
 #define NEGRO 16
 #define ROJO_SELECCION 12
 #define NEGRO_SELECCION 24
+#define PARAR_CRONOMETRO 1000
 
 int f_rey_b = 7, c_rey_b = 4, f_rey_n = 0, c_rey_n = 4,
 	f_origen_anterior = -1, c_origen_anterior = -1, f_destino_anterior = -1, c_destino_anterior = -1,
@@ -361,12 +362,16 @@ void verificar_estado_de_rey(bool * mensaje_jaque_mate, bool * mensaje_jaque, bo
 		*jaque_mate = true;
 		allegro_message("\n          JAQUE MATE          \n\n");
 		*mensaje_jaque_mate = false;
+		minuto_b = PARAR_CRONOMETRO;
+		minuto_n = PARAR_CRONOMETRO;
 	}
 
 	if(*mensaje_jaque_mate && (no_hay_movimiento_permitido_negras(campo) || no_hay_movimiento_permitido_blancas(campo)) && !negra_esta_en_jaque && !blanca_esta_en_jaque) {
 		*jaque_mate = true;
 		allegro_message("\n          EMPATE POR AHOGADO          \n\n");
 		*mensaje_jaque_mate = false;
+		minuto_b = PARAR_CRONOMETRO;
+		minuto_n = PARAR_CRONOMETRO;
 	}
 
 	if(*mensaje_jaque && (verificar_jaque_intermedio_negras(campo) || verificar_jaque_intermedio_blancas(campo)) && !(no_hay_movimiento_permitido_negras(campo) || no_hay_movimiento_permitido_blancas(campo))) {
@@ -480,7 +485,7 @@ void promocionar_peon_negro(char pieza_promocion_negra, char campo[LADO][LADO]) 
 }
 
 void tiempo_jugador_blanco(BITMAP *pantalla, int minuto, int segundo, bool *tiempo_limite) {
-	if(!*tiempo_limite && minuto >= 0) {
+	if(!*tiempo_limite && minuto >= 0 && minuto != PARAR_CRONOMETRO) {
 		if(segundo < 10) {
 			textprintf_centre_ex(pantalla, font, 767, 505, 15, 0, "0%d : 0%d", minuto, segundo);
 		} else {
@@ -493,7 +498,7 @@ void tiempo_jugador_blanco(BITMAP *pantalla, int minuto, int segundo, bool *tiem
 }
 
 void tiempo_jugador_negro(BITMAP * pantalla, int minuto, int segundo, bool *tiempo_limite) {
-	if(!*tiempo_limite && minuto >= 0) {
+	if(!*tiempo_limite && minuto >= 0 && minuto != PARAR_CRONOMETRO) {
 		if(segundo < 10) {
 			textprintf_centre_ex(pantalla, font, 767, 185, 15, 0, "0%d : 0%d", minuto, segundo);
 		} else {
@@ -506,7 +511,7 @@ void tiempo_jugador_negro(BITMAP * pantalla, int minuto, int segundo, bool *tiem
 }
 
 void cronometro_jugador_blanco(void) {
-	while(true) {
+	while(minuto_b != PARAR_CRONOMETRO) {
 		if(milesima_segundo_b < 1) {
 			segundo_b--;
 			milesima_segundo_b = 10;
@@ -521,7 +526,7 @@ void cronometro_jugador_blanco(void) {
 }
 
 void cronometro_jugador_negro(void) {
-	while(true) {
+	while(minuto_n != PARAR_CRONOMETRO) {
 		if(milesima_segundo_n < 1) {
 			segundo_n--;
 			milesima_segundo_n = 10;

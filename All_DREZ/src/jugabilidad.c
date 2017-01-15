@@ -703,8 +703,6 @@ void seleccionar(char campo[LADO][LADO], SAMPLE * sonido_mover, BITMAP * pantall
 			}
 		}
 
-		dibujar_cuadros_seleccion_anterior(pantalla, campo);
-
 		if(!mouse_dentro_tablero(mouse_x, mouse_y) && (mouse_b & 1)) {
 			if(turno_blanca) {
 				seleccionar_promocion(pantalla, mouse_x, mouse_y, &pieza_promocion_blanca, turno_blanca);
@@ -714,6 +712,7 @@ void seleccionar(char campo[LADO][LADO], SAMPLE * sonido_mover, BITMAP * pantall
 			re_draw(pantalla, campo);
 		}
 
+		dibujar_cuadros_seleccion_anterior(pantalla, campo);
 		dibujar_seleccion_promocion(pantalla, pieza_promocion_blanca, pieza_promocion_negra);
 		timer(pantalla, turno_blanca, minuto_n_detenido, segundo_n_detenido, minuto_b_detenido, segundo_b_detenido, &tiempo_limite_blanco, &tiempo_limite_negro);
 

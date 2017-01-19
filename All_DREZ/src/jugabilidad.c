@@ -20,7 +20,7 @@
 #define ROJO_SELECCION 12
 #define NEGRO_SELECCION 24
 #define PARAR_CRONOMETRO 1000
-#define TAMANIO_STREAM 9
+#define TAMANIO_STREAM 17
 
 int f_rey_b = 7, c_rey_b = 4, f_rey_n = 0, c_rey_n = 4,
 	f_origen_anterior = -1, c_origen_anterior = -1, f_destino_anterior = -1, c_destino_anterior = -1,
@@ -723,16 +723,20 @@ void seleccionar(char campo[LADO][LADO], SAMPLE * sonido_mover, BITMAP * pantall
 
 typedef struct {
 	char pieza;
-	int fila;
-	int columna;
+	int fila_origen;
+	int fila_destino;
+	int columna_origen;
+	int columna_destino;
 } __attribute__((packed)) protocolo;
 
 
 void *serializar_a_cliente(protocolo *paquete) {
 	void * stream = malloc(TAMANIO_STREAM);
 	memcpy(stream, &(paquete->pieza), 1);
-	memcpy(stream + 1, &(paquete->fila), 4);
-	memcpy(stream + 5, &(paquete->columna), 4);
+	memcpy(stream + 1, &(paquete->fila_origen), 4);
+	memcpy(stream + 5, &(paquete->fila_destino), 4);
+	memcpy(stream + 9, &(paquete->columna_origen), 4);
+	memcpy(stream + 13, &(paquete->columna_destino), 4);
 	return stream;
 }
 
@@ -741,8 +745,10 @@ void recibir_paquete_desde_cliente(int socket_servidor, protocolo *paquete) {
 	void *buffer = malloc(TAMANIO_STREAM);
 	recv(socket_servidor, buffer, TAMANIO_STREAM, 0);
 	memcpy(&(paquete->pieza), buffer, 1);
-	memcpy(&(paquete->fila), buffer + 1, 4);
-	memcpy(&(paquete->columna), buffer + 5, 4);
+	memcpy(&(paquete->fila_origen), buffer + 1, 4);
+	memcpy(&(paquete->fila_destino), buffer + 5, 4);
+	memcpy(&(paquete->columna_origen), buffer + 9, 4);
+	memcpy(&(paquete->columna_destino), buffer + 13, 4);
 	free(buffer);
 }
 

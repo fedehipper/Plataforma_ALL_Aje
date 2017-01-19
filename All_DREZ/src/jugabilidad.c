@@ -2,6 +2,8 @@
 #include <stdlib.h>
 #include <allegro.h>
 #include <stdbool.h>
+#include <sys/types.h>
+#include <sys/socket.h>
 #include <pthread.h>
 #include "tablero_grafico.h"
 #include "movimientos_peon.h"
@@ -10,6 +12,7 @@
 #include "movimientos_alfil.h"
 #include "movimientos_reina.h"
 #include "movimientos_caballo.h"
+#include "lib_socket.h"
 
 #define LADO 8
 #define ROJO 4
@@ -17,6 +20,7 @@
 #define ROJO_SELECCION 12
 #define NEGRO_SELECCION 24
 #define PARAR_CRONOMETRO 1000
+#define TAMANIO_STREAM 9
 
 int f_rey_b = 7, c_rey_b = 4, f_rey_n = 0, c_rey_n = 4,
 	f_origen_anterior = -1, c_origen_anterior = -1, f_destino_anterior = -1, c_destino_anterior = -1,
@@ -575,7 +579,7 @@ void verificar_tiempo_limite_message(bool tiempo_limite_blanco, bool tiempo_limi
 	}
 }
 
-
+// modo test, se mueven las piezas para detectar errores graficos o logicos
 void seleccionar(char campo[LADO][LADO], SAMPLE * sonido_mover, BITMAP * pantalla) {
 	int fila = 0, columna = 0, fila_origen = 0, fila_destino = -1, columna_origen = 0, columna_destino = -1,
 		clic_blanca = 0, clic_negra = 0, minuto_b_detenido = 5, segundo_b_detenido = 0, minuto_n_detenido = 5, segundo_n_detenido = 0;
@@ -717,4 +721,178 @@ void seleccionar(char campo[LADO][LADO], SAMPLE * sonido_mover, BITMAP * pantall
 	}
 }
 
+typedef struct {
+	char pieza;
+	int fila;
+	int columna;
+} __attribute__((packed)) protocolo;
+
+
+void *serializar_a_cliente(protocolo *paquete) {
+	void * stream = malloc(TAMANIO_STREAM);
+	memcpy(stream, &(paquete->pieza), 1);
+	memcpy(stream + 1, &(paquete->fila), 4);
+	memcpy(stream + 5, &(paquete->columna), 4);
+	return stream;
+}
+
+
+void recibir_paquete_desde_cliente(int socket_servidor, protocolo *paquete) {
+	void *buffer = malloc(TAMANIO_STREAM);
+	recv(socket_servidor, buffer, TAMANIO_STREAM, 0);
+	memcpy(&(paquete->pieza), buffer, 1);
+	memcpy(&(paquete->fila), buffer + 1, 4);
+	memcpy(&(paquete->columna), buffer + 5, 4);
+	free(buffer);
+}
+
+
+// modo juego en red lan --> protocolo ... |char * 64|
+void seleccionar_en_red(char campo[LADO][LADO], SAMPLE * sonido_mover, BITMAP * pantalla, char modo_cliente_o_servidor) {
+	int fila = 0, columna = 0, fila_origen = 0, fila_destino = -1, columna_origen = 0, columna_destino = -1, socket_servidor = 0,
+		clic_blanca = 0, clic_negra = 0, minuto_b_detenido = 5, segundo_b_detenido = 0, minuto_n_detenido = 5, segundo_n_detenido = 0;
+
+	bool turno_blanca = true, blanca_en_jaque = false, negra_en_jaque = false, condicion_blanca_seleccionar = false,
+		 condicion_negra_seleccionar = false, movio_blanca = false, movio_negra = false, jaque_mate = false,
+		 mensaje_jaque = true, mensaje_jaque_mate = true, tiempo_limite_negro = false,
+		 tiempo_limite_blanco = false, mensaje_tiempo_limite = false;
+
+	char pieza = ' ', pieza_promocion_blanca = 'w', pieza_promocion_negra = 'W';
+
+	pthread_t hilo_timer_blanco, hilo_timer_negro;
+	protocolo package;
+
+	pthread_create(&hilo_timer_blanco, NULL, (void*)cronometro_jugador_blanco, NULL);
+	pthread_create(&hilo_timer_negro, NULL, (void*)cronometro_jugador_negro, NULL);
+
+
+	LOCK_FUNCTION(close_button_handler);
+	set_close_button_callback(close_button_handler);
+
+	while(!close_button_pressed) {
+		blit(pantalla, screen, 0, 0, 0, 0, 870, 667);
+		verificar_estado_de_rey(&mensaje_jaque_mate, &mensaje_jaque, &jaque_mate, negra_en_jaque, blanca_en_jaque, campo);
+
+		rest(30);
+
+		if(!jaque_mate && (mouse_b & 1) && mouse_dentro_tablero(mouse_x, mouse_y) && !tiempo_limite_blanco && !tiempo_limite_negro) {
+
+			obtener_fila_y_columna(&fila, &columna);
+
+			if(turno_blanca) { // modo servidor las blancas mueven, queda como esta
+				condicion_blanca_seleccionar = hay_pieza(fila, columna, campo) && es_pieza_blanca(campo[fila][columna]);
+				seleccionar_origen_blanca(condicion_blanca_seleccionar, blanca_en_jaque, fila, columna, &pieza, turno_blanca, &clic_blanca, &clic_negra, &fila_origen, &columna_origen, campo);
+
+				if(clic_blanca > 0) {
+					while(mouse_b & 1) {
+						obtener_fila_y_columna(&fila_destino, &columna_destino);
+						seleccionar_pieza_blanca_a_mover(pantalla, pieza, campo);
+						re_draw(pantalla, campo);
+						clic_blanca += 1;
+						dibujar_cuadros_seleccion_anterior(pantalla, campo);
+						dibujar_seleccion_promocion(pantalla, pieza_promocion_blanca, pieza_promocion_negra);
+
+						tiempo_jugador_blanco(pantalla, minuto_b, segundo_b, &tiempo_limite_blanco);
+						tiempo_jugador_negro(pantalla, minuto_n_detenido, segundo_n_detenido, &tiempo_limite_negro);
+					}
+					campo[fila_origen][columna_origen] = pieza;
+				}
+
+				if(fila_destino != -1 && columna_destino != -1) {
+					movio_blanca = mover_pieza_a_destino(fila_origen, fila_destino, columna_origen, columna_destino, campo, &blanca_en_jaque);
+					if(movio_blanca) {
+						play_sample(sonido_mover, 200, 150, 1000, 0);
+						aplicar_movimiento(fila_origen, columna_origen, fila_destino, columna_destino, campo);
+						promocionar_peon_blanco(pieza_promocion_blanca, campo);
+						actualizacion_timer_blanco(&minuto_n_detenido, &segundo_n_detenido, &minuto_b_detenido, &segundo_b_detenido);
+
+						if(campo[fila_destino][columna_destino] == 'r') {
+							f_rey_b = fila_destino;
+							c_rey_b = columna_destino;
+						}
+						re_dibujar(pantalla, fila_origen, columna_origen, fila_destino, columna_destino, campo, movio_blanca);
+
+						asignacion_variables_auxiliares(&turno_blanca, false, &mensaje_jaque, &mensaje_jaque_mate, fila_origen, columna_origen, fila_destino, columna_destino);
+					} else {
+
+						turno_blanca = true;
+						draw_cuadrado(fila_origen, columna_origen, campo, ROJO, NEGRO, true, pantalla);
+						draw_cuadrado(fila_destino, columna_destino, campo, ROJO, NEGRO,true, pantalla);
+					}
+					if(movio_blanca && verificar_jaque(pieza, fila_destino, columna_destino, campo)) {
+						negra_en_jaque = true;
+					}
+					clic_blanca = 0;
+				}
+
+			} else { // aca tengo que recibir las coordenadas que movio el cliente, recibo el paquete, hay que serializar y desempaquetar
+
+				// recibo paquete de movimiento
+				recibir_paquete_desde_cliente(socket_servidor, &package);
+
+
+				//condicion_negra_seleccionar = hay_pieza(fila, columna, campo) && !es_pieza_blanca(campo[fila][columna]);
+				//seleccionar_origen_negra(condicion_negra_seleccionar, negra_en_jaque, fila, columna, &pieza, turno_blanca, &clic_blanca, &clic_negra, &fila_origen, &columna_origen, campo);
+
+//				if(clic_negra > 0) {
+//					while(mouse_b & 1) {
+//						obtener_fila_y_columna(&fila_destino, &columna_destino);
+//						seleccionar_pieza_negra_a_mover(pantalla, pieza, campo);
+//						re_draw(pantalla, campo);
+//						clic_negra += 1;
+//						dibujar_cuadros_seleccion_anterior(pantalla, campo);
+//						dibujar_seleccion_promocion(pantalla, pieza_promocion_blanca, pieza_promocion_negra);
+//
+//						tiempo_jugador_negro(pantalla, minuto_n, segundo_n, &tiempo_limite_negro);
+//						tiempo_jugador_blanco(pantalla, minuto_b_detenido, segundo_b_detenido, &tiempo_limite_blanco);
+//					}
+//					campo[fila_origen][columna_origen] = pieza;
+//				}
+
+//				if(fila_destino != -1 && columna_destino != -1) {
+//					movio_negra = mover_pieza_a_destino(fila_origen, fila_destino, columna_origen, columna_destino, campo, &negra_en_jaque);
+//					if(movio_negra) {
+//						play_sample(sonido_mover, 200, 150, 1000, 0);
+//						aplicar_movimiento(fila_origen, columna_origen, fila_destino, columna_destino, campo);
+//						promocionar_peon_negro(pieza_promocion_negra, campo);
+//						actualizacion_timer_negro(&minuto_n_detenido, &segundo_n_detenido, &minuto_b_detenido, &segundo_b_detenido);
+//
+//						if(campo[fila_destino][columna_destino] == 'R') {
+//							f_rey_n = fila_destino;
+//							c_rey_n = columna_destino;
+//						}
+//						re_dibujar(pantalla, fila_origen, columna_origen, fila_destino, columna_destino, campo, movio_negra);
+//						asignacion_variables_auxiliares(&turno_blanca, true, &mensaje_jaque, &mensaje_jaque_mate, fila_origen, columna_origen, fila_destino, columna_destino);
+//					} else {
+//						turno_blanca = false;
+//						draw_cuadrado(fila_origen, columna_origen, campo, ROJO, NEGRO, true, pantalla);
+//						draw_cuadrado(fila_destino, columna_destino, campo, ROJO, NEGRO, true, pantalla);
+//					}
+//
+//					if(movio_negra && verificar_jaque(pieza, fila_destino, columna_destino, campo)) {
+//						blanca_en_jaque = true;
+//					}
+//					clic_negra = 0;
+//				}
+
+			}
+		}
+
+		if(!mouse_dentro_tablero(mouse_x, mouse_y) && (mouse_b & 1) && !(tiempo_limite_blanco || tiempo_limite_negro)) {
+			if(turno_blanca) {
+				seleccionar_promocion(pantalla, mouse_x, mouse_y, &pieza_promocion_blanca, turno_blanca);
+			} else {
+				seleccionar_promocion(pantalla, mouse_x, mouse_y, &pieza_promocion_negra, turno_blanca);
+			}
+			re_draw(pantalla, campo);
+		}
+
+		verificar_tiempo_limite_message(tiempo_limite_blanco, tiempo_limite_negro, &mensaje_tiempo_limite);
+		dibujar_cuadros_seleccion_anterior(pantalla, campo);
+		dibujar_seleccion_promocion(pantalla, pieza_promocion_blanca, pieza_promocion_negra);
+		timer(pantalla, turno_blanca, minuto_n_detenido, segundo_n_detenido, minuto_b_detenido, segundo_b_detenido, &tiempo_limite_blanco, &tiempo_limite_negro);
+
+	}
+
+}
 

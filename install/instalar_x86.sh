@@ -4,5 +4,6 @@ echo
 	sudo apt-get install liballegro4.2-dev
 	sudo add-apt-repository ppa:webupd8team/haguichi
 	sudo apt-get update
+	sudo dpkg -i logmein-hamachi_2.1.0.174-1_i386
 	sudo apt-get install haguichi
 exit

@@ -738,15 +738,16 @@ void *serializar(protocolo *paquete) {
 	return stream;
 }
 
-void recibir(int socket, protocolo *paquete) {
+int recibir(int socket, protocolo *paquete) {
 	void *buffer = malloc(TAMANIO_STREAM);
-	recv(socket, buffer, TAMANIO_STREAM, 0);
+	int r = recv(socket, buffer, TAMANIO_STREAM, 0);
 	memcpy(&(paquete->pieza), buffer, 1);
 	memcpy(&(paquete->fila_origen), buffer + 1, 4);
 	memcpy(&(paquete->fila_destino), buffer + 5, 4);
 	memcpy(&(paquete->columna_origen), buffer + 9, 4);
 	memcpy(&(paquete->columna_destino), buffer + 13, 4);
 	free(buffer);
+	return r;
 }
 
 void seleccionar_en_red(char campo[LADO][LADO], SAMPLE * sonido_mover, BITMAP * pantalla, char modo_cliente_o_servidor, int *socket) {
@@ -779,9 +780,10 @@ void seleccionar_en_red(char campo[LADO][LADO], SAMPLE * sonido_mover, BITMAP * 
 
 			rest(30);
 
-			if(!jaque_mate && !turno_blanca && !tiempo_limite_blanco && !tiempo_limite_negro) {
+			if(!jaque_mate && !turno_blanca && !tiempo_limite_blanco && !tiempo_limite_negro && (recibir(*socket, &package) != -1)) {
 
-				recibir(*socket, &package);
+				printf("%d\n", package.fila_origen);
+
 				fila_origen = package.fila_origen;
 				columna_origen = package.columna_origen;
 				fila_destino = package.fila_destino;
@@ -900,9 +902,8 @@ void seleccionar_en_red(char campo[LADO][LADO], SAMPLE * sonido_mover, BITMAP * 
 
 			rest(30);
 
-			if(!jaque_mate && turno_blanca && !tiempo_limite_blanco && !tiempo_limite_negro) {
+			if(!jaque_mate && turno_blanca && !tiempo_limite_blanco && !tiempo_limite_negro && (recibir(*socket, &package) != -1)) {
 
-				recibir(*socket, &package);
 				fila_origen = package.fila_origen;
 				columna_origen = package.columna_origen;
 				fila_destino = package.fila_destino;

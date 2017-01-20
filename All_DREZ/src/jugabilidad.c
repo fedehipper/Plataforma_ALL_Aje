@@ -778,15 +778,12 @@ void seleccionar_en_red(char campo[LADO][LADO], SAMPLE * sonido_mover, BITMAP * 
 
 	// soy blancas
 	if(modo_cliente_o_servidor == 's') {
-		//////////////////
-
 
 		while(!close_button_pressed) {
 				blit(pantalla, screen, 0, 0, 0, 0, 870, 667);
 				verificar_estado_de_rey(&mensaje_jaque_mate, &mensaje_jaque, &jaque_mate, negra_en_jaque, blanca_en_jaque, campo);
 
 				rest(30);
-
 
 					if(turno_blanca && mouse_dentro_tablero(mouse_x, mouse_y) && !jaque_mate && (mouse_b & 1) && !tiempo_limite_blanco && !tiempo_limite_negro) {
 						obtener_fila_y_columna(&fila, &columna);
@@ -814,7 +811,7 @@ void seleccionar_en_red(char campo[LADO][LADO], SAMPLE * sonido_mover, BITMAP * 
 							if(movio_blanca) {
 								play_sample(sonido_mover, 200, 150, 1000, 0);
 
-								package.pieza = campo[fila_origen][columna_origen];
+								package.pieza = campo[fila_destino][columna_destino];
 								package.fila_origen = fila_origen;
 								package.fila_destino = fila_destino;
 								package.columna_origen = columna_origen;
@@ -900,19 +897,10 @@ void seleccionar_en_red(char campo[LADO][LADO], SAMPLE * sonido_mover, BITMAP * 
 
 			}
 
-
-
-		//////////////////
-
-
-
-	} // es servidor
+	}
 
 	// soy negras, soy cliente
 	if(modo_cliente_o_servidor == 'c') {
-
-		//////////////////
-
 
 		while(!close_button_pressed) {
 				blit(pantalla, screen, 0, 0, 0, 0, 870, 667);
@@ -1033,13 +1021,8 @@ void seleccionar_en_red(char campo[LADO][LADO], SAMPLE * sonido_mover, BITMAP * 
 
 			}
 
+	}
 
-		//////////////////
-
-
-
-	} // es cliente
-
-}//funcion
+}
 
 

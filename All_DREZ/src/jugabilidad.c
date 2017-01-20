@@ -728,6 +728,21 @@ typedef struct {
 	int columna_destino;
 } __attribute__((packed)) protocolo;
 
+void asignar_desde_el_paquete(int *fila_origen, int *columna_origen, int *fila_destino, int *columna_destino, protocolo *package) {
+	*fila_origen = package->fila_origen;
+	*columna_origen = package->columna_origen;
+	*fila_destino = package->fila_destino;
+	*columna_destino = package->columna_destino;
+}
+
+void asignar_hacia_el_paquete(int fila_origen, int columna_origen, int fila_destino, int columna_destino, protocolo *package, char campo[LADO][LADO]) {
+	package->pieza = campo[fila_destino][columna_destino];
+	package->fila_origen = fila_origen;
+	package->fila_destino = fila_destino;
+	package->columna_origen = columna_origen;
+	package->columna_destino = columna_destino;
+}
+
 void *serializar(protocolo *paquete) {
 	void * stream = malloc(TAMANIO_STREAM);
 	memcpy(stream, &(paquete->pieza), 1);
@@ -740,14 +755,14 @@ void *serializar(protocolo *paquete) {
 
 int recibir(int socket, protocolo *paquete) {
 	void *buffer = malloc(TAMANIO_STREAM);
-	int r = recv(socket, buffer, TAMANIO_STREAM, 0);
+	int recibio_stream = recv(socket, buffer, TAMANIO_STREAM, 0);
 	memcpy(&(paquete->pieza), buffer, 1);
 	memcpy(&(paquete->fila_origen), buffer + 1, 4);
 	memcpy(&(paquete->fila_destino), buffer + 5, 4);
 	memcpy(&(paquete->columna_origen), buffer + 9, 4);
 	memcpy(&(paquete->columna_destino), buffer + 13, 4);
 	free(buffer);
-	return r;
+	return recibio_stream;
 }
 
 void seleccionar_en_red(char campo[LADO][LADO], SAMPLE * sonido_mover, BITMAP * pantalla, char modo_cliente_o_servidor, int *socket) {
@@ -782,10 +797,7 @@ void seleccionar_en_red(char campo[LADO][LADO], SAMPLE * sonido_mover, BITMAP * 
 
 			if(!jaque_mate && !turno_blanca && !tiempo_limite_blanco && !tiempo_limite_negro && (recibir(*socket, &package) != -1)) {
 
-				fila_origen = package.fila_origen;
-				columna_origen = package.columna_origen;
-				fila_destino = package.fila_destino;
-				columna_destino = package.columna_destino;
+				asignar_desde_el_paquete(&fila_origen, &columna_origen, &fila_destino, &columna_destino, &package);
 
 				if(fila_destino != -1 && columna_destino != -1) {
 					movio_negra = mover_pieza_a_destino(fila_origen, fila_destino, columna_origen, columna_destino, campo, &negra_en_jaque);
@@ -828,7 +840,6 @@ void seleccionar_en_red(char campo[LADO][LADO], SAMPLE * sonido_mover, BITMAP * 
 						clic_blanca += 1;
 						dibujar_cuadros_seleccion_anterior(pantalla, campo);
 						dibujar_seleccion_promocion(pantalla, pieza_promocion_blanca, pieza_promocion_negra);
-
 						tiempo_jugador_blanco(pantalla, minuto_b, segundo_b, &tiempo_limite_blanco);
 						tiempo_jugador_negro(pantalla, minuto_n_detenido, segundo_n_detenido, &tiempo_limite_negro);
 					}
@@ -851,12 +862,7 @@ void seleccionar_en_red(char campo[LADO][LADO], SAMPLE * sonido_mover, BITMAP * 
 						re_dibujar(pantalla, fila_origen, columna_origen, fila_destino, columna_destino, campo, movio_blanca);
 						asignacion_variables_auxiliares(&turno_blanca, false, &mensaje_jaque, &mensaje_jaque_mate, fila_origen, columna_origen, fila_destino, columna_destino);
 
-						package.pieza = campo[fila_destino][columna_destino];
-						package.fila_origen = fila_origen;
-						package.fila_destino = fila_destino;
-						package.columna_origen = columna_origen;
-						package.columna_destino = columna_destino;
-
+						asignar_hacia_el_paquete(fila_origen, columna_origen, fila_destino, columna_destino, &package, campo);
 						void* buffer = serializar(&package);
 						send(*socket, buffer, TAMANIO_STREAM, 0);
 
@@ -902,10 +908,7 @@ void seleccionar_en_red(char campo[LADO][LADO], SAMPLE * sonido_mover, BITMAP * 
 
 			if(!jaque_mate && turno_blanca && !tiempo_limite_blanco && !tiempo_limite_negro && (recibir(*socket, &package) != -1)) {
 
-				fila_origen = package.fila_origen;
-				columna_origen = package.columna_origen;
-				fila_destino = package.fila_destino;
-				columna_destino = package.columna_destino;
+				asignar_desde_el_paquete(&fila_origen, &columna_origen, &fila_destino, &columna_destino, &package);
 
 				if(fila_destino != -1 && columna_destino != -1) {
 					movio_blanca = mover_pieza_a_destino(fila_origen, fila_destino, columna_origen, columna_destino, campo, &blanca_en_jaque);
@@ -920,8 +923,6 @@ void seleccionar_en_red(char campo[LADO][LADO], SAMPLE * sonido_mover, BITMAP * 
 							c_rey_b = columna_destino;
 						}
 						re_dibujar(pantalla, fila_origen, columna_origen, fila_destino, columna_destino, campo, movio_blanca);
-
-
 						asignacion_variables_auxiliares(&turno_blanca, false, &mensaje_jaque, &mensaje_jaque_mate, fila_origen, columna_origen, fila_destino, columna_destino);
 					} else {
 
@@ -949,7 +950,6 @@ void seleccionar_en_red(char campo[LADO][LADO], SAMPLE * sonido_mover, BITMAP * 
 						clic_negra += 1;
 						dibujar_cuadros_seleccion_anterior(pantalla, campo);
 						dibujar_seleccion_promocion(pantalla, pieza_promocion_blanca, pieza_promocion_negra);
-
 						tiempo_jugador_negro(pantalla, minuto_n, segundo_n, &tiempo_limite_negro);
 						tiempo_jugador_blanco(pantalla, minuto_b_detenido, segundo_b_detenido, &tiempo_limite_blanco);
 					}
@@ -972,12 +972,7 @@ void seleccionar_en_red(char campo[LADO][LADO], SAMPLE * sonido_mover, BITMAP * 
 						re_dibujar(pantalla, fila_origen, columna_origen, fila_destino, columna_destino, campo, movio_negra);
 						asignacion_variables_auxiliares(&turno_blanca, true, &mensaje_jaque, &mensaje_jaque_mate, fila_origen, columna_origen, fila_destino, columna_destino);
 
-						package.pieza = campo[fila_destino][columna_destino];
-						package.fila_origen = fila_origen;
-						package.fila_destino = fila_destino;
-						package.columna_origen = columna_origen;
-						package.columna_destino = columna_destino;
-
+						asignar_hacia_el_paquete(fila_origen, columna_origen, fila_destino, columna_destino, &package, campo);
 						void* buffer = serializar(&package);
 						send(*socket, buffer, TAMANIO_STREAM, 0);
 
@@ -1012,5 +1007,3 @@ void seleccionar_en_red(char campo[LADO][LADO], SAMPLE * sonido_mover, BITMAP * 
 	}
 
 }
-
-

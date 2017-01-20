@@ -79,7 +79,6 @@
 
 int main(int argc, char **argv) {
 	int socket;
-
 	allegro_init();
 	set_color_depth(8);
 	BITMAP * pantalla = create_bitmap(870, 667);
@@ -94,32 +93,24 @@ int main(int argc, char **argv) {
 
 	// modo red --> ./cliente ip o ./servidor
 	if(argc > 1 && !strcmp(argv[1], "cliente")) { // negras --> cliente
-
-		printf("\nse selecciono modo cliente\n");
+		printf("\n__MODO CLIENTE__\n");
 		client_init(&socket, argv[2], "4444");
-		printf("conectado al servidor...\n");
 
 		seleccionar_en_red(campo, sonido_mover, pantalla, 'c', &socket);
 		close(socket);
-
 	} else if(argc > 1 && !strcmp(argv[1], "servidor")) { // blancas --> servidor
-
-		printf("\nse seleciono modo servidor\n");
+		printf("\n__MODO SERVIDOR__\n");
 		server_init(&socket, "4444");
-		printf("servidor listo...\n");
 
 		server_acept(socket, &socket);
 		printf("cliente aceptado...\n");
 
 		seleccionar_en_red(campo, sonido_mover, pantalla, 's', &socket);
 		close(socket);
-
 	} else {
-		printf("aca va el modo humano vs maquina");
-		// por ahora dejo el modo test
+		// por ahora dejo el modo test, hay que hacer el algoritmo poda alfa-beta minimax
 		seleccionar(campo, sonido_mover, pantalla);
 	}
-
 
 	desinstalar_complementos(sonido_mover);
 	liberar_memoria_piezas(pantalla);

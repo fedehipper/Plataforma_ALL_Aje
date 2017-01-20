@@ -787,9 +787,8 @@ void seleccionar_en_red(char campo[LADO][LADO], SAMPLE * sonido_mover, BITMAP * 
 
 				rest(30);
 
-				if(!jaque_mate && (mouse_b & 1) && mouse_dentro_tablero(mouse_x, mouse_y) && !tiempo_limite_blanco && !tiempo_limite_negro) {
 
-					if(turno_blanca) {
+					if(turno_blanca && mouse_dentro_tablero(mouse_x, mouse_y) && !jaque_mate && (mouse_b & 1) && !tiempo_limite_blanco && !tiempo_limite_negro) {
 						obtener_fila_y_columna(&fila, &columna);
 
 						condicion_blanca_seleccionar = hay_pieza(fila, columna, campo) && es_pieza_blanca(campo[fila][columna]);
@@ -848,18 +847,14 @@ void seleccionar_en_red(char campo[LADO][LADO], SAMPLE * sonido_mover, BITMAP * 
 							clic_blanca = 0;
 						}
 
-					} else if(!(mouse_b & 1)) {
-						// en el turno del cliente espero el paquete con el movimiento, osea no muevo el mouse ni selecciono celdas
+					}
+					if(!jaque_mate && !turno_blanca && !tiempo_limite_blanco && !tiempo_limite_negro) {
 
 						recibir(*socket_servidor, &package);
-						fila = package.fila_origen;
-						columna = package.columna_origen;
-
-						condicion_negra_seleccionar = hay_pieza(fila, columna, campo) && !es_pieza_blanca(campo[fila][columna]);
-						seleccionar_origen_negra(condicion_negra_seleccionar, negra_en_jaque, fila, columna, &pieza, turno_blanca, &clic_blanca, &clic_negra, &fila_origen, &columna_origen, campo);
+						fila_origen = package.fila_origen;
+						columna_origen = package.columna_origen;
 						fila_destino = package.fila_destino;
 						columna_destino = package.columna_destino;
-
 
 						if(fila_destino != -1 && columna_destino != -1) {
 							movio_negra = mover_pieza_a_destino(fila_origen, fila_destino, columna_origen, columna_destino, campo, &negra_en_jaque);
@@ -887,7 +882,7 @@ void seleccionar_en_red(char campo[LADO][LADO], SAMPLE * sonido_mover, BITMAP * 
 							clic_negra = 0;
 						}
 					}
-				}
+
 
 				if(!mouse_dentro_tablero(mouse_x, mouse_y) && (mouse_b & 1) && !(tiempo_limite_blanco || tiempo_limite_negro)) {
 					if(turno_blanca) {
@@ -924,21 +919,12 @@ void seleccionar_en_red(char campo[LADO][LADO], SAMPLE * sonido_mover, BITMAP * 
 				verificar_estado_de_rey(&mensaje_jaque_mate, &mensaje_jaque, &jaque_mate, negra_en_jaque, blanca_en_jaque, campo);
 
 				rest(30);
-				recibir(*socket_servidor, &package);
-				printf("\n%c %d %d\n", package.pieza, package.fila_origen, package.columna_origen);
 
-				if(!jaque_mate && !tiempo_limite_blanco && !tiempo_limite_negro) {
+					if(!jaque_mate && turno_blanca && !tiempo_limite_blanco && !tiempo_limite_negro) {
 
-					if(turno_blanca) {
-
-						fila = package.fila_origen;
-						columna = package.columna_origen;
-
-
-
-						condicion_blanca_seleccionar = hay_pieza(fila, columna, campo) && es_pieza_blanca(campo[fila][columna]);
-						seleccionar_origen_blanca(condicion_blanca_seleccionar, blanca_en_jaque, fila, columna, &pieza, turno_blanca, &clic_blanca, &clic_negra, &fila_origen, &columna_origen, campo);
-
+						recibir(*socket_servidor, &package);
+						fila_origen = package.fila_origen;
+						columna_origen = package.columna_origen;
 						fila_destino = package.fila_destino;
 						columna_destino = package.columna_destino;
 
@@ -970,7 +956,8 @@ void seleccionar_en_red(char campo[LADO][LADO], SAMPLE * sonido_mover, BITMAP * 
 							clic_blanca = 0;
 						}
 
-					} else if((mouse_b & 1) && mouse_dentro_tablero(mouse_x, mouse_y)) {
+					}
+					if(!turno_blanca && mouse_dentro_tablero(mouse_x, mouse_y) && !jaque_mate && (mouse_b & 1) && !tiempo_limite_blanco && !tiempo_limite_negro) {
 						obtener_fila_y_columna(&fila, &columna);
 						condicion_negra_seleccionar = hay_pieza(fila, columna, campo) && !es_pieza_blanca(campo[fila][columna]);
 						seleccionar_origen_negra(condicion_negra_seleccionar, negra_en_jaque, fila, columna, &pieza, turno_blanca, &clic_blanca, &clic_negra, &fila_origen, &columna_origen, campo);
@@ -1029,7 +1016,6 @@ void seleccionar_en_red(char campo[LADO][LADO], SAMPLE * sonido_mover, BITMAP * 
 							clic_negra = 0;
 						}
 					}
-				}
 
 				if(!mouse_dentro_tablero(mouse_x, mouse_y) && (mouse_b & 1) && !(tiempo_limite_blanco || tiempo_limite_negro)) {
 					if(turno_blanca) {

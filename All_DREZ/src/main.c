@@ -78,8 +78,7 @@
 
 
 int main(int argc, char **argv) {
-	int socket_servidor;
-	int socket_cliente;
+	int socket;
 
 	allegro_init();
 	set_color_depth(8);
@@ -97,23 +96,23 @@ int main(int argc, char **argv) {
 	if(argc > 1 && !strcmp(argv[1], "cliente")) { // negras --> cliente
 
 		printf("\nse selecciono modo cliente\n");
-		client_init(&socket_servidor, argv[2], "4444");
+		client_init(&socket, argv[2], "4444");
 		printf("conectado al servidor...\n");
 
-		seleccionar_en_red(campo, sonido_mover, pantalla, 'c', &socket_servidor);
-		close(socket_servidor);
+		seleccionar_en_red(campo, sonido_mover, pantalla, 'c', &socket);
+		close(socket);
 
 	} else if(argc > 1 && !strcmp(argv[1], "servidor")) { // blancas --> servidor
 
 		printf("\nse seleciono modo servidor\n");
-		server_init(&socket_servidor, "4444");
+		server_init(&socket, "4444");
 		printf("servidor listo...\n");
 
-		server_acept(socket_servidor, &socket_servidor);
+		server_acept(socket, &socket);
 		printf("cliente aceptado...\n");
 
-		seleccionar_en_red(campo, sonido_mover, pantalla, 's', &socket_servidor);
-		close(socket_servidor);
+		seleccionar_en_red(campo, sonido_mover, pantalla, 's', &socket);
+		close(socket);
 
 	} else {
 		printf("aca va el modo humano vs maquina");

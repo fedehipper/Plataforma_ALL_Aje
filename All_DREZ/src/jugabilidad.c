@@ -92,19 +92,19 @@ bool verificar_jaque_intermedio_negras(char campo[LADO][LADO]) {
 }
 
 bool condicion_enroque_izq_blanco(char campo[LADO][LADO]) {
-	return !movi_torre_izq_b && !movi_rey_b && campo[7][1] == ' ' && campo[7][2] == ' ' && campo[7][3] == ' ';
+	return !movi_torre_izq_b && !movi_rey_b && campo[7][1] == ' ' && campo[7][2] == ' ' && campo[7][3] == ' ' && campo[7][0] == 't';
 }
 
 bool condicion_enroque_der_blanco(char campo[LADO][LADO]) {
-	return !movi_torre_der_b && !movi_rey_b && campo[7][5] == ' ' && campo[7][6] == ' ';
+	return !movi_torre_der_b && !movi_rey_b && campo[7][5] == ' ' && campo[7][6] == ' ' && campo[7][7] == 't';
 }
 
 bool condicion_enroque_izq_negro(char campo[LADO][LADO]) {
-	return !movi_torre_izq_n && !movi_rey_n && campo[0][1] == ' ' && campo[0][2] == ' ' && campo[0][3] == ' ';
+	return !movi_torre_izq_n && !movi_rey_n && campo[0][1] == ' ' && campo[0][2] == ' ' && campo[0][3] == ' ' && campo[0][0] == 'T';
 }
 
 bool condicion_enroque_der_negro(char campo[LADO][LADO]) {
-	return !movi_torre_der_n && !movi_rey_n && campo[0][5] == ' ' && campo[0][6] == ' ';
+	return !movi_torre_der_n && !movi_rey_n && campo[0][5] == ' ' && campo[0][6] == ' ' && campo[0][7] == 'T';
 }
 
 void hacer_enroque_izq_blanco(char campo[LADO][LADO]) {
@@ -961,15 +961,6 @@ void seleccionar_en_red(char campo[LADO][LADO], SAMPLE * sonido_mover, BITMAP * 
 					if(movio_negra) {
 						play_sample(sonido_mover, 200, 150, 1000, 0);
 
-						package.pieza = campo[fila_destino][columna_destino];
-						package.fila_origen = fila_origen;
-						package.fila_destino = fila_destino;
-						package.columna_origen = columna_origen;
-						package.columna_destino = columna_destino;
-
-						void* buffer = serializar(&package);
-						send(*socket, buffer, TAMANIO_STREAM, 0);
-
 						aplicar_movimiento(fila_origen, columna_origen, fila_destino, columna_destino, campo);
 						promocionar_peon_negro(pieza_promocion_negra, campo);
 						actualizacion_timer_negro(&minuto_n_detenido, &segundo_n_detenido, &minuto_b_detenido, &segundo_b_detenido);
@@ -980,6 +971,15 @@ void seleccionar_en_red(char campo[LADO][LADO], SAMPLE * sonido_mover, BITMAP * 
 						}
 						re_dibujar(pantalla, fila_origen, columna_origen, fila_destino, columna_destino, campo, movio_negra);
 						asignacion_variables_auxiliares(&turno_blanca, true, &mensaje_jaque, &mensaje_jaque_mate, fila_origen, columna_origen, fila_destino, columna_destino);
+
+						package.pieza = campo[fila_destino][columna_destino];
+						package.fila_origen = fila_origen;
+						package.fila_destino = fila_destino;
+						package.columna_origen = columna_origen;
+						package.columna_destino = columna_destino;
+
+						void* buffer = serializar(&package);
+						send(*socket, buffer, TAMANIO_STREAM, 0);
 
 					} else {
 						turno_blanca = false;

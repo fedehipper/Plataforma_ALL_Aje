@@ -782,8 +782,6 @@ void seleccionar_en_red(char campo[LADO][LADO], SAMPLE * sonido_mover, BITMAP * 
 
 			if(!jaque_mate && !turno_blanca && !tiempo_limite_blanco && !tiempo_limite_negro && (recibir(*socket, &package) != -1)) {
 
-				printf("%d\n", package.fila_origen);
-
 				fila_origen = package.fila_origen;
 				columna_origen = package.columna_origen;
 				fila_destino = package.fila_destino;

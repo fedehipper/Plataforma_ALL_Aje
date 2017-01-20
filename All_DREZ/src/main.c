@@ -97,22 +97,22 @@ int main(int argc, char **argv) {
 	if(argc > 1 && !strcmp(argv[1], "cliente")) { // negras --> cliente
 
 		printf("\nse selecciono modo cliente\n");
-		client_init(&socket_servidor, argv[2], "4143");
+		client_init(&socket_servidor, argv[2], "4444");
 		printf("conectado al servidor...\n");
 
-		seleccionar_en_red(campo, sonido_mover, pantalla, 'c');
+		seleccionar_en_red(campo, sonido_mover, pantalla, 'c', &socket_servidor);
 		close(socket_servidor);
 
 	} else if(argc > 1 && !strcmp(argv[1], "servidor")) { // blancas --> servidor
 
 		printf("\nse seleciono modo servidor\n");
-		server_init(&socket_servidor, "4143");
+		server_init(&socket_servidor, "4444");
 		printf("servidor listo...\n");
 
 		server_acept(socket_servidor, &socket_servidor);
 		printf("cliente aceptado...\n");
 
-		seleccionar_en_red(campo, sonido_mover, pantalla, 's');
+		seleccionar_en_red(campo, sonido_mover, pantalla, 's', &socket_servidor);
 		close(socket_servidor);
 
 	} else {

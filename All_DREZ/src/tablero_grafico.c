@@ -161,33 +161,16 @@ void jugador_negro(BITMAP * pantalla) {
 
 // ya son las coordenadas posta
 void seleccionar_promocion(BITMAP * pantalla, int mouse_x, int mouse_y, char *pieza_seleccionada, bool turno_blanca) {
-
 	if(!turno_blanca) {
-		if(mouse_x > 675 && mouse_x < 695 && mouse_y > 98 && mouse_y < 120) {
-			*pieza_seleccionada = 'T';
-		}
-		if(mouse_x > 768 && mouse_x < 782 && mouse_y > 98 && mouse_y < 120) {
-			*pieza_seleccionada = 'C';
-		}
-		if(mouse_x > 675 && mouse_x < 695 && mouse_y > 82 && mouse_y < 96) {
-			*pieza_seleccionada = 'W';
-		}
-		if(mouse_x > 768 && mouse_x < 782 && mouse_y > 82 && mouse_y < 96) {
-			*pieza_seleccionada = 'A';
-		}
+		if(mouse_x > 675 && mouse_x < 695 && mouse_y > 98 && mouse_y < 120) *pieza_seleccionada = 'T';
+		if(mouse_x > 768 && mouse_x < 782 && mouse_y > 98 && mouse_y < 120) *pieza_seleccionada = 'C';
+		if(mouse_x > 675 && mouse_x < 695 && mouse_y > 82 && mouse_y < 96) *pieza_seleccionada = 'W';
+		if(mouse_x > 768 && mouse_x < 782 && mouse_y > 82 && mouse_y < 96) *pieza_seleccionada = 'A';
 	} else {
-		if(mouse_x > 675 && mouse_x < 695 && mouse_y > 402 && mouse_y < 416) {
-			*pieza_seleccionada = 'w';
-		}
-		if(mouse_x > 768 && mouse_x < 782 && mouse_y > 402 && mouse_y < 416) {
-			*pieza_seleccionada = 'a';
-		}
-		if(mouse_x > 675 && mouse_x < 695 && mouse_y > 422 && mouse_y < 436) {
-			*pieza_seleccionada = 't';
-		}
-		if(mouse_x > 768 && mouse_x < 782 && mouse_y > 422 && mouse_y < 436) {
-			*pieza_seleccionada = 'c';
-		}
+		if(mouse_x > 675 && mouse_x < 695 && mouse_y > 402 && mouse_y < 416) *pieza_seleccionada = 'w';
+		if(mouse_x > 768 && mouse_x < 782 && mouse_y > 402 && mouse_y < 416) *pieza_seleccionada = 'a';
+		if(mouse_x > 675 && mouse_x < 695 && mouse_y > 422 && mouse_y < 436) *pieza_seleccionada = 't';
+		if(mouse_x > 768 && mouse_x < 782 && mouse_y > 422 && mouse_y < 436) *pieza_seleccionada = 'c';
 	}
 }
 
@@ -586,30 +569,18 @@ void re_draw(BITMAP * pantalla, char campo[LADO][LADO]) {
 
 void switcheo_draw_piezas(BITMAP * pantalla, char pieza, char campo[LADO][LADO]) {
 	switch(pieza) {
-		case 'p': draw_peon_blanco(pantalla, campo);
-		break;
-		case 'P': draw_peon_negro(pantalla, campo);
-		break;
-		case 't': draw_torre_blanca(pantalla, campo);
-		break;
-		case 'T': draw_torre_negra(pantalla, campo);
-		break;
-		case 'a': draw_alfil_blanco(pantalla, campo);
-		break;
-		case 'A': draw_alfil_negro(pantalla, campo);
-		break;
-		case 'c': draw_caballo_blanco(pantalla, campo);
-		break;
-		case 'C': draw_caballo_negro(pantalla, campo);
-		break;
-		case 'r': draw_rey_blanco(pantalla, campo);
-		break;
-		case 'R': draw_rey_negro(pantalla, campo);
-		break;
-		case 'w': draw_reina_blanca(pantalla, campo);
-		break;
-		case 'W': draw_reina_negra(pantalla, campo);
-		break;
+		case 'p': draw_peon_blanco(pantalla, campo); break;
+		case 'P': draw_peon_negro(pantalla, campo); break;
+		case 't': draw_torre_blanca(pantalla, campo); break;
+		case 'T': draw_torre_negra(pantalla, campo); break;
+		case 'a': draw_alfil_blanco(pantalla, campo); break;
+		case 'A': draw_alfil_negro(pantalla, campo); break;
+		case 'c': draw_caballo_blanco(pantalla, campo); break;
+		case 'C': draw_caballo_negro(pantalla, campo); break;
+		case 'r': draw_rey_blanco(pantalla, campo); break;
+		case 'R': draw_rey_negro(pantalla, campo); break;
+		case 'w': draw_reina_blanca(pantalla, campo); break;
+		case 'W': draw_reina_negra(pantalla, campo); break;
 	}
 }
 
@@ -620,11 +591,7 @@ void draw_cuadrado(int fila, int columna, char campo[LADO][LADO], int color_clar
 			rectfill(pantalla, 11 + 80 * columna , 11 + 80 * fila, 89 + 80 * columna, 89 + 80 * fila, color_claro);
 		else
 			rectfill(pantalla, 11 + 80 * columna , 11 + 80 * fila, 89 + 80 * columna, 89 + 80 * fila, color_oscuro);
-		if(dibujar_pieza) {
-			if(campo[fila][columna] != ' ') {
-				switcheo_draw_piezas(pantalla, campo[fila][columna], campo);
-			}
-		}
+		if(dibujar_pieza && campo[fila][columna] != ' ') switcheo_draw_piezas(pantalla, campo[fila][columna], campo);
 	}
 }
 

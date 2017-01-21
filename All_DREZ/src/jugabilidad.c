@@ -41,18 +41,12 @@ bool verificar_jaque_intermedio_blancas(char campo[LADO][LADO]) {
 		for(j = 0 ; j < LADO ; j++) {
 			if(campo[i][j] != ' ' && es_pieza_blanca(campo[i][j])) {
 				switch(campo[i][j]) {
-				case 'a': es_jaque = movimiento_permitido_alfil(i, j, f_rey_n , c_rey_n, campo);
-				break;
-				case 'p': es_jaque = movimiento_permitido_peon(i, j, f_rey_n, c_rey_n, campo);
-				break;
-				case 'c': es_jaque = movimiento_permitido_caballo(i, j, f_rey_n, c_rey_n, campo);
-				break;
-				case 'w': es_jaque = movimiento_permitido_reina(i, j, f_rey_n, c_rey_n, campo);
-				break;
-				case 't': es_jaque = movimiento_permitido_torre(i, j, f_rey_n, c_rey_n, campo);
-				break;
-				case 'r': es_jaque = movimiento_permitido_rey(i, j, f_rey_n, c_rey_n, campo);
-				break;
+					case 'a': es_jaque = movimiento_permitido_alfil(i, j, f_rey_n , c_rey_n, campo); break;
+					case 'p': es_jaque = movimiento_permitido_peon(i, j, f_rey_n, c_rey_n, campo); break;
+					case 'c': es_jaque = movimiento_permitido_caballo(i, j, f_rey_n, c_rey_n, campo); break;
+					case 'w': es_jaque = movimiento_permitido_reina(i, j, f_rey_n, c_rey_n, campo); break;
+					case 't': es_jaque = movimiento_permitido_torre(i, j, f_rey_n, c_rey_n, campo); break;
+					case 'r': es_jaque = movimiento_permitido_rey(i, j, f_rey_n, c_rey_n, campo); break;
 				}
 			}
 			if(es_jaque) break;
@@ -69,18 +63,12 @@ bool verificar_jaque_intermedio_negras(char campo[LADO][LADO]) {
 		for(j = 0 ; j < LADO ; j++) {
 			if(campo[i][j] != ' ' && !es_pieza_blanca(campo[i][j])) {
 				switch(campo[i][j]) {
-					case 'A': es_jaque = movimiento_permitido_alfil(i, j, f_rey_b , c_rey_b, campo);
-					break;
-					case 'P': es_jaque = movimiento_permitido_peon(i, j, f_rey_b , c_rey_b, campo);
-					break;
-					case 'C': es_jaque = movimiento_permitido_caballo(i, j, f_rey_b , c_rey_b, campo);
-					break;
-					case 'W': es_jaque = movimiento_permitido_reina(i, j, f_rey_b , c_rey_b, campo);
-					break;
-					case 'T': es_jaque = movimiento_permitido_torre(i, j, f_rey_b , c_rey_b, campo);
-					break;
-					case 'R': es_jaque = movimiento_permitido_rey(i, j, f_rey_b, c_rey_b, campo);
-					break;
+					case 'A': es_jaque = movimiento_permitido_alfil(i, j, f_rey_b , c_rey_b, campo); break;
+					case 'P': es_jaque = movimiento_permitido_peon(i, j, f_rey_b , c_rey_b, campo); break;
+					case 'C': es_jaque = movimiento_permitido_caballo(i, j, f_rey_b , c_rey_b, campo); break;
+					case 'W': es_jaque = movimiento_permitido_reina(i, j, f_rey_b , c_rey_b, campo); break;
+					case 'T': es_jaque = movimiento_permitido_torre(i, j, f_rey_b , c_rey_b, campo); break;
+					case 'R': es_jaque = movimiento_permitido_rey(i, j, f_rey_b, c_rey_b, campo); break;
 				}
 			}
 			if(es_jaque) break;
@@ -127,18 +115,10 @@ void hacer_enroque_der_negro(char campo[LADO][LADO]) {
 }
 
 void aplicar_movimiento(int fila_origen, int columna_origen, int fila_destino, int columna_destino, char campo[LADO][LADO]) {
-	if(fila_origen == 0 && columna_origen == 0) {
-		movi_torre_izq_n = true;
-	}
-	if(fila_origen == 0 && columna_origen == 7) {
-		movi_torre_der_n = true;
-	}
-	if(fila_origen == 7 && columna_origen == 0) {
-		movi_torre_izq_b = true;
-	}
-	if(fila_origen == 7 && columna_origen == 7) {
-		movi_torre_der_b = true;
-	}
+	if(fila_origen == 0 && columna_origen == 0) movi_torre_izq_n = true;
+	if(fila_origen == 0 && columna_origen == 7) movi_torre_der_n = true;
+	if(fila_origen == 7 && columna_origen == 0) movi_torre_izq_b = true;
+	if(fila_origen == 7 && columna_origen == 7) movi_torre_der_b = true;
 
 	char pieza_origen = campo[fila_origen][columna_origen];
 
@@ -163,12 +143,8 @@ void aplicar_movimiento(int fila_origen, int columna_origen, int fila_destino, i
 		movi_torre_izq_n = true;
 	}
 
-	if(fila_origen == 7 && columna_origen == 4) {
-		movi_rey_b = true;
-	}
-	if(fila_origen == 0 && columna_origen == 4) {
-		movi_rey_n = true;
-	}
+	if(fila_origen == 7 && columna_origen == 4) movi_rey_b = true;
+	if(fila_origen == 0 && columna_origen == 4) movi_rey_n = true;
 
 	campo[fila_destino][columna_destino] = pieza_origen;
 	campo[fila_origen][columna_origen] = ' ';
@@ -196,52 +172,43 @@ bool mover_pieza_a_destino(int fila_origen, int fila_destino, int columna_origen
 	if(campo[fila_origen][columna_origen] != ' ' && columna_destino != 8 && fila_destino != 8 && columna_origen != 8 && fila_origen != 8) {
 		switch(campo[fila_origen][columna_origen]) {
 			case 'p':
-			case 'P': if(movimiento_permitido_peon(fila_origen, columna_origen, fila_destino, columna_destino, campo))
-				mover = !si_se_mueve_es_jaque_peon(fila_origen, columna_origen, fila_destino, columna_destino, campo, f_rey_b, c_rey_b, f_rey_n, c_rey_n);
+			case 'P':
+				if(movimiento_permitido_peon(fila_origen, columna_origen, fila_destino, columna_destino, campo))
+					mover = !si_se_mueve_es_jaque_peon(fila_origen, columna_origen, fila_destino, columna_destino, campo, f_rey_b, c_rey_b, f_rey_n, c_rey_n);
 			break;
 			case 'T':
-			case 't': if(movimiento_permitido_torre(fila_origen, columna_origen, fila_destino, columna_destino, campo))
-				mover = !si_se_mueve_es_jaque_torre(fila_origen, columna_origen, fila_destino, columna_destino,  campo, f_rey_b, c_rey_b, f_rey_n, c_rey_n);
+			case 't':
+				if(movimiento_permitido_torre(fila_origen, columna_origen, fila_destino, columna_destino, campo))
+					mover = !si_se_mueve_es_jaque_torre(fila_origen, columna_origen, fila_destino, columna_destino,  campo, f_rey_b, c_rey_b, f_rey_n, c_rey_n);
 			break;
 			case 'r':
 				enroque_der_blanca = movimiento_enroque_der_blanco(fila_origen, columna_origen, fila_destino, columna_destino);
 				enroque_izq_blanca = movimiento_enroque_izq_blanco(fila_origen, columna_origen, fila_destino, columna_destino);
-
-				if(enroque_der_blanca) {
-					mover = condicion_enroque_der_blanco(campo);
-				}
-				if(enroque_izq_blanca) {
-					mover = condicion_enroque_izq_blanco(campo);
-				}
-				if(!enroque_der_blanca && !enroque_izq_blanca) {
-					mover = movimiento_permitido_rey(fila_origen, columna_origen, fila_destino, columna_destino, campo);
-				}
+				if(enroque_der_blanca) mover = condicion_enroque_der_blanco(campo);
+				if(enroque_izq_blanca) mover = condicion_enroque_izq_blanco(campo);
+				if(!enroque_der_blanca && !enroque_izq_blanca) mover = movimiento_permitido_rey(fila_origen, columna_origen, fila_destino, columna_destino, campo);
 			break;
 			case 'R':
 				enroque_der_negra = movimiento_enroque_der_negro(fila_origen, columna_origen, fila_destino, columna_destino);
 				enroque_izq_negra = movimiento_enroque_izq_negro(fila_origen, columna_origen, fila_destino, columna_destino);
-
-				if(enroque_der_negra) {
-					mover = condicion_enroque_der_negro(campo);
-				}
-				if(enroque_izq_negra) {
-					mover = condicion_enroque_izq_negro(campo);
-				}
-				if(!enroque_der_negra && !enroque_izq_negra) {
-					mover = movimiento_permitido_rey(fila_origen, columna_origen, fila_destino, columna_destino, campo);
-				}
+				if(enroque_der_negra) mover = condicion_enroque_der_negro(campo);
+				if(enroque_izq_negra) mover = condicion_enroque_izq_negro(campo);
+				if(!enroque_der_negra && !enroque_izq_negra) mover = movimiento_permitido_rey(fila_origen, columna_origen, fila_destino, columna_destino, campo);
 			break;
 			case 'a':
-			case 'A': if(movimiento_permitido_alfil(fila_origen, columna_origen, fila_destino, columna_destino, campo))
-				mover = !si_se_mueve_es_jaque_alfil(fila_origen, columna_origen, fila_destino, columna_destino,  campo, f_rey_b, c_rey_b, f_rey_n, c_rey_n);
+			case 'A':
+				if(movimiento_permitido_alfil(fila_origen, columna_origen, fila_destino, columna_destino, campo))
+					mover = !si_se_mueve_es_jaque_alfil(fila_origen, columna_origen, fila_destino, columna_destino,  campo, f_rey_b, c_rey_b, f_rey_n, c_rey_n);
 			break;
 			case 'w':
-			case 'W': if(movimiento_permitido_reina(fila_origen, columna_origen, fila_destino, columna_destino, campo))
-				mover = !si_se_mueve_es_jaque_reina(fila_origen, columna_origen, fila_destino, columna_destino,  campo, f_rey_b, c_rey_b, f_rey_n, c_rey_n);
+			case 'W':
+				if(movimiento_permitido_reina(fila_origen, columna_origen, fila_destino, columna_destino, campo))
+					mover = !si_se_mueve_es_jaque_reina(fila_origen, columna_origen, fila_destino, columna_destino,  campo, f_rey_b, c_rey_b, f_rey_n, c_rey_n);
 			break;
 			case 'c':
-			case 'C': if(movimiento_permitido_caballo(fila_origen, columna_origen, fila_destino, columna_destino, campo))
-				mover = !si_se_mueve_es_jaque_caballo(fila_origen, columna_origen, fila_destino, columna_destino,  campo, f_rey_b, c_rey_b, f_rey_n, c_rey_n);
+			case 'C':
+				if(movimiento_permitido_caballo(fila_origen, columna_origen, fila_destino, columna_destino, campo))
+					mover = !si_se_mueve_es_jaque_caballo(fila_origen, columna_origen, fila_destino, columna_destino,  campo, f_rey_b, c_rey_b, f_rey_n, c_rey_n);
 			break;
 		}
 		if(mover && *pieza_esta_en_hacke) *pieza_esta_en_hacke = false;
@@ -388,35 +355,23 @@ void verificar_estado_de_rey(bool turno_blanca, bool * mensaje_jaque_mate, bool 
 
 void seleccionar_pieza_negra_a_mover(BITMAP * pantalla, char pieza, char campo[LADO][LADO]) {
 	switch(pieza) {
-		case 'P': dibujar_peon_en_movimiento(pantalla,'P', mouse_x - 40 , mouse_y - 40, campo);
-		break;
-		case 'A': dibujar_alfil_en_movimiento(pantalla,'A', mouse_x - 40 , mouse_y - 40, campo);
-		break;
-		case 'T': dibujar_torre_en_movimiento(pantalla,'T', mouse_x - 40 , mouse_y - 40, campo);
-		break;
-		case 'W': dibujar_reina_en_movimiento(pantalla,'W', mouse_x - 40 , mouse_y - 40, campo);
-		break;
-		case 'R': dibujar_rey_en_movimiento(pantalla,'R', mouse_x - 40 , mouse_y - 40, campo);
-		break;
-		case 'C': dibujar_caballo_en_movimiento(pantalla,'C', mouse_x - 40 , mouse_y - 40, campo);
-		break;
+		case 'P': dibujar_peon_en_movimiento(pantalla,'P', mouse_x - 40 , mouse_y - 40, campo); break;
+		case 'A': dibujar_alfil_en_movimiento(pantalla,'A', mouse_x - 40 , mouse_y - 40, campo); break;
+		case 'T': dibujar_torre_en_movimiento(pantalla,'T', mouse_x - 40 , mouse_y - 40, campo); break;
+		case 'W': dibujar_reina_en_movimiento(pantalla,'W', mouse_x - 40 , mouse_y - 40, campo); break;
+		case 'R': dibujar_rey_en_movimiento(pantalla,'R', mouse_x - 40 , mouse_y - 40, campo); break;
+		case 'C': dibujar_caballo_en_movimiento(pantalla,'C', mouse_x - 40 , mouse_y - 40, campo); break;
 	}
 }
 
 void seleccionar_pieza_blanca_a_mover(BITMAP * pantalla, char pieza, char campo[LADO][LADO]) {
 	switch(pieza) {
-		case 'p': dibujar_peon_en_movimiento(pantalla, 'p', mouse_x - 40 , mouse_y - 40, campo);
-		break;
-		case 'a': dibujar_alfil_en_movimiento(pantalla,'a', mouse_x - 40 , mouse_y - 40, campo);
-		break;
-		case 't': dibujar_torre_en_movimiento(pantalla,'t', mouse_x - 40 , mouse_y - 40, campo);
-		break;
-		case 'w': dibujar_reina_en_movimiento(pantalla,'w', mouse_x - 40 , mouse_y - 40, campo);
-		break;
-		case 'r': dibujar_rey_en_movimiento(pantalla,'r', mouse_x - 40 , mouse_y - 40, campo);
-		break;
-		case 'c': dibujar_caballo_en_movimiento(pantalla,'c', mouse_x - 40 , mouse_y - 40, campo);
-		break;
+		case 'p': dibujar_peon_en_movimiento(pantalla, 'p', mouse_x - 40 , mouse_y - 40, campo); break;
+		case 'a': dibujar_alfil_en_movimiento(pantalla,'a', mouse_x - 40 , mouse_y - 40, campo); break;
+		case 't': dibujar_torre_en_movimiento(pantalla,'t', mouse_x - 40 , mouse_y - 40, campo); break;
+		case 'w': dibujar_reina_en_movimiento(pantalla,'w', mouse_x - 40 , mouse_y - 40, campo); break;
+		case 'r': dibujar_rey_en_movimiento(pantalla,'r', mouse_x - 40 , mouse_y - 40, campo); break;
+		case 'c': dibujar_caballo_en_movimiento(pantalla,'c', mouse_x - 40 , mouse_y - 40, campo); break;
 	}
 }
 
@@ -474,46 +429,24 @@ bool mouse_dentro_tablero(int mouse_x, int mouse_y) {
 
 void promocionar_peon_blanco(char pieza_promocion_blanca, char campo[LADO][LADO]) {
 	int i;
-	for(i = 0 ; i < 8 ; i++) {
-		if(campo[0][i] == 'p') {
-			campo[0][i] = pieza_promocion_blanca;
-		}
-	}
+	for(i = 0 ; i < 8 ; i++) if(campo[0][i] == 'p') campo[0][i] = pieza_promocion_blanca;
 }
 
 void promocionar_peon_negro(char pieza_promocion_negra, char campo[LADO][LADO]) {
 	int i;
-	for(i = 0 ; i < 8 ; i++) {
-		if(campo[7][i] == 'P') {
-			campo[7][i] = pieza_promocion_negra;
-		}
-	}
+	for(i = 0 ; i < 8 ; i++) if(campo[7][i] == 'P') campo[7][i] = pieza_promocion_negra;
 }
 
 void tiempo_jugador_blanco(BITMAP *pantalla, int minuto, int segundo, bool *tiempo_limite) {
-	if(!*tiempo_limite && minuto >= 0 && minuto != PARAR_CRONOMETRO) {
-		if(segundo < 10) {
-			textprintf_centre_ex(pantalla, font, 767, 505, 15, 0, "0%d : 0%d", minuto, segundo);
-		} else {
-			textprintf_centre_ex(pantalla, font, 767, 505, 15, 0, "0%d : %d", minuto, segundo);
-		}
-	}
-	if(minuto < 0) {
-		*tiempo_limite = true;
-	}
+	if(!*tiempo_limite && minuto >= 0 && minuto != PARAR_CRONOMETRO)
+		(segundo < 10) ? textprintf_centre_ex(pantalla, font, 767, 505, 15, 0, "0%d : 0%d", minuto, segundo) : textprintf_centre_ex(pantalla, font, 767, 505, 15, 0, "0%d : %d", minuto, segundo);
+	if(minuto < 0) *tiempo_limite = true;
 }
 
 void tiempo_jugador_negro(BITMAP * pantalla, int minuto, int segundo, bool *tiempo_limite) {
-	if(!*tiempo_limite && minuto >= 0 && minuto != PARAR_CRONOMETRO) {
-		if(segundo < 10) {
-			textprintf_centre_ex(pantalla, font, 767, 185, 15, 0, "0%d : 0%d", minuto, segundo);
-		} else {
-			textprintf_centre_ex(pantalla, font, 767, 185, 15, 0, "0%d : %d", minuto, segundo);
-		}
-	}
-	if(minuto < 0) {
-		*tiempo_limite = true;
-	}
+	if(!*tiempo_limite && minuto >= 0 && minuto != PARAR_CRONOMETRO)
+		(segundo < 10) ? textprintf_centre_ex(pantalla, font, 767, 185, 15, 0, "0%d : 0%d", minuto, segundo) : textprintf_centre_ex(pantalla, font, 767, 185, 15, 0, "0%d : %d", minuto, segundo);
+	if(minuto < 0) *tiempo_limite = true;
 }
 
 void cronometro_jugador_blanco(void) {
@@ -789,7 +722,7 @@ void seleccionar_en_red(char campo[LADO][LADO], SAMPLE * sonido_mover, BITMAP * 
 			rest(30);
 
 			if(!jaque_mate && !turno_blanca && !tiempo_limite_blanco && !tiempo_limite_negro && (recibir(*socket, &package) != -1)) {
-
+				printf("recibi esto: %c  \n", package.pieza);
 				asignar_desde_el_paquete(&fila_origen, &columna_origen, &fila_destino, &columna_destino, &package);
 
 				if(fila_destino != -1 && columna_destino != -1) {
@@ -889,7 +822,7 @@ void seleccionar_en_red(char campo[LADO][LADO], SAMPLE * sonido_mover, BITMAP * 
 			rest(30);
 
 			if(!jaque_mate && turno_blanca && !tiempo_limite_blanco && !tiempo_limite_negro && (recibir(*socket, &package) != -1)) {
-
+				printf("recibi esto: %c  \n", package.pieza);
 				asignar_desde_el_paquete(&fila_origen, &columna_origen, &fila_destino, &columna_destino, &package);
 
 				if(fila_destino != -1 && columna_destino != -1) {

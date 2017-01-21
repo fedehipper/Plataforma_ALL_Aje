@@ -884,6 +884,7 @@ void seleccionar_en_red(char campo[LADO][LADO], SAMPLE * sonido_mover, BITMAP * 
 						asignar_hacia_el_paquete(fila_origen, columna_origen, fila_destino, columna_destino, &package, campo);
 						void* buffer = serializar(&package);
 						send(*socket, buffer, TAMANIO_STREAM, 0);
+						printf("valor enviado: %c\n", campo[fila_destino][columna_destino]);
 
 					} else {
 						turno_blanca = false;

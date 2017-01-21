@@ -62,7 +62,6 @@ bool verificar_jaque_intermedio_blancas(char campo[LADO][LADO]) {
 	return es_jaque;
 }
 
-
 bool verificar_jaque_intermedio_negras(char campo[LADO][LADO]) {
 	int i,j;
 	bool es_jaque = false;
@@ -175,7 +174,6 @@ void aplicar_movimiento(int fila_origen, int columna_origen, int fila_destino, i
 	campo[fila_origen][columna_origen] = ' ';
 }
 
-
 bool movimiento_enroque_izq_blanco(int fila_origen, int columna_origen, int fila_destino, int columna_destino) {
 	return fila_origen == 7 && columna_origen == 4 && fila_destino == 7 && columna_destino == 2;
 }
@@ -191,8 +189,6 @@ bool movimiento_enroque_izq_negro(int fila_origen, int columna_origen, int fila_
 bool movimiento_enroque_der_negro(int fila_origen, int columna_origen, int fila_destino, int columna_destino) {
 	return fila_origen == 0 && columna_origen == 4 && fila_destino == 0 && columna_destino == 6;
 }
-
-
 
 bool mover_pieza_a_destino(int fila_origen, int fila_destino, int columna_origen, int columna_destino, char campo[LADO][LADO], bool *pieza_esta_en_hacke) {
 	bool mover = false, enroque_der_blanca = false, enroque_izq_blanca = false, enroque_der_negra = false, enroque_izq_negra = false;
@@ -276,7 +272,6 @@ bool verificar_jaque(char pieza, int fila_destino, int columna_destino, char cam
 	return es_jaque;
 }
 
-
 volatile int close_button_pressed = false;
 
 void close_button_handler(void) {
@@ -358,7 +353,7 @@ void obtener_fila_y_columna(int * fila, int * columna) {
 	*columna = (mouse_x - 11) / 80;
 }
 
-void verificar_estado_de_rey(bool * mensaje_jaque_mate, bool * mensaje_jaque, bool * jaque_mate, bool negra_esta_en_jaque, bool blanca_esta_en_jaque, char campo[LADO][LADO]) {
+void verificar_estado_de_rey(bool turno_blanca, bool * mensaje_jaque_mate, bool * mensaje_jaque, bool * jaque_mate, bool negra_esta_en_jaque, bool blanca_esta_en_jaque, char campo[LADO][LADO]) {
 	if(*mensaje_jaque_mate && (no_hay_movimiento_permitido_negras(campo) || no_hay_movimiento_permitido_blancas(campo)) && (negra_esta_en_jaque || blanca_esta_en_jaque)) {
 		*jaque_mate = true;
 		allegro_message("\n          JAQUE MATE          \n\n");
@@ -367,12 +362,22 @@ void verificar_estado_de_rey(bool * mensaje_jaque_mate, bool * mensaje_jaque, bo
 		minuto_n = PARAR_CRONOMETRO;
 	}
 
-	if(*mensaje_jaque_mate && (no_hay_movimiento_permitido_negras(campo) || no_hay_movimiento_permitido_blancas(campo)) && !negra_esta_en_jaque && !blanca_esta_en_jaque) {
-		*jaque_mate = true;
-		allegro_message("\n          EMPATE POR AHOGADO          \n\n");
-		*mensaje_jaque_mate = false;
-		minuto_b = PARAR_CRONOMETRO;
-		minuto_n = PARAR_CRONOMETRO;
+	if(turno_blanca) {
+		if(*mensaje_jaque_mate && no_hay_movimiento_permitido_negras(campo) && !negra_esta_en_jaque && !blanca_esta_en_jaque) {
+			*jaque_mate = true;
+			allegro_message("\n          EMPATE POR AHOGADO          \n\n");
+			*mensaje_jaque_mate = false;
+			minuto_b = PARAR_CRONOMETRO;
+			minuto_n = PARAR_CRONOMETRO;
+		}
+	} else {
+		if(*mensaje_jaque_mate && no_hay_movimiento_permitido_blancas(campo) && !negra_esta_en_jaque && !blanca_esta_en_jaque) {
+			*jaque_mate = true;
+			allegro_message("\n          EMPATE POR AHOGADO          \n\n");
+			*mensaje_jaque_mate = false;
+			minuto_b = PARAR_CRONOMETRO;
+			minuto_n = PARAR_CRONOMETRO;
+		}
 	}
 
 	if(*mensaje_jaque && (verificar_jaque_intermedio_negras(campo) || verificar_jaque_intermedio_blancas(campo)) && !(no_hay_movimiento_permitido_negras(campo) || no_hay_movimiento_permitido_blancas(campo))) {
@@ -541,7 +546,6 @@ void cronometro_jugador_negro(void) {
 	}
 }
 
-
 void timer(BITMAP *pantalla, bool turno_blanca, int minuto_n_detenido, int segundo_n_detenido, int minuto_b_detenido, int segundo_b_detenido, bool *t_limite_b, bool *t_limite_n) {
 	if(turno_blanca) {
 		tiempo_jugador_negro(pantalla, minuto_n_detenido, segundo_n_detenido, t_limite_n);
@@ -602,7 +606,7 @@ void seleccionar(char campo[LADO][LADO], SAMPLE * sonido_mover, BITMAP * pantall
 
 	while(!close_button_pressed) {
 		blit(pantalla, screen, 0, 0, 0, 0, 870, 667);
-		verificar_estado_de_rey(&mensaje_jaque_mate, &mensaje_jaque, &jaque_mate, negra_en_jaque, blanca_en_jaque, campo);
+		verificar_estado_de_rey(turno_blanca, &mensaje_jaque_mate, &mensaje_jaque, &jaque_mate, negra_en_jaque, blanca_en_jaque, campo);
 
 		rest(30);
 
@@ -642,17 +646,13 @@ void seleccionar(char campo[LADO][LADO], SAMPLE * sonido_mover, BITMAP * pantall
 							c_rey_b = columna_destino;
 						}
 						re_dibujar(pantalla, fila_origen, columna_origen, fila_destino, columna_destino, campo, movio_blanca);
-
 						asignacion_variables_auxiliares(&turno_blanca, false, &mensaje_jaque, &mensaje_jaque_mate, fila_origen, columna_origen, fila_destino, columna_destino);
 					} else {
-
 						turno_blanca = true;
 						draw_cuadrado(fila_origen, columna_origen, campo, ROJO, NEGRO, true, pantalla);
 						draw_cuadrado(fila_destino, columna_destino, campo, ROJO, NEGRO,true, pantalla);
 					}
-					if(movio_blanca && verificar_jaque(pieza, fila_destino, columna_destino, campo)) {
-						negra_en_jaque = true;
-					}
+					if(movio_blanca && verificar_jaque(pieza, fila_destino, columna_destino, campo)) negra_en_jaque = true;
 					clic_blanca = 0;
 				}
 
@@ -695,21 +695,14 @@ void seleccionar(char campo[LADO][LADO], SAMPLE * sonido_mover, BITMAP * pantall
 						draw_cuadrado(fila_origen, columna_origen, campo, ROJO, NEGRO, true, pantalla);
 						draw_cuadrado(fila_destino, columna_destino, campo, ROJO, NEGRO, true, pantalla);
 					}
-
-					if(movio_negra && verificar_jaque(pieza, fila_destino, columna_destino, campo)) {
-						blanca_en_jaque = true;
-					}
+					if(movio_negra && verificar_jaque(pieza, fila_destino, columna_destino, campo)) blanca_en_jaque = true;
 					clic_negra = 0;
 				}
 			}
 		}
 
 		if(!mouse_dentro_tablero(mouse_x, mouse_y) && (mouse_b & 1) && !(tiempo_limite_blanco || tiempo_limite_negro)) {
-			if(turno_blanca) {
-				seleccionar_promocion(pantalla, mouse_x, mouse_y, &pieza_promocion_blanca, turno_blanca);
-			} else {
-				seleccionar_promocion(pantalla, mouse_x, mouse_y, &pieza_promocion_negra, turno_blanca);
-			}
+			(turno_blanca) ? seleccionar_promocion(pantalla, mouse_x, mouse_y, &pieza_promocion_blanca, turno_blanca) : seleccionar_promocion(pantalla, mouse_x, mouse_y, &pieza_promocion_negra, turno_blanca);
 			re_draw(pantalla, campo);
 		}
 
@@ -791,7 +784,7 @@ void seleccionar_en_red(char campo[LADO][LADO], SAMPLE * sonido_mover, BITMAP * 
 
 		while(!close_button_pressed) {
 			blit(pantalla, screen, 0, 0, 0, 0, 870, 667);
-			verificar_estado_de_rey(&mensaje_jaque_mate, &mensaje_jaque, &jaque_mate, negra_en_jaque, blanca_en_jaque, campo);
+			verificar_estado_de_rey(turno_blanca, &mensaje_jaque_mate, &mensaje_jaque, &jaque_mate, negra_en_jaque, blanca_en_jaque, campo);
 
 			rest(30);
 
@@ -818,10 +811,7 @@ void seleccionar_en_red(char campo[LADO][LADO], SAMPLE * sonido_mover, BITMAP * 
 						draw_cuadrado(fila_origen, columna_origen, campo, ROJO, NEGRO, true, pantalla);
 						draw_cuadrado(fila_destino, columna_destino, campo, ROJO, NEGRO, true, pantalla);
 					}
-
-					if(movio_negra && verificar_jaque(pieza, fila_destino, columna_destino, campo)) {
-						blanca_en_jaque = true;
-					}
+					if(movio_negra && verificar_jaque(pieza, fila_destino, columna_destino, campo)) blanca_en_jaque = true;
 					clic_negra = 0;
 				}
 			}
@@ -871,20 +861,13 @@ void seleccionar_en_red(char campo[LADO][LADO], SAMPLE * sonido_mover, BITMAP * 
 						draw_cuadrado(fila_origen, columna_origen, campo, ROJO, NEGRO, true, pantalla);
 						draw_cuadrado(fila_destino, columna_destino, campo, ROJO, NEGRO,true, pantalla);
 					}
-					if(movio_blanca && verificar_jaque(pieza, fila_destino, columna_destino, campo)) {
-						negra_en_jaque = true;
-					}
+					if(movio_blanca && verificar_jaque(pieza, fila_destino, columna_destino, campo)) negra_en_jaque = true;
 					clic_blanca = 0;
 				}
 
 			}
-
 			if(!mouse_dentro_tablero(mouse_x, mouse_y) && (mouse_b & 1) && !(tiempo_limite_blanco || tiempo_limite_negro)) {
-				if(turno_blanca) {
-					seleccionar_promocion(pantalla, mouse_x, mouse_y, &pieza_promocion_blanca, turno_blanca);
-				} else {
-					seleccionar_promocion(pantalla, mouse_x, mouse_y, &pieza_promocion_negra, turno_blanca);
-				}
+				(turno_blanca) ? seleccionar_promocion(pantalla, mouse_x, mouse_y, &pieza_promocion_blanca, turno_blanca) : seleccionar_promocion(pantalla, mouse_x, mouse_y, &pieza_promocion_negra, turno_blanca);
 				re_draw(pantalla, campo);
 			}
 
@@ -892,7 +875,6 @@ void seleccionar_en_red(char campo[LADO][LADO], SAMPLE * sonido_mover, BITMAP * 
 			dibujar_cuadros_seleccion_anterior(pantalla, campo);
 			dibujar_seleccion_promocion(pantalla, pieza_promocion_blanca, pieza_promocion_negra);
 			timer(pantalla, turno_blanca, minuto_n_detenido, segundo_n_detenido, minuto_b_detenido, segundo_b_detenido, &tiempo_limite_blanco, &tiempo_limite_negro);
-
 		}
 
 	}
@@ -902,7 +884,7 @@ void seleccionar_en_red(char campo[LADO][LADO], SAMPLE * sonido_mover, BITMAP * 
 
 		while(!close_button_pressed) {
 			blit(pantalla, screen, 0, 0, 0, 0, 870, 667);
-			verificar_estado_de_rey(&mensaje_jaque_mate, &mensaje_jaque, &jaque_mate, negra_en_jaque, blanca_en_jaque, campo);
+			verificar_estado_de_rey(turno_blanca, &mensaje_jaque_mate, &mensaje_jaque, &jaque_mate, negra_en_jaque, blanca_en_jaque, campo);
 
 			rest(30);
 
@@ -925,14 +907,11 @@ void seleccionar_en_red(char campo[LADO][LADO], SAMPLE * sonido_mover, BITMAP * 
 						re_dibujar(pantalla, fila_origen, columna_origen, fila_destino, columna_destino, campo, movio_blanca);
 						asignacion_variables_auxiliares(&turno_blanca, false, &mensaje_jaque, &mensaje_jaque_mate, fila_origen, columna_origen, fila_destino, columna_destino);
 					} else {
-
 						turno_blanca = true;
 						draw_cuadrado(fila_origen, columna_origen, campo, ROJO, NEGRO, true, pantalla);
 						draw_cuadrado(fila_destino, columna_destino, campo, ROJO, NEGRO,true, pantalla);
 					}
-					if(movio_blanca && verificar_jaque(pieza, fila_destino, columna_destino, campo)) {
-						negra_en_jaque = true;
-					}
+					if(movio_blanca && verificar_jaque(pieza, fila_destino, columna_destino, campo)) negra_en_jaque = true;
 					clic_blanca = 0;
 				}
 
@@ -981,20 +960,13 @@ void seleccionar_en_red(char campo[LADO][LADO], SAMPLE * sonido_mover, BITMAP * 
 						draw_cuadrado(fila_origen, columna_origen, campo, ROJO, NEGRO, true, pantalla);
 						draw_cuadrado(fila_destino, columna_destino, campo, ROJO, NEGRO, true, pantalla);
 					}
-
-					if(movio_negra && verificar_jaque(pieza, fila_destino, columna_destino, campo)) {
-						blanca_en_jaque = true;
-					}
+					if(movio_negra && verificar_jaque(pieza, fila_destino, columna_destino, campo)) blanca_en_jaque = true;
 					clic_negra = 0;
 				}
 			}
 
 			if(!mouse_dentro_tablero(mouse_x, mouse_y) && (mouse_b & 1) && !(tiempo_limite_blanco || tiempo_limite_negro)) {
-				if(turno_blanca) {
-					seleccionar_promocion(pantalla, mouse_x, mouse_y, &pieza_promocion_blanca, turno_blanca);
-				} else {
-					seleccionar_promocion(pantalla, mouse_x, mouse_y, &pieza_promocion_negra, turno_blanca);
-				}
+				(turno_blanca) ? seleccionar_promocion(pantalla, mouse_x, mouse_y, &pieza_promocion_blanca, turno_blanca) : seleccionar_promocion(pantalla, mouse_x, mouse_y, &pieza_promocion_negra, turno_blanca);
 				re_draw(pantalla, campo);
 			}
 

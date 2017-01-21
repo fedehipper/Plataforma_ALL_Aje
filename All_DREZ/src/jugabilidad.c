@@ -20,7 +20,7 @@
 #define ROJO_SELECCION 12
 #define NEGRO_SELECCION 24
 #define PARAR_CRONOMETRO 1000
-#define TAMANIO_STREAM 17
+#define TAMANIO_STREAM 26
 
 int f_rey_b = 7, c_rey_b = 4, f_rey_n = 0, c_rey_n = 4,
 	f_origen_anterior = -1, c_origen_anterior = -1, f_destino_anterior = -1, c_destino_anterior = -1,
@@ -671,22 +671,22 @@ void asignar_hacia_el_paquete(int fila_origen, int columna_origen, int fila_dest
 
 void *serializar(protocolo *paquete) {
 	void * stream = malloc(TAMANIO_STREAM);
-	memcpy(stream, &(paquete->pieza), 1);
-	memcpy(stream + 1, &(paquete->fila_origen), 4);
-	memcpy(stream + 5, &(paquete->fila_destino), 4);
-	memcpy(stream + 9, &(paquete->columna_origen), 4);
-	memcpy(stream + 13, &(paquete->columna_destino), 4);
+	memcpy(stream, &(paquete->pieza), 2);
+	memcpy(stream + 2, &(paquete->fila_origen), 6);
+	memcpy(stream + 8, &(paquete->fila_destino), 6);
+	memcpy(stream + 14, &(paquete->columna_origen), 6);
+	memcpy(stream + 20, &(paquete->columna_destino), 6);
 	return stream;
 }
 
 int recibir(int socket, protocolo *paquete) {
 	void *buffer = malloc(TAMANIO_STREAM);
 	int recibio_stream = recv(socket, buffer, TAMANIO_STREAM, 0);
-	memcpy(&(paquete->pieza), buffer, 1);
-	memcpy(&(paquete->fila_origen), buffer + 1, 4);
-	memcpy(&(paquete->fila_destino), buffer + 5, 4);
-	memcpy(&(paquete->columna_origen), buffer + 9, 4);
-	memcpy(&(paquete->columna_destino), buffer + 13, 4);
+	memcpy(&(paquete->pieza), buffer, 2);
+	memcpy(&(paquete->fila_origen), buffer + 2, 6);
+	memcpy(&(paquete->fila_destino), buffer + 8, 6);
+	memcpy(&(paquete->columna_origen), buffer + 14, 6);
+	memcpy(&(paquete->columna_destino), buffer + 20, 6);
 	free(buffer);
 	return recibio_stream;
 }
@@ -722,7 +722,6 @@ void seleccionar_en_red(char campo[LADO][LADO], SAMPLE * sonido_mover, BITMAP * 
 			rest(30);
 
 			if(!jaque_mate && !turno_blanca && !tiempo_limite_blanco && !tiempo_limite_negro && (recibir(*socket, &package) != -1)) {
-				printf("recibi esto: %c  \n", package.pieza);
 				asignar_desde_el_paquete(&fila_origen, &columna_origen, &fila_destino, &columna_destino, &package);
 
 				if(fila_destino != -1 && columna_destino != -1) {
@@ -818,11 +817,9 @@ void seleccionar_en_red(char campo[LADO][LADO], SAMPLE * sonido_mover, BITMAP * 
 		while(!close_button_pressed) {
 			blit(pantalla, screen, 0, 0, 0, 0, 870, 667);
 			verificar_estado_de_rey(turno_blanca, &mensaje_jaque_mate, &mensaje_jaque, &jaque_mate, negra_en_jaque, blanca_en_jaque, campo);
-
 			rest(30);
 
 			if(!jaque_mate && turno_blanca && !tiempo_limite_blanco && !tiempo_limite_negro && (recibir(*socket, &package) != -1)) {
-				printf("recibi esto: %c  \n", package.pieza);
 				asignar_desde_el_paquete(&fila_origen, &columna_origen, &fila_destino, &columna_destino, &package);
 
 				if(fila_destino != -1 && columna_destino != -1) {

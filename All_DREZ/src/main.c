@@ -93,7 +93,8 @@ int main(int argc, char **argv) {
 	dibujar_seleccion_promocion(pantalla, 'w', 'W');
 	blit(pantalla, screen, 0, 0, 0, 0, 870, 667);
 
-	// modo red --> ./cliente ip o ./servidor
+	// por ahora se inicializa de esta manera, despues se desarrollara una pantalla de inicio
+	// modo red --> ./ejecutable cliente ip ::::: ./ejecutable servidor ::::: ./ejecutable solitario ::::: ./ejecutable
 	if(argc > 1 && !strcmp(argv[1], "cliente")) { // negras --> cliente
 		printf("\n__MODO CLIENTE__\n");
 		client_init(&socket, argv[2], "4444");
@@ -109,9 +110,11 @@ int main(int argc, char **argv) {
 
 		seleccionar_en_red(campo, sonido_mover, pantalla, 's', &socket);
 		close(socket);
-	} else {
-		// por ahora dejo el modo solitario, hay que hacer el algoritmo poda alfa-beta minimax
+	} else if(argc > 1 && !strcmp(argv[1], "solitario")) {
 		seleccionar_en_solitario(campo, sonido_mover, pantalla);
+	} else {
+		// modo vs maquina, hay que hacer el algoritmo poda alfa-beta minimax
+		printf("hola, todavia no esta desarrollada el vs maquina, saludos...");
 	}
 
 	desinstalar_complementos(sonido_mover);

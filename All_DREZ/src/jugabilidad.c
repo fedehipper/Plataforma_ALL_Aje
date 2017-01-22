@@ -517,7 +517,7 @@ void verificar_tiempo_limite_message(bool tiempo_limite_blanco, bool tiempo_limi
 }
 
 // modo test, se mueven las piezas para detectar errores graficos o logicos
-void seleccionar(char campo[LADO][LADO], SAMPLE * sonido_mover, BITMAP * pantalla) {
+void seleccionar_en_solitario(char campo[LADO][LADO], SAMPLE * sonido_mover, BITMAP * pantalla) {
 	int fila = 0, columna = 0, fila_origen = 0, fila_destino = -1, columna_origen = 0, columna_destino = -1,
 		clic_blanca = 0, clic_negra = 0, minuto_b_detenido = 5, segundo_b_detenido = 0, minuto_n_detenido = 5, segundo_n_detenido = 0;
 
@@ -708,7 +708,6 @@ void seleccionar_en_red(char campo[LADO][LADO], SAMPLE * sonido_mover, BITMAP * 
 
 	pthread_create(&hilo_timer_blanco, NULL, (void*)cronometro_jugador_blanco, NULL);
 	pthread_create(&hilo_timer_negro, NULL, (void*)cronometro_jugador_negro, NULL);
-
 
 	LOCK_FUNCTION(close_button_handler);
 	set_close_button_callback(close_button_handler);

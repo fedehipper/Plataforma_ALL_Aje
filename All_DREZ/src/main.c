@@ -90,6 +90,8 @@ int main(int argc, char **argv) {
 	char campo[LADO][LADO];
 	inicializar_tablero(pantalla, campo);
 	SAMPLE * sonido_mover = instalar_sonidos();
+	dibujar_seleccion_promocion(pantalla, 'w', 'W');
+	blit(pantalla, screen, 0, 0, 0, 0, 870, 667);
 
 	// modo red --> ./cliente ip o ./servidor
 	if(argc > 1 && !strcmp(argv[1], "cliente")) { // negras --> cliente
@@ -108,8 +110,8 @@ int main(int argc, char **argv) {
 		seleccionar_en_red(campo, sonido_mover, pantalla, 's', &socket);
 		close(socket);
 	} else {
-		// por ahora dejo el modo test, hay que hacer el algoritmo poda alfa-beta minimax
-		seleccionar(campo, sonido_mover, pantalla);
+		// por ahora dejo el modo solitario, hay que hacer el algoritmo poda alfa-beta minimax
+		seleccionar_en_solitario(campo, sonido_mover, pantalla);
 	}
 
 	desinstalar_complementos(sonido_mover);

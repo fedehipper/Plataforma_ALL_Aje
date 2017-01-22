@@ -654,7 +654,8 @@ typedef struct {
 	int columna_destino;
 } __attribute__((packed)) protocolo;
 
-void asignar_desde_el_paquete(int *fila_origen, int *columna_origen, int *fila_destino, int *columna_destino, protocolo *package) {
+void asignar_desde_el_paquete(char *pieza, int *fila_origen, int *columna_origen, int *fila_destino, int *columna_destino, protocolo *package) {
+	*pieza = package->pieza;
 	*fila_origen = package->fila_origen;
 	*columna_origen = package->columna_origen;
 	*fila_destino = package->fila_destino;
@@ -722,7 +723,7 @@ void seleccionar_en_red(char campo[LADO][LADO], SAMPLE * sonido_mover, BITMAP * 
 			rest(30);
 
 			if(!jaque_mate && !turno_blanca && !tiempo_limite_blanco && !tiempo_limite_negro && (recibir(*socket, &package) != -1)) {
-				asignar_desde_el_paquete(&fila_origen, &columna_origen, &fila_destino, &columna_destino, &package);
+				asignar_desde_el_paquete(&pieza, &fila_origen, &columna_origen, &fila_destino, &columna_destino, &package);
 
 				if(fila_destino != -1 && columna_destino != -1) {
 					movio_negra = mover_pieza_a_destino(fila_origen, fila_destino, columna_origen, columna_destino, campo, &negra_en_jaque);
@@ -820,7 +821,7 @@ void seleccionar_en_red(char campo[LADO][LADO], SAMPLE * sonido_mover, BITMAP * 
 			rest(30);
 
 			if(!jaque_mate && turno_blanca && !tiempo_limite_blanco && !tiempo_limite_negro && (recibir(*socket, &package) != -1)) {
-				asignar_desde_el_paquete(&fila_origen, &columna_origen, &fila_destino, &columna_destino, &package);
+				asignar_desde_el_paquete(&pieza, &fila_origen, &columna_origen, &fila_destino, &columna_destino, &package);
 
 				if(fila_destino != -1 && columna_destino != -1) {
 					movio_blanca = mover_pieza_a_destino(fila_origen, fila_destino, columna_origen, columna_destino, campo, &blanca_en_jaque);

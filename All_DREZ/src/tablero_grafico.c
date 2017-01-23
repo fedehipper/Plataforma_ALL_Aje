@@ -12,6 +12,10 @@
 #define COLOR_CUADRADOS 4
 #define CARACTER_A_ENTERO 97
 #define RETARDO_MOVIMIENTO_PIEZA 10
+#define BLANCO 15
+#define NEGRO 16
+#define GRIS 24
+#define COLOR_TEXTO 28
 
 BITMAP *b_peon_blanco, *b_peon_negro, *b_torre_blanca, *b_torre_negra, *b_alfil_blanco, *b_alfil_negro, *b_caballo_blanco,
 	   *b_caballo_negro, *b_reina_blanca, *b_reina_negra, *b_rey_blanco, *b_rey_negro;
@@ -41,15 +45,15 @@ void draw_lineas_horizontales(BITMAP *pantalla) {
 }
 
 void draw_coordenadas(BITMAP * pantalla) {
-	textprintf_justify_ex(pantalla, font, 45, 10, 655, 0, 15, 0, "A         B         C         D         E         F         G         H");
-	textprintf_justify_ex(pantalla, font, 655, 10, 45, 0, 15, 0, "1");
-	textprintf_justify_ex(pantalla, font, 655, 10, 125, 0, 15, 0, "2");
-	textprintf_justify_ex(pantalla, font, 655, 10, 205, 0, 15, 0, "3");
-	textprintf_justify_ex(pantalla, font, 655, 10, 285, 0, 15, 0, "4");
-	textprintf_justify_ex(pantalla, font, 655, 10, 365, 0, 15, 0, "5");
-	textprintf_justify_ex(pantalla, font, 655, 10, 445, 0, 15, 0, "6");
-	textprintf_justify_ex(pantalla, font, 655, 10, 525, 0, 15, 0, "7");
-	textprintf_justify_ex(pantalla, font, 655, 10, 605, 0, 15, 0, "8");
+	textprintf_justify_ex(pantalla, font, 45, 10, 655, 0, COLOR_TEXTO, 0, "A         B         C         D         E         F         G         H");
+	textprintf_justify_ex(pantalla, font, 655, 10, 45, 0, COLOR_TEXTO, 0, "1");
+	textprintf_justify_ex(pantalla, font, 655, 10, 125, 0, COLOR_TEXTO, 0, "2");
+	textprintf_justify_ex(pantalla, font, 655, 10, 205, 0, COLOR_TEXTO, 0, "3");
+	textprintf_justify_ex(pantalla, font, 655, 10, 285, 0, COLOR_TEXTO, 0, "4");
+	textprintf_justify_ex(pantalla, font, 655, 10, 365, 0, COLOR_TEXTO, 0, "5");
+	textprintf_justify_ex(pantalla, font, 655, 10, 445, 0, COLOR_TEXTO, 0, "6");
+	textprintf_justify_ex(pantalla, font, 655, 10, 525, 0, COLOR_TEXTO, 0, "7");
+	textprintf_justify_ex(pantalla, font, 655, 10, 605, 0, COLOR_TEXTO, 0, "8");
 }
 
 bool impar_relativo(int i, int j) {
@@ -66,13 +70,12 @@ void draw_cuadros_tablero(BITMAP *pantalla) {
 	for(i = 0 ; i < 8 ; i++) {
 		for(j = 0 ; j < 8 ; j++) {
 			if(impar_relativo(i, j))
-				rectfill(pantalla, aux_1 + 80 * i, aux_1 + 80 * j, aux_2 + 80 * i, aux_2 + 80 * j, 16);
+				rectfill(pantalla, aux_1 + 80 * i, aux_1 + 80 * j, aux_2 + 80 * i, aux_2 + 80 * j, NEGRO);
 			else
 				rectfill(pantalla, aux_1 + 80 * i, aux_1 + 80 * j, aux_2 + 80 * i, aux_2 + 80 * j, COLOR_CUADRADOS);
 		}
 	}
 }
-
 
 void tablero_en_blanco(char campo[LADO][LADO]) {
 	int i, j;
@@ -132,31 +135,31 @@ void inicializar_posicion_piezas(char campo[LADO][LADO]) {
 }
 
 void jugador_blanco(BITMAP * pantalla) {
-	textout_centre_ex(pantalla, font, "JUGADOR BLANCO", 762, 345, 15, 0);
-	textout_centre_ex(pantalla, font, "PROMOCION", 765, 65, 15, 0);
-	textout_centre_ex(pantalla, font, "reina", 720, 85, 15, 0);
-	textout_centre_ex(pantalla, font, "torre", 720, 105, 15, 0);
-	textout_centre_ex(pantalla, font, "alfil", 810, 85, 15, 0);
-	textout_centre_ex(pantalla, font, "caballo", 819, 105, 15, 0);
-	circle(pantalla, 685, 108, 7, 15);
-	circle(pantalla, 775, 108, 7, 15);
-	circle(pantalla, 685, 89, 7, 15);
-	circle(pantalla, 775, 89, 7, 15);
-	textout_centre_ex(pantalla, font, "CRONOMETRO", 765, 155, 15, 0);
+	textout_centre_ex(pantalla, font, "JUGADOR BLANCO", 762, 345, COLOR_TEXTO, 0);
+	textout_centre_ex(pantalla, font, "PROMOCION", 765, 65, COLOR_TEXTO, 0);
+	textout_centre_ex(pantalla, font, "reina", 720, 85, COLOR_TEXTO, 0);
+	textout_centre_ex(pantalla, font, "torre", 720, 105, COLOR_TEXTO, 0);
+	textout_centre_ex(pantalla, font, "alfil", 810, 85, COLOR_TEXTO, 0);
+	textout_centre_ex(pantalla, font, "caballo", 819, 105, COLOR_TEXTO, 0);
+	circle(pantalla, 685, 108, 7, COLOR_TEXTO);
+	circle(pantalla, 775, 108, 7, COLOR_TEXTO);
+	circle(pantalla, 685, 89, 7, COLOR_TEXTO);
+	circle(pantalla, 775, 89, 7, COLOR_TEXTO);
+	textout_centre_ex(pantalla, font, "CRONOMETRO", 765, 155, COLOR_TEXTO, 0);
 }
 
 void jugador_negro(BITMAP * pantalla) {
-	textout_centre_ex(pantalla, font, "JUGADOR NEGRO", 760, 25, 15, 0);
-	textout_centre_ex(pantalla, font, "PROMOCION", 765, 385, 15, 0);
-	textout_centre_ex(pantalla, font, "reina", 720, 405, 15, 0);
-	textout_centre_ex(pantalla, font, "torre", 720, 425, 15, 0);
-	textout_centre_ex(pantalla, font, "alfil", 810, 405, 15, 0);
-	textout_centre_ex(pantalla, font, "caballo", 819, 425, 15, 0);
-	circle(pantalla, 685, 409, 7, 15);
-	circle(pantalla, 775, 409, 7, 15);
-	circle(pantalla, 685, 429, 7, 15);
-	circle(pantalla, 775, 429, 7, 15);
-	textout_centre_ex(pantalla, font, "CRONOMETRO", 765, 475, 15, 0);
+	textout_centre_ex(pantalla, font, "JUGADOR NEGRO", 760, 25, COLOR_TEXTO, 0);
+	textout_centre_ex(pantalla, font, "PROMOCION", 765, 385, COLOR_TEXTO, 0);
+	textout_centre_ex(pantalla, font, "reina", 720, 405, COLOR_TEXTO, 0);
+	textout_centre_ex(pantalla, font, "torre", 720, 425, COLOR_TEXTO, 0);
+	textout_centre_ex(pantalla, font, "alfil", 810, 405, COLOR_TEXTO, 0);
+	textout_centre_ex(pantalla, font, "caballo", 819, 425, COLOR_TEXTO, 0);
+	circle(pantalla, 685, 409, 7, COLOR_TEXTO);
+	circle(pantalla, 775, 409, 7, COLOR_TEXTO);
+	circle(pantalla, 685, 429, 7, COLOR_TEXTO);
+	circle(pantalla, 775, 429, 7, COLOR_TEXTO);
+	textout_centre_ex(pantalla, font, "CRONOMETRO", 765, 475, COLOR_TEXTO, 0);
 }
 
 // ya son las coordenadas posta
@@ -176,16 +179,16 @@ void seleccionar_promocion(BITMAP * pantalla, int mouse_x, int mouse_y, char *pi
 
 void dibujar_seleccion_promocion(BITMAP *pantalla, char pieza_promocion_blanca, char pieza_promocion_negra) {
 	switch(pieza_promocion_blanca) {
-		case 'w': circlefill(pantalla, 685, 409, 4, 2); break;
-		case 'a': circlefill(pantalla, 775, 409, 4, 2); break;
-		case 't': circlefill(pantalla, 685, 429, 4, 2); break;
-		case 'c': circlefill(pantalla, 775, 429, 4, 2); break;
+		case 'w': circlefill(pantalla, 685, 409, 7, 2); break;
+		case 'a': circlefill(pantalla, 775, 409, 7, 2); break;
+		case 't': circlefill(pantalla, 685, 429, 7, 2); break;
+		case 'c': circlefill(pantalla, 775, 429, 7, 2); break;
 	}
 	switch(pieza_promocion_negra) {
-		case 'W': circlefill(pantalla, 685, 89, 4, 2); break;
-		case 'A': circlefill(pantalla, 775, 89, 4, 2); break;
-		case 'T': circlefill(pantalla, 685, 108, 4, 2); break;
-		case 'C': circlefill(pantalla, 775, 108, 4, 2); break;
+		case 'W': circlefill(pantalla, 685, 89, 7, 2); break;
+		case 'A': circlefill(pantalla, 775, 89, 7, 2); break;
+		case 'T': circlefill(pantalla, 685, 108, 7, 2); break;
+		case 'C': circlefill(pantalla, 775, 108, 7, 2); break;
 	}
 }
 
@@ -195,24 +198,27 @@ void draw_tablero(BITMAP *pantalla) {
 	draw_coordenadas(pantalla);
 	draw_cuadros_tablero(pantalla);
 	draw_bordes(pantalla);
-	rect(pantalla, 665, 10, 860, 650, 15);
-	line(pantalla, 665, 330, 860, 330, 15);
+	rect(pantalla, 665, 10, 860, 650, BLANCO);
+	line(pantalla, 665, 330, 860, 330, BLANCO);
 	jugador_blanco(pantalla);
 	jugador_negro(pantalla);
 }
 
-void crear_caballo_blanco(void) {
+
+
+void modificar_color_pieza(tipo_pieza una_pieza, int color_nuevo, int color_viejo) {
 	int i, j;
-	b_caballo_blanco = create_bitmap(110, 110);
-	clear_bitmap(b_caballo_blanco);
-	for(i = 0 ; i < LADO_PIEZA ; i++) {
-		for(j = 0 ; j < LADO_PIEZA ; j++) {
-			putpixel(b_caballo_blanco, i, j, palette_color[caballo_blanco[j][i]]);
+	for(i = 0 ; i < 71 ; i++) {
+		for(j = 0 ; j < 71 ; j++) {
+			if(una_pieza[i][j] == color_viejo) {
+				una_pieza[i][j] = color_nuevo;
+			}
 		}
 	}
 }
 
 void crear_reina_blanca(void) {
+	modificar_color_pieza(reina_blanca, GRIS, NEGRO);
 	int i, j;
 	b_reina_blanca = create_bitmap(110, 110);
 	clear_bitmap(b_reina_blanca);
@@ -223,7 +229,20 @@ void crear_reina_blanca(void) {
 	}
 }
 
+void crear_caballo_blanco(void) {
+	modificar_color_pieza(caballo_blanco, GRIS, NEGRO);
+	int i, j;
+	b_caballo_blanco = create_bitmap(110, 110);
+	clear_bitmap(b_caballo_blanco);
+	for(i = 0 ; i < LADO_PIEZA ; i++) {
+		for(j = 0 ; j < LADO_PIEZA ; j++) {
+			putpixel(b_caballo_blanco, i, j, palette_color[caballo_blanco[j][i]]);
+		}
+	}
+}
+
 void crear_rey_blanco(void) {
+	modificar_color_pieza(rey_blanco, GRIS, NEGRO);
 	int i, j;
 	b_rey_blanco = create_bitmap(110, 110);
 	clear_bitmap(b_rey_blanco);
@@ -235,6 +254,7 @@ void crear_rey_blanco(void) {
 }
 
 void crear_rey_negro(void) {
+	modificar_color_pieza(rey_negro, GRIS, BLANCO);
 	int i, j;
 	b_rey_negro = create_bitmap(110, 110);
 	clear_bitmap(b_rey_negro);
@@ -246,6 +266,7 @@ void crear_rey_negro(void) {
 }
 
 void crear_reina_negra(void) {
+	modificar_color_pieza(reina_negra, GRIS, BLANCO);
 	int i, j;
 	b_reina_negra = create_bitmap(110, 110);
 	clear_bitmap(b_reina_negra);
@@ -257,6 +278,7 @@ void crear_reina_negra(void) {
 }
 
 void crear_caballo_negro(void) {
+	modificar_color_pieza(caballo_negro, GRIS, BLANCO);
 	int i, j;
 	b_caballo_negro = create_bitmap(110, 110);
 	clear_bitmap(b_caballo_negro);
@@ -267,6 +289,7 @@ void crear_caballo_negro(void) {
 	}
 }
 void crear_torre_blanca(void) {
+	modificar_color_pieza(torre_blanca, GRIS, NEGRO);
 	int i, j;
 	b_torre_blanca = create_bitmap(110, 110);
 	clear_bitmap(b_torre_blanca);
@@ -278,6 +301,7 @@ void crear_torre_blanca(void) {
 }
 
 void crear_alfil_blanco(void) {
+	modificar_color_pieza(alfil_blanco, GRIS, NEGRO);
 	int i, j;
 	b_alfil_blanco = create_bitmap(115, 115);
 	clear_bitmap(b_alfil_blanco);
@@ -289,6 +313,7 @@ void crear_alfil_blanco(void) {
 }
 
 void crear_alfil_negro(void) {
+	modificar_color_pieza(alfil_negro, GRIS, BLANCO);
 	int i, j;
 	b_alfil_negro = create_bitmap(115, 115);
 	clear_bitmap(b_alfil_negro);
@@ -300,6 +325,7 @@ void crear_alfil_negro(void) {
 }
 
 void crear_torre_negra(void) {
+	modificar_color_pieza(torre_negra, GRIS, BLANCO);
 	int i, j;
 	b_torre_negra = create_bitmap(110, 110);
 	clear_bitmap(b_torre_negra);
@@ -311,6 +337,7 @@ void crear_torre_negra(void) {
 }
 
 void crear_peon_blanco(void) {
+	modificar_color_pieza(peon_blanco, GRIS, NEGRO);
 	int i, j;
 	b_peon_blanco = create_bitmap(110, 110);
 	clear(b_peon_blanco);
@@ -321,6 +348,7 @@ void crear_peon_blanco(void) {
 }
 
 void crear_peon_negro(void) {
+	modificar_color_pieza(peon_negro, GRIS, BLANCO);
 	int i, j;
 	b_peon_negro = create_bitmap(110, 110);
 	clear_bitmap(b_peon_negro);

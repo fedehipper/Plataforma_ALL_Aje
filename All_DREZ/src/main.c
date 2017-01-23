@@ -113,8 +113,8 @@ int main(int argc, char **argv) {
 	} else if(argc > 1 && !strcmp(argv[1], "solitario")) {
 		seleccionar_en_solitario(campo, sonido_mover, pantalla);
 	} else {
-		// modo vs maquina, hay que hacer el algoritmo poda alfa-beta minimax
-		printf("hola, todavia no esta desarrollada el vs maquina, saludos...");
+		// por ahora dejo este
+		seleccionar_en_solitario(campo, sonido_mover, pantalla);
 	}
 
 	desinstalar_complementos(sonido_mover);

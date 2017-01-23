@@ -23,16 +23,16 @@ movimientos_alfil.o : movimientos_caballo.o movimientos_peon.o movimientos_reina
 movimientos_caballo.o : movimientos_peon.o movimientos_reina.o movimientos_rey.o movimientos_torre.o
 	gcc -c movimientos_caballo.c
 
-movimientos_peon.o : movimientos_reina.o movimientos_rey.o movimientos_torre.o movimientos_alfil.h
+movimientos_peon.o : movimientos_reina.o movimientos_rey.o movimientos_torre.o
 	gcc -c movimientos_peon.c
 
-movimientos_reina.o : movimientos_rey.o movimientos_torre.o movimientos_alfil.h
+movimientos_reina.o : movimientos_rey.o movimientos_torre.o
 	gcc -c movimientos_reina.c
 
-movimientos_rey.o : movimientos_torre.o movimientos_alfil.h
+movimientos_rey.o : movimientos_torre.o
 	gcc -c movimientos_rey.c
 
-movimientos_torre.o : movimientos_alfil.h
+movimientos_torre.o : 
 	gcc -c movimientos_torre.c
 
 tablero_grafico.o : $(HEADERS)

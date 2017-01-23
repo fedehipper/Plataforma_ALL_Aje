@@ -634,7 +634,7 @@ void seleccionar_en_solitario(char campo[LADO][LADO], SAMPLE * sonido_mover, BIT
 			}
 		}
 
-		if(!mouse_dentro_tablero(mouse_x, mouse_y) && (mouse_b & 1) && !(tiempo_limite_blanco || tiempo_limite_negro)) {
+		if(!jaque_mate && !mouse_dentro_tablero(mouse_x, mouse_y) && (mouse_b & 1) && !(tiempo_limite_blanco || tiempo_limite_negro)) {
 			(turno_blanca) ? seleccionar_promocion(pantalla, mouse_x, mouse_y, &pieza_promocion_blanca, turno_blanca) : seleccionar_promocion(pantalla, mouse_x, mouse_y, &pieza_promocion_negra, turno_blanca);
 			re_draw(pantalla, campo);
 		}
@@ -644,6 +644,7 @@ void seleccionar_en_solitario(char campo[LADO][LADO], SAMPLE * sonido_mover, BIT
 		dibujar_seleccion_promocion(pantalla, pieza_promocion_blanca, pieza_promocion_negra);
 		timer(pantalla, turno_blanca, minuto_n_detenido, segundo_n_detenido, minuto_b_detenido, segundo_b_detenido, &tiempo_limite_blanco, &tiempo_limite_negro);
 	}
+
 }
 
 typedef struct {
@@ -798,7 +799,7 @@ void seleccionar_en_red(char campo[LADO][LADO], SAMPLE * sonido_mover, BITMAP * 
 				}
 
 			}
-			if(!mouse_dentro_tablero(mouse_x, mouse_y) && (mouse_b & 1) && !(tiempo_limite_blanco || tiempo_limite_negro)) {
+			if(!jaque_mate && !mouse_dentro_tablero(mouse_x, mouse_y) && (mouse_b & 1) && !(tiempo_limite_blanco || tiempo_limite_negro)) {
 				(turno_blanca) ? seleccionar_promocion(pantalla, mouse_x, mouse_y, &pieza_promocion_blanca, turno_blanca) : seleccionar_promocion(pantalla, mouse_x, mouse_y, &pieza_promocion_negra, turno_blanca);
 				re_draw(pantalla, campo);
 			}
@@ -895,7 +896,7 @@ void seleccionar_en_red(char campo[LADO][LADO], SAMPLE * sonido_mover, BITMAP * 
 				}
 			}
 
-			if(!mouse_dentro_tablero(mouse_x, mouse_y) && (mouse_b & 1) && !(tiempo_limite_blanco || tiempo_limite_negro)) {
+			if(!jaque_mate && !mouse_dentro_tablero(mouse_x, mouse_y) && (mouse_b & 1) && !(tiempo_limite_blanco || tiempo_limite_negro)) {
 				(turno_blanca) ? seleccionar_promocion(pantalla, mouse_x, mouse_y, &pieza_promocion_blanca, turno_blanca) : seleccionar_promocion(pantalla, mouse_x, mouse_y, &pieza_promocion_negra, turno_blanca);
 				re_draw(pantalla, campo);
 			}

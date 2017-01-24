@@ -14,8 +14,8 @@
 	/* columns rows colors chars-per-pixel */
 	"48 48 4 1",
 	"  c red",
-	". c black",
-	"X c #808000000000",
+	". c brown",
+	"X c orange",
 	"o c None",
 	/* pixels */
 	"XXXXXX......XXXXXX......XXXXXX......XXXXXX......",

@@ -1,6 +1,7 @@
 #include <allegro.h>
 #include "tablero_grafico.h"
 #define LADO 8
+#define CURSOR 2
 
 SAMPLE * instalar_sonidos(void) {
 	int driver_digi = 1, driver_midi = 0;
@@ -15,7 +16,7 @@ SAMPLE * instalar_sonidos(void) {
 void instalar_complementos(void) {
 	install_mouse();
 	install_timer();
-	show_os_cursor(2);
+	show_os_cursor(CURSOR);
 }
 
 void mostrar_display(void) {

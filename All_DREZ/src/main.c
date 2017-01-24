@@ -80,6 +80,7 @@
 int main(int argc, char **argv) {
 	int socket;
 	allegro_init();
+
 	set_color_depth(8);
 	BITMAP * pantalla = create_bitmap(870, 667);
 	clear_bitmap(pantalla);

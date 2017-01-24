@@ -15,10 +15,10 @@
 #include "lib_socket.h"
 
 #define LADO 8
-#define ROJO 4
-#define NEGRO 16
-#define ROJO_SELECCION 12
-#define NEGRO_SELECCION 24
+#define OSCURO 6
+#define CLARO 90
+#define SELECCION_CLARO 69
+#define SELECCION_OSCURO 72
 #define PARAR_CRONOMETRO 1000
 #define TAMANIO_STREAM 17
 
@@ -261,12 +261,13 @@ void seleccionar_origen(int fila, int columna, bool turno_blanca, int *clic_blan
 	}
 }
 
+
 void re_dibujar(BITMAP *pantalla, int fila_origen, int columna_origen, int fila_destino, int columna_destino, char campo[LADO][LADO], bool se_movio) {
-	draw_cuadrado(fila_origen, columna_origen, campo, ROJO, NEGRO, true, pantalla);
+	draw_cuadrado(fila_origen, columna_origen, campo, CLARO, OSCURO, true, pantalla);
 	re_draw(pantalla, campo);
 	if(se_movio) {
-		draw_cuadrado(fila_origen, columna_origen, campo, ROJO_SELECCION, NEGRO_SELECCION, true, pantalla);
-		draw_cuadrado(fila_destino, columna_destino, campo, ROJO_SELECCION, NEGRO_SELECCION, true, pantalla);
+		draw_cuadrado(fila_origen, columna_origen, campo, SELECCION_CLARO, SELECCION_OSCURO, true, pantalla);
+		draw_cuadrado(fila_destino, columna_destino, campo, SELECCION_CLARO, SELECCION_OSCURO, true, pantalla);
 	}
 }
 
@@ -403,8 +404,8 @@ void seleccionar_origen_negra(bool condicion_negra_seleccionar, bool negra_en_ja
 
 void dibujar_cuadros_seleccion_anterior(BITMAP *pantalla, char campo[LADO][LADO]) {
 	if(f_origen_anterior != -1 && c_origen_anterior != -1 && f_destino_anterior != -1 && c_destino_anterior != -1) {
-		draw_cuadrado(f_origen_anterior, c_origen_anterior, campo, ROJO_SELECCION, NEGRO_SELECCION, true, pantalla);
-		draw_cuadrado(f_destino_anterior, c_destino_anterior, campo, ROJO_SELECCION, NEGRO_SELECCION, true, pantalla);
+		draw_cuadrado(f_origen_anterior, c_origen_anterior, campo, SELECCION_CLARO, SELECCION_OSCURO, true, pantalla);
+		draw_cuadrado(f_destino_anterior, c_destino_anterior, campo, SELECCION_CLARO, SELECCION_OSCURO, true, pantalla);
 	}
 }
 
@@ -439,13 +440,13 @@ void promocionar_peon_negro(char pieza_promocion_negra, char campo[LADO][LADO]) 
 
 void tiempo_jugador_blanco(BITMAP *pantalla, int minuto, int segundo, bool *tiempo_limite) {
 	if(!*tiempo_limite && minuto >= 0 && minuto != PARAR_CRONOMETRO)
-		(segundo < 10) ? textprintf_centre_ex(pantalla, font, 767, 505, 15, 0, "0%d : 0%d", minuto, segundo) : textprintf_centre_ex(pantalla, font, 767, 505, 15, 0, "0%d : %d", minuto, segundo);
+		(segundo < 10) ? textprintf_centre_ex(pantalla, font, 767, 505, 16, 25, "0%d : 0%d", minuto, segundo) : textprintf_centre_ex(pantalla, font, 767, 505, 16, 25, "0%d : %d", minuto, segundo);
 	if(minuto < 0) *tiempo_limite = true;
 }
 
 void tiempo_jugador_negro(BITMAP * pantalla, int minuto, int segundo, bool *tiempo_limite) {
 	if(!*tiempo_limite && minuto >= 0 && minuto != PARAR_CRONOMETRO)
-		(segundo < 10) ? textprintf_centre_ex(pantalla, font, 767, 185, 15, 0, "0%d : 0%d", minuto, segundo) : textprintf_centre_ex(pantalla, font, 767, 185, 15, 0, "0%d : %d", minuto, segundo);
+		(segundo < 10) ? textprintf_centre_ex(pantalla, font, 767, 185, 16, 25, "0%d : 0%d", minuto, segundo) : textprintf_centre_ex(pantalla, font, 767, 185, 16, 25, "0%d : %d", minuto, segundo);
 	if(minuto < 0) *tiempo_limite = true;
 }
 
@@ -582,8 +583,7 @@ void seleccionar_en_solitario(char campo[LADO][LADO], SAMPLE * sonido_mover, BIT
 						asignacion_variables_auxiliares(&turno_blanca, false, &mensaje_jaque, &mensaje_jaque_mate, fila_origen, columna_origen, fila_destino, columna_destino);
 					} else {
 						turno_blanca = true;
-						draw_cuadrado(fila_origen, columna_origen, campo, ROJO, NEGRO, true, pantalla);
-						draw_cuadrado(fila_destino, columna_destino, campo, ROJO, NEGRO,true, pantalla);
+						switcheo_draw_piezas(pantalla, pieza, campo);
 					}
 					if(movio_blanca && verificar_jaque(pieza, fila_destino, columna_destino, campo)) negra_en_jaque = true;
 					clic_blanca = 0;
@@ -625,8 +625,8 @@ void seleccionar_en_solitario(char campo[LADO][LADO], SAMPLE * sonido_mover, BIT
 						asignacion_variables_auxiliares(&turno_blanca, true, &mensaje_jaque, &mensaje_jaque_mate, fila_origen, columna_origen, fila_destino, columna_destino);
 					} else {
 						turno_blanca = false;
-						draw_cuadrado(fila_origen, columna_origen, campo, ROJO, NEGRO, true, pantalla);
-						draw_cuadrado(fila_destino, columna_destino, campo, ROJO, NEGRO, true, pantalla);
+						switcheo_draw_piezas(pantalla, pieza, campo);
+
 					}
 					if(movio_negra && verificar_jaque(pieza, fila_destino, columna_destino, campo)) blanca_en_jaque = true;
 					clic_negra = 0;
@@ -741,8 +741,7 @@ void seleccionar_en_red(char campo[LADO][LADO], SAMPLE * sonido_mover, BITMAP * 
 						asignacion_variables_auxiliares(&turno_blanca, true, &mensaje_jaque, &mensaje_jaque_mate, fila_origen, columna_origen, fila_destino, columna_destino);
 					} else {
 						turno_blanca = false;
-						draw_cuadrado(fila_origen, columna_origen, campo, ROJO, NEGRO, true, pantalla);
-						draw_cuadrado(fila_destino, columna_destino, campo, ROJO, NEGRO, true, pantalla);
+						switcheo_draw_piezas(pantalla, pieza, campo);
 					}
 					if(movio_negra && verificar_jaque(pieza, fila_destino, columna_destino, campo)) blanca_en_jaque = true;
 					clic_negra = 0;
@@ -791,8 +790,7 @@ void seleccionar_en_red(char campo[LADO][LADO], SAMPLE * sonido_mover, BITMAP * 
 
 					} else {
 						turno_blanca = true;
-						draw_cuadrado(fila_origen, columna_origen, campo, ROJO, NEGRO, true, pantalla);
-						draw_cuadrado(fila_destino, columna_destino, campo, ROJO, NEGRO,true, pantalla);
+						switcheo_draw_piezas(pantalla, pieza, campo);
 					}
 					if(movio_blanca && verificar_jaque(pieza, fila_destino, columna_destino, campo)) negra_en_jaque = true;
 					clic_blanca = 0;
@@ -839,8 +837,7 @@ void seleccionar_en_red(char campo[LADO][LADO], SAMPLE * sonido_mover, BITMAP * 
 						asignacion_variables_auxiliares(&turno_blanca, false, &mensaje_jaque, &mensaje_jaque_mate, fila_origen, columna_origen, fila_destino, columna_destino);
 					} else {
 						turno_blanca = true;
-						draw_cuadrado(fila_origen, columna_origen, campo, ROJO, NEGRO, true, pantalla);
-						draw_cuadrado(fila_destino, columna_destino, campo, ROJO, NEGRO,true, pantalla);
+						switcheo_draw_piezas(pantalla, pieza, campo);
 					}
 					if(movio_blanca && verificar_jaque(pieza, fila_destino, columna_destino, campo)) negra_en_jaque = true;
 					clic_blanca = 0;
@@ -888,8 +885,7 @@ void seleccionar_en_red(char campo[LADO][LADO], SAMPLE * sonido_mover, BITMAP * 
 
 					} else {
 						turno_blanca = false;
-						draw_cuadrado(fila_origen, columna_origen, campo, ROJO, NEGRO, true, pantalla);
-						draw_cuadrado(fila_destino, columna_destino, campo, ROJO, NEGRO, true, pantalla);
+						switcheo_draw_piezas(pantalla, pieza, campo);
 					}
 					if(movio_negra && verificar_jaque(pieza, fila_destino, columna_destino, campo)) blanca_en_jaque = true;
 					clic_negra = 0;

@@ -26,5 +26,7 @@ void menu_negro_piezas_promocion(BITMAP *pantalla, int * arr, bool *derecha);
 void menu_seleccion_blanco(BITMAP * pantalla, int mouse_x, int mouse_y, bool seleccion, bool derecha);
 void seleccionar_promocion(BITMAP * pantalla, int mouse_x, int mouse_y, char *pieza_seleccionada, bool turno_blanca);
 void dibujar_seleccion_promocion(BITMAP *pantalla, char pieza_promocion_blanca, char pieza_promocion_negra);
+void switcheo_draw_piezas(BITMAP * pantalla, char pieza, char campo[LADO][LADO]);
+
 
 #endif /* TABLERO_GRAFICO_H_ */

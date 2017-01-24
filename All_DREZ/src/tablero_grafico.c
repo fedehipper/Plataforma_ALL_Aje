@@ -45,7 +45,7 @@ void draw_cuadros_tablero(BITMAP *pantalla) {
 	int i, j;
 	for(i = 0 ; i < 8 ; i++) {
 		for(j = 0 ; j < 8 ; j++) {
-			if(impar_relativo(i, j))	//6 o 112
+			if(impar_relativo(i, j))
 				rectfill(pantalla, 11 + 80 * i, 11 + 80 * j, 90 + 80 * i, 90 + 80 * j, 113);
 			else
 				rectfill(pantalla, 11 + 80 * i, 11 + 80 * j, 90 + 80 * i, 90 + 80 * j, 6);
@@ -169,7 +169,7 @@ void dibujar_seleccion_promocion(BITMAP *pantalla, char pieza_promocion_blanca, 
 }
 
 void draw_tablero(BITMAP *pantalla) {
-	rectfill(pantalla, 0, 0, 664, 667, 6); // o 90
+	rectfill(pantalla, 0, 0, 664, 667, 6);
 	rect(pantalla, 10, 10, 651, 651, 113);
 	rectfill(pantalla, 665, 0, 870, 667, GRIS);
 	rect(pantalla, 665, 0, 869, 666, GRIS + 1);

@@ -15,7 +15,7 @@
 #define RETARDO_MOVIMIENTO_PIEZA 10
 #define BLANCO 15
 #define NEGRO 16
-#define GRIS 25
+#define GRIS 28
 #define COLOR_TEXTO 16
 
 BITMAP *b_peon_blanco, *b_peon_negro, *b_torre_blanca, *b_torre_negra, *b_alfil_blanco, *b_alfil_negro, *b_caballo_blanco,

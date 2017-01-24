@@ -440,13 +440,13 @@ void promocionar_peon_negro(char pieza_promocion_negra, char campo[LADO][LADO]) 
 
 void tiempo_jugador_blanco(BITMAP *pantalla, int minuto, int segundo, bool *tiempo_limite) {
 	if(!*tiempo_limite && minuto >= 0 && minuto != PARAR_CRONOMETRO)
-		(segundo < 10) ? textprintf_centre_ex(pantalla, font, 767, 505, 16, 25, "0%d : 0%d", minuto, segundo) : textprintf_centre_ex(pantalla, font, 767, 505, 16, 25, "0%d : %d", minuto, segundo);
+		(segundo < 10) ? textprintf_centre_ex(pantalla, font, 767, 505, 16, 28, "0%d : 0%d", minuto, segundo) : textprintf_centre_ex(pantalla, font, 767, 505, 16, 28, "0%d : %d", minuto, segundo);
 	if(minuto < 0) *tiempo_limite = true;
 }
 
 void tiempo_jugador_negro(BITMAP * pantalla, int minuto, int segundo, bool *tiempo_limite) {
 	if(!*tiempo_limite && minuto >= 0 && minuto != PARAR_CRONOMETRO)
-		(segundo < 10) ? textprintf_centre_ex(pantalla, font, 767, 185, 16, 25, "0%d : 0%d", minuto, segundo) : textprintf_centre_ex(pantalla, font, 767, 185, 16, 25, "0%d : %d", minuto, segundo);
+		(segundo < 10) ? textprintf_centre_ex(pantalla, font, 767, 185, 16, 28, "0%d : 0%d", minuto, segundo) : textprintf_centre_ex(pantalla, font, 767, 185, 16, 28, "0%d : %d", minuto, segundo);
 	if(minuto < 0) *tiempo_limite = true;
 }
 

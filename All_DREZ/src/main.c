@@ -99,18 +99,13 @@ int main(int argc, char **argv) {
 	if(argc > 1 && !strcmp(argv[1], "cliente")) { // negras --> cliente
 		printf("\n__MODO CLIENTE__\n");
 		client_init(&socket, argv[2], "4444");
-
 		seleccionar_en_red(campo, sonido_mover, pantalla, 'c', &socket);
-		close(socket);
 	} else if(argc > 1 && !strcmp(argv[1], "servidor")) { // blancas --> servidor
 		printf("\n__MODO SERVIDOR__\n");
 		server_init(&socket, "4444");
-
 		server_acept(socket, &socket);
 		printf("cliente aceptado...\n");
-
 		seleccionar_en_red(campo, sonido_mover, pantalla, 's', &socket);
-		close(socket);
 	} else if(argc > 1 && !strcmp(argv[1], "solitario")) {
 		seleccionar_en_solitario(campo, sonido_mover, pantalla);
 	} else {
@@ -118,6 +113,7 @@ int main(int argc, char **argv) {
 		seleccionar_en_solitario(campo, sonido_mover, pantalla);
 	}
 
+	close(socket);
 	desinstalar_complementos(sonido_mover);
 	liberar_memoria_piezas(pantalla);
 	allegro_exit();

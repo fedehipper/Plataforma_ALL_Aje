@@ -27,7 +27,7 @@ void seleccionar_promocion(BITMAP * pantalla, int mouse_x, int mouse_y, char *pi
 void dibujar_seleccion_promocion(BITMAP *pantalla, char pieza_promocion_blanca, char pieza_promocion_negra);
 void switcheo_draw_piezas(BITMAP * pantalla, char pieza, char campo[LADO][LADO]);
 void re_draw(BITMAP * pantalla, char campo[LADO][LADO]);
-
+void draw_cuadrado_relleno(int fila, int columna, char campo[LADO][LADO], int color,  BITMAP * pantalla);
 
 
 #endif /* TABLERO_GRAFICO_H_ */

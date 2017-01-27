@@ -571,6 +571,18 @@ void draw_cuadrado(int fila, int columna, char campo[LADO][LADO], int color_clar
 	}
 }
 
+void draw_cuadrado_relleno(int fila, int columna, char campo[LADO][LADO], int color,  BITMAP * pantalla) {
+	if(fila < 8 && columna < 8) {
+		if(par_relativo(fila, columna)) {
+			rectfill(pantalla, 11 + 80 * columna, 11 + 80 * fila, 90 + 80 * columna, 90 + 80 * fila, color - 3);
+		}
+		else {
+			rectfill(pantalla, 11 + 80 * columna, 11 + 80 * fila, 90 + 80 * columna, 90 + 80 * fila, color);
+		}
+	}
+	if(campo[fila][columna] != ' ') switcheo_draw_piezas(pantalla, campo[fila][columna], campo);
+}
+
 void liberar_memoria_piezas(BITMAP * pantalla) {
 	destroy_bitmap(b_alfil_blanco);
 	destroy_bitmap(b_alfil_negro);

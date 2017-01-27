@@ -5,16 +5,9 @@
 #include <stdbool.h>
 #include "piezas.h"
 
-#define ESCALA 10
 #define LADO 8
 #define LADO_PIEZA 71
-#define OSCURO 6
-#define CLARO 90
-#define COLOR_CUADRADOS 4
-#define CARACTER_A_ENTERO 97
 #define RETARDO_MOVIMIENTO_PIEZA 10
-#define BLANCO 15
-#define NEGRO 16
 #define GRIS 28
 #define COLOR_TEXTO 16
 
@@ -22,15 +15,15 @@ BITMAP *b_peon_blanco, *b_peon_negro, *b_torre_blanca, *b_torre_negra, *b_alfil_
 	   *b_caballo_negro, *b_reina_blanca, *b_reina_negra, *b_rey_blanco, *b_rey_negro;
 
 void draw_coordenadas(BITMAP * pantalla) {
-	textprintf_justify_ex(pantalla, font, 45, 10, 655, 0, 113, 6, "A         B         C         D         E         F         G         H");
-	textprintf_justify_ex(pantalla, font, 655, 10, 45, 0, 113, 6, "8");
-	textprintf_justify_ex(pantalla, font, 655, 10, 125, 0, 113, 6, "7");
-	textprintf_justify_ex(pantalla, font, 655, 10, 205, 0, 113, 6, "6");
-	textprintf_justify_ex(pantalla, font, 655, 10, 285, 0, 113, 6, "5");
-	textprintf_justify_ex(pantalla, font, 655, 10, 365, 0, 113, 6, "4");
-	textprintf_justify_ex(pantalla, font, 655, 10, 445, 0, 113, 6, "3");
-	textprintf_justify_ex(pantalla, font, 655, 10, 525, 0, 113, 6, "2");
-	textprintf_justify_ex(pantalla, font, 655, 10, 605, 0, 113, 6, "1");
+	textprintf_justify_ex(pantalla, font, 45, 10, 655, 0, 114, 66, "A         B         C         D         E         F         G         H");
+	textprintf_justify_ex(pantalla, font, 655, 10, 45, 0, 114, 66, "8");
+	textprintf_justify_ex(pantalla, font, 655, 10, 125, 0, 114, 66, "7");
+	textprintf_justify_ex(pantalla, font, 655, 10, 205, 0, 114, 66, "6");
+	textprintf_justify_ex(pantalla, font, 655, 10, 285, 0, 114, 66, "5");
+	textprintf_justify_ex(pantalla, font, 655, 10, 365, 0, 114, 66, "4");
+	textprintf_justify_ex(pantalla, font, 655, 10, 445, 0, 114, 66, "3");
+	textprintf_justify_ex(pantalla, font, 655, 10, 525, 0, 114, 66, "2");
+	textprintf_justify_ex(pantalla, font, 655, 10, 605, 0, 114, 66, "1");
 }
 
 bool impar_relativo(int i, int j) {
@@ -46,9 +39,9 @@ void draw_cuadros_tablero(BITMAP *pantalla) {
 	for(i = 0 ; i < 8 ; i++) {
 		for(j = 0 ; j < 8 ; j++) {
 			if(impar_relativo(i, j))
-				rectfill(pantalla, 11 + 80 * i, 11 + 80 * j, 90 + 80 * i, 90 + 80 * j, 113);
+				rectfill(pantalla, 11 + 80 * i, 11 + 80 * j, 90 + 80 * i, 90 + 80 * j, 114);
 			else
-				rectfill(pantalla, 11 + 80 * i, 11 + 80 * j, 90 + 80 * i, 90 + 80 * j, 6);
+				rectfill(pantalla, 11 + 80 * i, 11 + 80 * j, 90 + 80 * i, 90 + 80 * j, 66);
 		}
 	}
 }
@@ -169,11 +162,10 @@ void dibujar_seleccion_promocion(BITMAP *pantalla, char pieza_promocion_blanca, 
 }
 
 void draw_tablero(BITMAP *pantalla) {
-	rectfill(pantalla, 0, 0, 664, 667, 6);
-	rect(pantalla, 10, 10, 651, 651, 113);
+	rectfill(pantalla, 0, 0, 664, 667, 66);
+	rect(pantalla, 10, 10, 651, 651, 114);
 	rectfill(pantalla, 665, 0, 870, 667, GRIS);
-	rect(pantalla, 665, 0, 869, 666, GRIS + 1);
-	line(pantalla, 665, 330, 869, 330, GRIS + 1);
+	line(pantalla, 665, 330, 870, 330, GRIS + 1);
 	draw_coordenadas(pantalla);
 	draw_cuadros_tablero(pantalla);
 	jugador_blanco(pantalla);

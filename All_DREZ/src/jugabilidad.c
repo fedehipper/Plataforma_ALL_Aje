@@ -527,12 +527,6 @@ void marcar_movimiento_permitido(BITMAP * pantalla, char campo[LADO][LADO], int 
 	}
 }
 
-struct arg_struct {
-    BITMAP *pantalla;
-    char *campo;
-    int fila_origen;
-    int columna_origen;
-}args;
 
 // modo test, se mueven las piezas para detectar errores graficos o logicos
 void seleccionar_en_solitario(char campo[LADO][LADO], SAMPLE * sonido_mover, BITMAP * pantalla) {

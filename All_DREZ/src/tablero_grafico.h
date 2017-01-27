@@ -6,10 +6,9 @@
 
 void inicializar_posicion_piezas(char campo[LADO][LADO]);
 void draw_tablero(BITMAP *pantalla);
-void re_draw(BITMAP * pantalla, char campo[LADO][LADO]);
 void tablero_en_blanco(char campo[LADO][LADO]);
 void crear_piezas(void);
-void draw_cuadrado(int fila, int columna, char campo[LADO][LADO], int color_claro, int color_oscuro, bool dibujar_pieza, BITMAP * pantalla);
+void draw_cuadrado(int fila, int columna, char campo[LADO][LADO], int color_claro, int color_oscuro, BITMAP * pantalla);
 void dibujar_peon_en_movimiento(BITMAP * pantalla, char pieza, int x, int y, char campo[LADO][LADO]);
 void dibujar_torre_en_movimiento(BITMAP * pantalla,char pieza, int x, int y, char campo[LADO][LADO]);
 void dibujar_caballo_en_movimiento(BITMAP * pantalla,char pieza, int x, int y, char campo[LADO][LADO]);
@@ -27,6 +26,8 @@ void menu_seleccion_blanco(BITMAP * pantalla, int mouse_x, int mouse_y, bool sel
 void seleccionar_promocion(BITMAP * pantalla, int mouse_x, int mouse_y, char *pieza_seleccionada, bool turno_blanca);
 void dibujar_seleccion_promocion(BITMAP *pantalla, char pieza_promocion_blanca, char pieza_promocion_negra);
 void switcheo_draw_piezas(BITMAP * pantalla, char pieza, char campo[LADO][LADO]);
+void re_draw(BITMAP * pantalla, char campo[LADO][LADO]);
+
 
 
 #endif /* TABLERO_GRAFICO_H_ */

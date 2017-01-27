@@ -554,7 +554,7 @@ void switcheo_draw_piezas(BITMAP * pantalla, char pieza, char campo[LADO][LADO])
 	}
 }
 
-void draw_cuadrado(int fila, int columna, char campo[LADO][LADO], int color_claro, int color_oscuro, bool dibujar_pieza, BITMAP * pantalla) {
+void draw_cuadrado(int fila, int columna, char campo[LADO][LADO], int color_claro, int color_oscuro,  BITMAP * pantalla) {
 	if(fila < 8 && columna < 8) {
 		if(par_relativo(fila, columna)) {
 			rect(pantalla, 11 + 80 * columna, 11 + 80 * fila, 90 + 80 * columna, 90 + 80 * fila, color_oscuro);

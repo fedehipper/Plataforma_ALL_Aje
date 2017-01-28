@@ -98,12 +98,12 @@ int main(int argc, char **argv) {
 	// modo red --> ./ejecutable cliente ip ::::: ./ejecutable servidor ::::: ./ejecutable solitario ::::: ./ejecutable
 	if(argc > 1 && !strcmp(argv[1], "cliente")) { // negras --> cliente
 		printf("\n__MODO CLIENTE__\n");
-		client_init(&socket, argv[2], "4444");
+		client_init(&socket, argv[2], "4005");
 		seleccionar_en_red(campo, sonido_mover, pantalla, 'c', &socket);
 		close(socket);
 	} else if(argc > 1 && !strcmp(argv[1], "servidor")) { // blancas --> servidor
 		printf("\n__MODO SERVIDOR__\n");
-		server_init(&socket, "4444");
+		server_init(&socket, "4005");
 		server_acept(socket, &socket);
 		printf("cliente aceptado...\n");
 		seleccionar_en_red(campo, sonido_mover, pantalla, 's', &socket);

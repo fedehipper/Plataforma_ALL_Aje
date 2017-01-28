@@ -261,14 +261,7 @@ void seleccionar_origen(int fila, int columna, bool turno_blanca, int *clic_blan
 	}
 }
 
-void re_dibujar(BITMAP *pantalla, int fila_origen, int columna_origen, int fila_destino, int columna_destino, char campo[LADO][LADO], bool se_movio) {
-	draw_cuadrado(fila_origen, columna_origen, campo, CLARO, OSCURO, pantalla);
-	re_draw(pantalla, campo);
-	if(se_movio) {
-		draw_cuadrado(fila_origen, columna_origen, campo, SELECCION_CLARO, SELECCION_OSCURO, pantalla);
-		draw_cuadrado(fila_destino, columna_destino, campo, SELECCION_CLARO, SELECCION_OSCURO, pantalla);
-	}
-}
+
 
 bool hay_movimiento_permitido_blancas(char campo[LADO][LADO]) {
 	int i, j, k, l;
@@ -379,12 +372,10 @@ void seleccionar_origen_blanca(bool condicion_blanca_seleccionar, bool blanca_en
 	if(condicion_blanca_seleccionar && !blanca_en_jaque) {
 		seleccionar_origen(fila, columna, turno_blanca, clic_blanca, clic_negra, fila_origen, columna_origen);
 		*pieza = campo[*fila_origen][*columna_origen];
-		campo[*fila_origen][*columna_origen] = ' ';
 	}
 	if(condicion_blanca_seleccionar && blanca_en_jaque) {
 		seleccionar_origen(fila, columna, turno_blanca, clic_blanca, clic_negra, fila_origen, columna_origen);
 		*pieza = campo[*fila_origen][*columna_origen];
-		campo[*fila_origen][*columna_origen] = ' ';
 	}
 }
 
@@ -392,12 +383,10 @@ void seleccionar_origen_negra(bool condicion_negra_seleccionar, bool negra_en_ja
 	if(condicion_negra_seleccionar && !negra_en_jaque) {
 		seleccionar_origen(fila, columna, turno_blanca, clic_blanca, clic_negra, fila_origen, columna_origen);
 		*pieza = campo[*fila_origen][*columna_origen];
-		campo[*fila_origen][*columna_origen] = ' ';
 	}
 	if(condicion_negra_seleccionar && negra_en_jaque) {
 		seleccionar_origen(fila, columna, turno_blanca, clic_blanca, clic_negra, fila_origen, columna_origen);
 		*pieza = campo[*fila_origen][*columna_origen];
-		campo[*fila_origen][*columna_origen] = ' ';
 	}
 }
 
@@ -518,15 +507,14 @@ void verificar_tiempo_limite_message(bool tiempo_limite_blanco, bool tiempo_limi
 
 void marcar_movimiento_permitido(BITMAP * pantalla, char campo[LADO][LADO], int fila_origen, int columna_origen) {
 	int i, j;
-	bool condicion_dibujo, soy_blanco;
+	bool condicion_dibujo = FALSE, soy_blanco = FALSE;
 	for(i = 0 ; i < LADO ; i++) {
 		for(j = 0 ; j < LADO ; j++) {
 			condicion_dibujo = mover_pieza_a_destino(fila_origen, i, columna_origen, j, campo, NULL);
 			soy_blanco = es_pieza_blanca(campo[fila_origen][columna_origen]);
 
-			if(condicion_dibujo && campo[i][j] == ' ') {
-				circlefill(pantalla, j * 80 + 50 , 50 + i * 80 , 12, 26);
-			}
+			if(condicion_dibujo && campo[i][j] == ' ') circlefill(pantalla, j * 80 + 50 , 50 + i * 80 , 12, 26);
+
 			if(condicion_dibujo && campo[i][j] != ' ' && ((soy_blanco && !es_pieza_blanca(campo[i][j])) || (!soy_blanco && es_pieza_blanca(campo[i][j])))) {
 				draw_cuadrado(i, j, campo, 16, 26, pantalla);
 			}
@@ -534,6 +522,14 @@ void marcar_movimiento_permitido(BITMAP * pantalla, char campo[LADO][LADO], int 
 	}
 }
 
+void re_dibujar(BITMAP *pantalla, int fila_origen, int columna_origen, int fila_destino, int columna_destino, char campo[LADO][LADO], bool se_movio) {
+	draw_cuadrado(fila_origen, columna_origen, campo, CLARO, OSCURO, pantalla);
+	re_draw(pantalla, campo);
+	if(se_movio) {
+		draw_cuadrado(fila_origen, columna_origen, campo, SELECCION_CLARO, SELECCION_OSCURO, pantalla);
+		draw_cuadrado(fila_destino, columna_destino, campo, SELECCION_CLARO, SELECCION_OSCURO, pantalla);
+	}
+}
 
 // modo test, se mueven las piezas para detectar errores graficos o logicos
 void seleccionar_en_solitario(char campo[LADO][LADO], SAMPLE * sonido_mover, BITMAP * pantalla) {
@@ -573,6 +569,8 @@ void seleccionar_en_solitario(char campo[LADO][LADO], SAMPLE * sonido_mover, BIT
 					presiono_blanca = TRUE;
 					presiono_negra = FALSE;
 					while(mouse_b & 1) {
+						ocultar_pieza(fila_origen, columna_origen, campo, 114, 66, pantalla);
+						marcar_movimiento_permitido(pantalla, campo, fila_origen, columna_origen);
 						draw_cuadrado(fila_origen, columna_origen, campo, SELECCION_CLARO, SELECCION_OSCURO, pantalla);
 						obtener_fila_y_columna(&fila_destino, &columna_destino);
 						seleccionar_pieza_blanca_a_mover(pantalla, pieza, campo);
@@ -618,6 +616,8 @@ void seleccionar_en_solitario(char campo[LADO][LADO], SAMPLE * sonido_mover, BIT
 					presiono_negra = TRUE;
 					presiono_blanca = FALSE;
 					while(mouse_b & 1) {
+						ocultar_pieza(fila_origen, columna_origen, campo, 114, 66, pantalla);
+						marcar_movimiento_permitido(pantalla, campo, fila_origen, columna_origen);
 						draw_cuadrado(fila_origen, columna_origen, campo, SELECCION_CLARO, SELECCION_OSCURO, pantalla);
 						obtener_fila_y_columna(&fila_destino, &columna_destino);
 						seleccionar_pieza_negra_a_mover(pantalla, pieza, campo);
@@ -785,6 +785,8 @@ void seleccionar_en_red(char campo[LADO][LADO], SAMPLE * sonido_mover, BITMAP * 
 				if(clic_blanca > 0) {
 					presiono_blanca = TRUE;
 					while(mouse_b & 1) {
+						ocultar_pieza(fila_origen, columna_origen, campo, 114, 66, pantalla);
+						marcar_movimiento_permitido(pantalla, campo, fila_origen, columna_origen);
 						draw_cuadrado(fila_origen, columna_origen, campo, SELECCION_CLARO, SELECCION_OSCURO, pantalla);
 						obtener_fila_y_columna(&fila_destino, &columna_destino);
 						seleccionar_pieza_blanca_a_mover(pantalla, pieza, campo);
@@ -889,6 +891,8 @@ void seleccionar_en_red(char campo[LADO][LADO], SAMPLE * sonido_mover, BITMAP * 
 				if(clic_negra > 0) {
 					presiono_negra = TRUE;
 					while(mouse_b & 1) {
+						ocultar_pieza(fila_origen, columna_origen, campo, 114, 66, pantalla);
+						marcar_movimiento_permitido(pantalla, campo, fila_origen, columna_origen);
 						draw_cuadrado(fila_origen, columna_origen, campo, SELECCION_CLARO, SELECCION_OSCURO, pantalla);
 						obtener_fila_y_columna(&fila_destino, &columna_destino);
 						seleccionar_pieza_negra_a_mover(pantalla, pieza, campo);

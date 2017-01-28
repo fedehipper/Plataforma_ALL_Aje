@@ -543,7 +543,7 @@ void seleccionar_en_solitario(char campo[LADO][LADO], SAMPLE * sonido_mover, BIT
 	bool turno_blanca = true, blanca_en_jaque = false, negra_en_jaque = false, condicion_blanca_seleccionar = false,
 		 condicion_negra_seleccionar = false, movio_blanca = false, movio_negra = false, jaque_mate = false,
 		 mensaje_jaque = true, mensaje_jaque_mate = true, tiempo_limite_negro = false,
-		 tiempo_limite_blanco = false, mensaje_tiempo_limite = false;
+		 tiempo_limite_blanco = false, mensaje_tiempo_limite = false, presiono_blanca = false, presiono_negra = false;
 
 	char pieza = ' ', pieza_promocion_blanca = 'w', pieza_promocion_negra = 'W';
 
@@ -570,6 +570,8 @@ void seleccionar_en_solitario(char campo[LADO][LADO], SAMPLE * sonido_mover, BIT
 				seleccionar_origen_blanca(condicion_blanca_seleccionar, blanca_en_jaque, fila, columna, &pieza, turno_blanca, &clic_blanca, &clic_negra, &fila_origen, &columna_origen, campo);
 
 				if(clic_blanca > 0) {
+					presiono_blanca = TRUE;
+					presiono_negra = FALSE;
 					while(mouse_b & 1) {
 						draw_cuadrado(fila_origen, columna_origen, campo, SELECCION_CLARO, SELECCION_OSCURO, pantalla);
 						obtener_fila_y_columna(&fila_destino, &columna_destino);
@@ -587,6 +589,7 @@ void seleccionar_en_solitario(char campo[LADO][LADO], SAMPLE * sonido_mover, BIT
 				if(fila_destino != -1 && columna_destino != -1) {
 					movio_blanca = mover_pieza_a_destino(fila_origen, fila_destino, columna_origen, columna_destino, campo, &blanca_en_jaque);
 					if(movio_blanca) {
+						presiono_blanca = FALSE;
 						play_sample(sonido_mover, 200, 150, 1000, 0);
 						aplicar_movimiento(fila_origen, columna_origen, fila_destino, columna_destino, campo);
 						promocionar_peon_blanco(pieza_promocion_blanca, campo);
@@ -612,6 +615,8 @@ void seleccionar_en_solitario(char campo[LADO][LADO], SAMPLE * sonido_mover, BIT
 				seleccionar_origen_negra(condicion_negra_seleccionar, negra_en_jaque, fila, columna, &pieza, turno_blanca, &clic_blanca, &clic_negra, &fila_origen, &columna_origen, campo);
 
 				if(clic_negra > 0) {
+					presiono_negra = TRUE;
+					presiono_blanca = FALSE;
 					while(mouse_b & 1) {
 						draw_cuadrado(fila_origen, columna_origen, campo, SELECCION_CLARO, SELECCION_OSCURO, pantalla);
 						obtener_fila_y_columna(&fila_destino, &columna_destino);
@@ -629,6 +634,7 @@ void seleccionar_en_solitario(char campo[LADO][LADO], SAMPLE * sonido_mover, BIT
 				if(fila_destino != -1 && columna_destino != -1) {
 					movio_negra = mover_pieza_a_destino(fila_origen, fila_destino, columna_origen, columna_destino, campo, &negra_en_jaque);
 					if(movio_negra) {
+						presiono_negra = FALSE;
 						play_sample(sonido_mover, 200, 150, 1000, 0);
 						aplicar_movimiento(fila_origen, columna_origen, fila_destino, columna_destino, campo);
 						promocionar_peon_negro(pieza_promocion_negra, campo);
@@ -658,8 +664,8 @@ void seleccionar_en_solitario(char campo[LADO][LADO], SAMPLE * sonido_mover, BIT
 
 		verificar_tiempo_limite_message(tiempo_limite_blanco, tiempo_limite_negro, &mensaje_tiempo_limite);
 		dibujar_cuadros_seleccion_anterior(pantalla, campo);
-		if(!movio_blanca) draw_cuadrado(fila_origen, columna_origen, campo, SELECCION_CLARO, SELECCION_OSCURO, pantalla);
-		if(!movio_negra) draw_cuadrado(fila_origen, columna_origen, campo, SELECCION_CLARO, SELECCION_OSCURO, pantalla);
+		if(!presiono_blanca && presiono_negra) draw_cuadrado(fila_origen, columna_origen, campo, SELECCION_CLARO, SELECCION_OSCURO, pantalla);
+		if(!presiono_negra && presiono_blanca) draw_cuadrado(fila_origen, columna_origen, campo, SELECCION_CLARO, SELECCION_OSCURO, pantalla);
 		marcar_movimiento_permitido(pantalla, campo, fila_origen, columna_origen);
 		dibujar_seleccion_promocion(pantalla, pieza_promocion_blanca, pieza_promocion_negra);
 		timer(pantalla, turno_blanca, minuto_n_detenido, segundo_n_detenido, minuto_b_detenido, segundo_b_detenido, &tiempo_limite_blanco, &tiempo_limite_negro);
@@ -720,7 +726,7 @@ void seleccionar_en_red(char campo[LADO][LADO], SAMPLE * sonido_mover, BITMAP * 
 	bool turno_blanca = true, blanca_en_jaque = false, negra_en_jaque = false, condicion_blanca_seleccionar = false,
 			 condicion_negra_seleccionar = false, movio_blanca = false, movio_negra = false, jaque_mate = false,
 			 mensaje_jaque = true, mensaje_jaque_mate = true, tiempo_limite_negro = false,
-			 tiempo_limite_blanco = false, mensaje_tiempo_limite = false;
+			 tiempo_limite_blanco = false, mensaje_tiempo_limite = false, presiono_blanca = FALSE, presiono_negra = FALSE;
 
 	char pieza = ' ', pieza_promocion_blanca = 'w', pieza_promocion_negra = 'W';
 
@@ -748,6 +754,8 @@ void seleccionar_en_red(char campo[LADO][LADO], SAMPLE * sonido_mover, BITMAP * 
 				if(fila_destino != -1 && columna_destino != -1) {
 					movio_negra = mover_pieza_a_destino(fila_origen, fila_destino, columna_origen, columna_destino, campo, &negra_en_jaque);
 					if(movio_negra) {
+						presiono_negra = TRUE;
+						presiono_blanca = TRUE;
 						play_sample(sonido_mover, 200, 150, 1000, 0);
 						aplicar_movimiento(fila_origen, columna_origen, fila_destino, columna_destino, campo);
 						promocionar_peon_negro(pieza_promocion_negra, campo);
@@ -775,10 +783,12 @@ void seleccionar_en_red(char campo[LADO][LADO], SAMPLE * sonido_mover, BITMAP * 
 				seleccionar_origen_blanca(condicion_blanca_seleccionar, blanca_en_jaque, fila, columna, &pieza, turno_blanca, &clic_blanca, &clic_negra, &fila_origen, &columna_origen, campo);
 
 				if(clic_blanca > 0) {
+					presiono_blanca = TRUE;
 					while(mouse_b & 1) {
+						draw_cuadrado(fila_origen, columna_origen, campo, SELECCION_CLARO, SELECCION_OSCURO, pantalla);
 						obtener_fila_y_columna(&fila_destino, &columna_destino);
 						seleccionar_pieza_blanca_a_mover(pantalla, pieza, campo);
-					//	re_draw(pantalla, campo);
+						re_draw(pantalla, campo);
 						clic_blanca += 1;
 						dibujar_cuadros_seleccion_anterior(pantalla, campo);
 						dibujar_seleccion_promocion(pantalla, pieza_promocion_blanca, pieza_promocion_negra);
@@ -791,6 +801,8 @@ void seleccionar_en_red(char campo[LADO][LADO], SAMPLE * sonido_mover, BITMAP * 
 				if(fila_destino != -1 && columna_destino != -1) {
 					movio_blanca = mover_pieza_a_destino(fila_origen, fila_destino, columna_origen, columna_destino, campo, &blanca_en_jaque);
 					if(movio_blanca) {
+						presiono_blanca = TRUE;
+						presiono_negra = TRUE;
 						play_sample(sonido_mover, 200, 150, 1000, 0);
 
 						aplicar_movimiento(fila_origen, columna_origen, fila_destino, columna_destino, campo);
@@ -819,11 +831,14 @@ void seleccionar_en_red(char campo[LADO][LADO], SAMPLE * sonido_mover, BITMAP * 
 			}
 			if(!jaque_mate && !mouse_dentro_tablero(mouse_x, mouse_y) && (mouse_b & 1) && !(tiempo_limite_blanco || tiempo_limite_negro)) {
 				(turno_blanca) ? seleccionar_promocion(pantalla, mouse_x, mouse_y, &pieza_promocion_blanca, turno_blanca) : seleccionar_promocion(pantalla, mouse_x, mouse_y, &pieza_promocion_negra, turno_blanca);
-			//	re_draw(pantalla, campo);
+				re_draw(pantalla, campo);
 			}
 
 			verificar_tiempo_limite_message(tiempo_limite_blanco, tiempo_limite_negro, &mensaje_tiempo_limite);
 			dibujar_cuadros_seleccion_anterior(pantalla, campo);
+			if(!presiono_blanca && presiono_negra) draw_cuadrado(fila_origen, columna_origen, campo, SELECCION_CLARO, SELECCION_OSCURO, pantalla);
+			if(!presiono_negra && presiono_blanca) draw_cuadrado(fila_origen, columna_origen, campo, SELECCION_CLARO, SELECCION_OSCURO, pantalla);
+			marcar_movimiento_permitido(pantalla, campo, fila_origen, columna_origen);
 			dibujar_seleccion_promocion(pantalla, pieza_promocion_blanca, pieza_promocion_negra);
 			timer(pantalla, turno_blanca, minuto_n_detenido, segundo_n_detenido, minuto_b_detenido, segundo_b_detenido, &tiempo_limite_blanco, &tiempo_limite_negro);
 		}
@@ -844,6 +859,8 @@ void seleccionar_en_red(char campo[LADO][LADO], SAMPLE * sonido_mover, BITMAP * 
 				if(fila_destino != -1 && columna_destino != -1) {
 					movio_blanca = mover_pieza_a_destino(fila_origen, fila_destino, columna_origen, columna_destino, campo, &blanca_en_jaque);
 					if(movio_blanca) {
+						presiono_blanca = TRUE;
+						presiono_negra = TRUE;
 						play_sample(sonido_mover, 200, 150, 1000, 0);
 						aplicar_movimiento(fila_origen, columna_origen, fila_destino, columna_destino, campo);
 						promocionar_peon_blanco(pieza_promocion_blanca, campo);
@@ -870,10 +887,12 @@ void seleccionar_en_red(char campo[LADO][LADO], SAMPLE * sonido_mover, BITMAP * 
 				seleccionar_origen_negra(condicion_negra_seleccionar, negra_en_jaque, fila, columna, &pieza, turno_blanca, &clic_blanca, &clic_negra, &fila_origen, &columna_origen, campo);
 
 				if(clic_negra > 0) {
+					presiono_negra = TRUE;
 					while(mouse_b & 1) {
+						draw_cuadrado(fila_origen, columna_origen, campo, SELECCION_CLARO, SELECCION_OSCURO, pantalla);
 						obtener_fila_y_columna(&fila_destino, &columna_destino);
 						seleccionar_pieza_negra_a_mover(pantalla, pieza, campo);
-					//	re_draw(pantalla, campo);
+						re_draw(pantalla, campo);
 						clic_negra += 1;
 						dibujar_cuadros_seleccion_anterior(pantalla, campo);
 						dibujar_seleccion_promocion(pantalla, pieza_promocion_blanca, pieza_promocion_negra);
@@ -886,6 +905,8 @@ void seleccionar_en_red(char campo[LADO][LADO], SAMPLE * sonido_mover, BITMAP * 
 				if(fila_destino != -1 && columna_destino != -1) {
 					movio_negra = mover_pieza_a_destino(fila_origen, fila_destino, columna_origen, columna_destino, campo, &negra_en_jaque);
 					if(movio_negra) {
+						presiono_negra = TRUE;
+						presiono_blanca = TRUE;
 						play_sample(sonido_mover, 200, 150, 1000, 0);
 
 						aplicar_movimiento(fila_origen, columna_origen, fila_destino, columna_destino, campo);
@@ -914,11 +935,14 @@ void seleccionar_en_red(char campo[LADO][LADO], SAMPLE * sonido_mover, BITMAP * 
 
 			if(!jaque_mate && !mouse_dentro_tablero(mouse_x, mouse_y) && (mouse_b & 1) && !(tiempo_limite_blanco || tiempo_limite_negro)) {
 				(turno_blanca) ? seleccionar_promocion(pantalla, mouse_x, mouse_y, &pieza_promocion_blanca, turno_blanca) : seleccionar_promocion(pantalla, mouse_x, mouse_y, &pieza_promocion_negra, turno_blanca);
-				//re_draw(pantalla, campo);
+				re_draw(pantalla, campo);
 			}
 
 			verificar_tiempo_limite_message(tiempo_limite_blanco, tiempo_limite_negro, &mensaje_tiempo_limite);
 			dibujar_cuadros_seleccion_anterior(pantalla, campo);
+			if(!presiono_blanca && presiono_negra) draw_cuadrado(fila_origen, columna_origen, campo, SELECCION_CLARO, SELECCION_OSCURO, pantalla);
+			if(!presiono_negra && presiono_blanca) draw_cuadrado(fila_origen, columna_origen, campo, SELECCION_CLARO, SELECCION_OSCURO, pantalla);
+			marcar_movimiento_permitido(pantalla, campo, fila_origen, columna_origen);
 			dibujar_seleccion_promocion(pantalla, pieza_promocion_blanca, pieza_promocion_negra);
 			timer(pantalla, turno_blanca, minuto_n_detenido, segundo_n_detenido, minuto_b_detenido, segundo_b_detenido, &tiempo_limite_blanco, &tiempo_limite_negro);
 

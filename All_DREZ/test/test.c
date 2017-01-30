@@ -26,6 +26,11 @@ CU_EXPORT CU_ErrorCode run_test(void) {
 		return CU_get_error();
 	}
 
+	if(NULL == CU_add_test(pSuite, "test of test_tablero_en_blanco()", test_tablero_en_blanco)) {
+		CU_cleanup_registry();
+		return CU_get_error();
+	}
+
 	/* Run all tests using the CUnit Basic interface */
 	CU_basic_set_mode(CU_BRM_VERBOSE);
 	CU_basic_run_tests();

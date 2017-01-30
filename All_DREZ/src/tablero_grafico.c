@@ -38,9 +38,7 @@ void draw_cuadros_tablero(BITMAP *pantalla) {
 	int i, j;
 	for(i = 0 ; i < 8 ; i++) {
 		for(j = 0 ; j < 8 ; j++) {
-			if(impar_relativo(i, j))
-				rectfill(pantalla, 11 + 80 * i, 11 + 80 * j, 90 + 80 * i, 90 + 80 * j, 114);
-			else
+			(impar_relativo(i, j)) ? rectfill(pantalla, 11 + 80 * i, 11 + 80 * j, 90 + 80 * i, 90 + 80 * j, 114) :
 				rectfill(pantalla, 11 + 80 * i, 11 + 80 * j, 90 + 80 * i, 90 + 80 * j, 66);
 		}
 	}

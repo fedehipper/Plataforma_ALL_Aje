@@ -3,6 +3,7 @@
 
 #define LADO 8
 #include <stdbool.h>
+#include <allegro.h>
 
 void inicializar_posicion_piezas(char campo[LADO][LADO]);
 void draw_tablero(BITMAP *pantalla);
@@ -29,5 +30,10 @@ void switcheo_draw_piezas(BITMAP * pantalla, char pieza, char campo[LADO][LADO])
 void re_draw(BITMAP * pantalla, char campo[LADO][LADO]);
 void draw_cuadrado_relleno(int fila, int columna, char campo[LADO][LADO], int color,  BITMAP * pantalla);
 void ocultar_pieza(int fila, int columna, char campo[LADO][LADO], int color_oscuro, int color_claro,  BITMAP * pantalla);
+
+
+
+
+
 
 #endif /* TABLERO_GRAFICO_H_ */

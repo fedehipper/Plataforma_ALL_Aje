@@ -4,6 +4,7 @@
 void test_valor(void);
 int clean_suite1(void);
 int init_suite1(void);
+void test_tablero_en_blanco(void);
 
 
 

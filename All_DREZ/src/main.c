@@ -122,9 +122,11 @@ int main(int argc, char **argv) {
 
 	desinstalar_complementos(sonido_mover);
 	liberar_memoria_piezas(pantalla);
+	run_test();
+
 	allegro_exit();
 
-	run_test();
+
 
 	return EXIT_SUCCESS;
 }

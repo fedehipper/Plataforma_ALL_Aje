@@ -6,6 +6,7 @@
 *.settings.xml
 
 snake/.settings/language.settings.xml
+temp.text
 
 /Debug/
 

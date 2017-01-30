@@ -1,8 +1,7 @@
 #ifndef TEST_TABLERO_GRAFICO_H_
 #define TEST_TABLERO_GRAFICO_H_
 
-void testFPRINTF(void);
-void testFREAD(void);
+void test_valor(void);
 int clean_suite1(void);
 int init_suite1(void);
 

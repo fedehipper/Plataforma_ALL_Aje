@@ -7,6 +7,9 @@
 #include "inicializar.h"
 #include <string.h>
 #include "lib_socket.h"
+#include <CUnit/Basic.h>
+#include <stdarg.h>
+#include "../test/test.h"
 
 #define LADO 8
 
@@ -78,6 +81,7 @@
 
 
 int main(int argc, char **argv) {
+
 	int socket;
 	allegro_init();
 
@@ -119,6 +123,8 @@ int main(int argc, char **argv) {
 	desinstalar_complementos(sonido_mover);
 	liberar_memoria_piezas(pantalla);
 	allegro_exit();
+
+	run_test();
 
 	return EXIT_SUCCESS;
 }

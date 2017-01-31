@@ -1,6 +1,8 @@
 #include <CUnit/Basic.h>
 #include "../src/movimientos_torre.h"
 
+#define LADO 8
+
 void test_es_amigo_de_torre(void) {
 	CU_ASSERT(es_amigo_de_torre('t', 'c'));
 	CU_ASSERT(es_amigo_de_torre('t', 'a'));
@@ -26,4 +28,21 @@ void test_es_amigo_de_torre(void) {
 	CU_ASSERT_FALSE(es_amigo_de_torre('t', 'W'));
 	CU_ASSERT_FALSE(es_amigo_de_torre('t', 'R'));
 	CU_ASSERT_FALSE(es_amigo_de_torre('t', 'P'));
+}
+
+void inicializar_campo(char campo[LADO][LADO]) {
+	int i, j;
+	for(i = 0 ; i < LADO ; i++) {
+		for(j = 0 ; j < LADO ; j++) {
+			campo[i][j] = ' ';
+		}
+	}
+}
+
+void test_es_abajo_de_torre(void) {
+	char campo[LADO][LADO];
+	campo[2][2] = 't';
+	campo[4][4] = 'T';
+	CU_ASSERT(es_abajo_de_torre(4, 4 , 2, 4 ,campo));
+	CU_ASSERT(es_abajo_de_torre(2, 2, 4, 2 ,campo));
 }

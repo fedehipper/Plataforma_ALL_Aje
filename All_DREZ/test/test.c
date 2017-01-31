@@ -44,6 +44,7 @@ CU_EXPORT CU_ErrorCode run_test(void) {
 	if(NULL == CU_add_test(pSuite, "test of test_tablero_en_blanco()", test_tablero_en_blanco)) clean_up_get_registry();
 	if(NULL == CU_add_test(pSuite, "test of test_inicializar_posicion_piezas()", test_inicializar_posicion_piezas)) clean_up_get_registry();
 	if(NULL == CU_add_test(pSuite, "test of test_es_amigo_de_torre()", test_es_amigo_de_torre)) clean_up_get_registry();
+	if(NULL == CU_add_test(pSuite, "test of test_es_abajo_de_torre()", test_es_abajo_de_torre)) clean_up_get_registry();
 
 	/* Run all tests using the CUnit Basic interface */
 	CU_basic_set_mode(CU_BRM_VERBOSE);

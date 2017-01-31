@@ -12,12 +12,8 @@ bool es_amigo_de_torre(char torre, char otro) {
 		   otro == 'W' || otro == 'A' || otro == 'R' || otro == 'P' || otro == 'C' || otro == 'T';
 }
 
-char color_torre(int fila_origen, int columna_origen, char campo[LADO][LADO]) {
-	return campo[fila_origen][columna_origen];
-}
-
 bool es_abajo_de_torre(int fila_origen, int columna_origen, int fila_destino, int columna_destino, char campo[LADO][LADO]) {
-	if(color_torre(fila_origen, columna_origen, campo) == 't') {
+	if(campo[fila_origen][columna_origen] == 't') {
 		return fila_origen < fila_destino && columna_origen == columna_destino;
 	} else {
 		return fila_origen > fila_destino && columna_origen == columna_destino;
@@ -25,7 +21,7 @@ bool es_abajo_de_torre(int fila_origen, int columna_origen, int fila_destino, in
 }
 
 bool es_arriba_de_torre(int fila_origen, int columna_origen, int fila_destino, int columna_destino, char campo[LADO][LADO]) {
-	if(color_torre(fila_origen, columna_origen, campo) == 't') {
+	if(campo[fila_origen][columna_origen] == 't') {
 		return fila_origen > fila_destino && columna_origen == columna_destino;
 	} else {
 		return fila_origen < fila_destino && columna_origen == columna_destino;
@@ -33,7 +29,7 @@ bool es_arriba_de_torre(int fila_origen, int columna_origen, int fila_destino, i
 }
 
 bool es_a_la_izquierda_de_torre(int fila_origen, int columna_origen, int fila_destino, int columna_destino, char campo[LADO][LADO]) {
-	if(color_torre(fila_origen, columna_origen, campo) == 't') {
+	if(campo[fila_origen][columna_origen] == 't') {
 		return columna_origen > columna_destino && fila_origen == fila_destino;
 	} else {
 		return columna_origen < columna_destino && fila_origen == fila_destino;
@@ -41,7 +37,7 @@ bool es_a_la_izquierda_de_torre(int fila_origen, int columna_origen, int fila_de
 }
 
 bool es_a_la_derecha_de_torre(int fila_origen, int columna_origen, int fila_destino, int columna_destino, char campo[LADO][LADO]) {
-	if(color_torre(fila_origen, columna_origen, campo) == 't') {
+	if(campo[fila_origen][columna_origen] == 't') {
 		return columna_origen < columna_destino && fila_origen == fila_destino;
 	} else {
 		return columna_origen > columna_destino && fila_origen == fila_destino;
@@ -50,7 +46,7 @@ bool es_a_la_derecha_de_torre(int fila_origen, int columna_origen, int fila_dest
 
 bool puede_ir_arriba_torre(int fila_origen, int fila_destino, int columna, char campo[LADO][LADO]) {
 	int i = 0, distancia = 0;
-	if(color_torre(fila_origen, columna, campo) == 't') {
+	if(campo[fila_origen][columna] == 't') {
 		distancia = fila_origen - fila_destino;
 		for(i = 1 ; i < distancia ; i++) {
 			if(campo[fila_origen - i][columna] != ' ') {
@@ -70,7 +66,7 @@ bool puede_ir_arriba_torre(int fila_origen, int fila_destino, int columna, char 
 
 bool puede_ir_abajo_torre(int fila_origen, int fila_destino, int columna, char campo[LADO][LADO]) {
 	int i = 0, distancia = 0;
-	if(color_torre(fila_origen, columna, campo) == 't') {
+	if(campo[fila_origen][columna] == 't') {
 		distancia = fila_destino - fila_origen;
 		for(i = 1 ; i < distancia ; i++) {
 			if(campo[fila_origen + i][columna] != ' ') {
@@ -91,7 +87,7 @@ bool puede_ir_abajo_torre(int fila_origen, int fila_destino, int columna, char c
 
 bool puede_ir_izquierda_torre(int columna_origen, int columna_destino, int fila, char campo[LADO][LADO]) {
 	int i = 0, distancia = 0;
-	if(color_torre(fila, columna_origen, campo) == 't') {
+	if(campo[fila][columna_origen] == 't') {
 		distancia = columna_origen - columna_destino;
 		for(i = 1 ; i < distancia ; i++) {
 			if(campo[fila][columna_origen - i] != ' ') {
@@ -111,7 +107,7 @@ bool puede_ir_izquierda_torre(int columna_origen, int columna_destino, int fila,
 
 bool puede_ir_derecha_torre(int columna_origen, int columna_destino, int fila, char campo[LADO][LADO]) {
 	int i = 0, distancia = 0;
-	if(color_torre(fila, columna_origen, campo) == 't') {
+	if(campo[fila][columna_origen] == 't') {
 		distancia = columna_destino - columna_origen;
 		for(i = 1 ; i < distancia ; i++) {
 			if(campo[fila][columna_origen + i] != ' ') {

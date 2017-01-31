@@ -6,6 +6,11 @@
 #include <string.h>
 #include "test_tablero_grafico.h"
 
+CU_EXPORT CU_ErrorCode clean_up_get_registry(void) {
+	CU_cleanup_registry();
+	return CU_get_error();
+}
+
 CU_EXPORT CU_ErrorCode run_test(void) {
 	CU_pSuite pSuite = NULL;
 
@@ -21,15 +26,9 @@ CU_EXPORT CU_ErrorCode run_test(void) {
 
 	/* add the tests to the suite */
 	/* NOTE - ORDER IS IMPORTANT - MUST TEST fread() AFTER fprintf() */
-	if(NULL == CU_add_test(pSuite, "test of test_valor()", test_valor)) {
-		CU_cleanup_registry();
-		return CU_get_error();
-	}
-
-	if(NULL == CU_add_test(pSuite, "test of test_tablero_en_blanco()", test_tablero_en_blanco)) {
-		CU_cleanup_registry();
-		return CU_get_error();
-	}
+	if(NULL == CU_add_test(pSuite, "test of test_valor()", test_valor)) clean_up_get_registry();
+	if(NULL == CU_add_test(pSuite, "test of test_tablero_en_blanco()", test_tablero_en_blanco)) clean_up_get_registry();
+	if(NULL == CU_add_test(pSuite, "test of test_inicializar_posicion_piezas()", test_inicializar_posicion_piezas)) clean_up_get_registry();
 
 	/* Run all tests using the CUnit Basic interface */
 	CU_basic_set_mode(CU_BRM_VERBOSE);

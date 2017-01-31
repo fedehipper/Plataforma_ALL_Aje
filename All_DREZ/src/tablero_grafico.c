@@ -129,7 +129,6 @@ void jugador_negro(BITMAP * pantalla) {
 	textout_centre_ex(pantalla, font, "CRONOMETRO", 765, 475, COLOR_TEXTO, GRIS);
 }
 
-// ya son las coordenadas posta
 void seleccionar_promocion(BITMAP * pantalla, int mouse_x, int mouse_y, char *pieza_seleccionada, bool turno_blanca) {
 	if(!turno_blanca) {
 		if(mouse_x > 675 && mouse_x < 695 && mouse_y > 98 && mouse_y < 120) *pieza_seleccionada = 'T';
@@ -559,8 +558,7 @@ void draw_cuadrado(int fila, int columna, char campo[LADO][LADO], int color_clar
 			rect(pantalla, 12 + 80 * columna, 12 + 80 * fila, 89 + 80 * columna, 89 + 80 * fila, color_oscuro);
 			rect(pantalla, 13 + 80 * columna, 13 + 80 * fila, 88 + 80 * columna, 88 + 80 * fila, color_claro);
 			rect(pantalla, 14 + 80 * columna, 14 + 80 * fila, 87 + 80 * columna, 87 + 80 * fila, color_claro);
-		}
-		else {
+		} else {
 			rect(pantalla, 11 + 80 * columna, 11 + 80 * fila, 90 + 80 * columna, 90 + 80 * fila, color_oscuro);
 			rect(pantalla, 12 + 80 * columna, 12 + 80 * fila, 89 + 80 * columna, 89 + 80 * fila, color_oscuro);
 			rect(pantalla, 13 + 80 * columna, 13 + 80 * fila, 88 + 80 * columna, 88 + 80 * fila, color_claro);
@@ -571,20 +569,16 @@ void draw_cuadrado(int fila, int columna, char campo[LADO][LADO], int color_clar
 
 void draw_cuadrado_relleno(int fila, int columna, char campo[LADO][LADO], int color,  BITMAP * pantalla) {
 	if(fila < 8 && columna < 8) {
-		if(par_relativo(fila, columna)) {
-			rectfill(pantalla, 11 + 80 * columna, 11 + 80 * fila, 90 + 80 * columna, 90 + 80 * fila, color - 3);
-		}
-		else {
+		(par_relativo(fila, columna)) ? rectfill(pantalla, 11 + 80 * columna, 11 + 80 * fila, 90 + 80 * columna, 90 + 80 * fila, color - 3) :
 			rectfill(pantalla, 11 + 80 * columna, 11 + 80 * fila, 90 + 80 * columna, 90 + 80 * fila, color);
-		}
 	}
 	if(campo[fila][columna] != ' ') switcheo_draw_piezas(pantalla, campo[fila][columna], campo);
 }
 
 void ocultar_pieza(int fila, int columna, char campo[LADO][LADO], int color_oscuro, int color_claro,  BITMAP * pantalla) {
 	if(fila < 8 && columna < 8) {
-		if(par_relativo(fila, columna)) rectfill(pantalla, 11 + 80 * columna, 11 + 80 * fila, 90 + 80 * columna, 90 + 80 * fila, color_claro);
-		else rectfill(pantalla, 11 + 80 * columna, 11 + 80 * fila, 90 + 80 * columna, 90 + 80 * fila, color_oscuro);
+		(par_relativo(fila, columna)) ? rectfill(pantalla, 11 + 80 * columna, 11 + 80 * fila, 90 + 80 * columna, 90 + 80 * fila, color_claro) :
+			rectfill(pantalla, 11 + 80 * columna, 11 + 80 * fila, 90 + 80 * columna, 90 + 80 * fila, color_oscuro);
 	}
 }
 

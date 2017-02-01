@@ -32,17 +32,50 @@ void test_es_amigo_de_torre(void) {
 
 void inicializar_campo(char campo[LADO][LADO]) {
 	int i, j;
-	for(i = 0 ; i < LADO ; i++) {
-		for(j = 0 ; j < LADO ; j++) {
-			campo[i][j] = ' ';
-		}
-	}
+	for(i = 0 ; i < LADO ; i++) for(j = 0 ; j < LADO ; j++) campo[i][j] = ' ';
 }
 
 void test_es_abajo_de_torre(void) {
 	char campo[LADO][LADO];
+	inicializar_campo(campo);
 	campo[2][2] = 't';
 	campo[4][4] = 'T';
 	CU_ASSERT(es_abajo_de_torre(4, 4 , 2, 4 ,campo));
 	CU_ASSERT(es_abajo_de_torre(2, 2, 4, 2 ,campo));
+	CU_ASSERT_FALSE(es_abajo_de_torre(4, 4, 5, 4, campo));
+	CU_ASSERT_FALSE(es_abajo_de_torre(2, 2, 1, 2, campo));
+	CU_ASSERT_FALSE(es_abajo_de_torre(2, 2, 3, 4, campo));
+	CU_ASSERT_FALSE(es_abajo_de_torre(4, 4, 4, 3, campo));
 }
+
+void test_es_arriba_de_torre(void) {
+	char campo[LADO][LADO];
+	inicializar_campo(campo);
+	campo[2][2] = 't';
+	campo[4][4] = 'T';
+	CU_ASSERT(es_arriba_de_torre(2, 2, 1, 2, campo));
+	CU_ASSERT(es_arriba_de_torre(4, 4, 5, 4, campo));
+}
+
+void test_es_a_la_izquierda_de_torre(void) {
+	char campo[LADO][LADO];
+	inicializar_campo(campo);
+	campo[2][2] = 't';
+	campo[4][4] = 'T';
+	CU_ASSERT(es_a_la_izquierda_de_torre(2, 2, 2, 1, campo));
+	CU_ASSERT(es_a_la_izquierda_de_torre(4, 4, 4, 5, campo));
+}
+
+void test_es_a_la_derecha_de_torre(void) {
+	char campo[LADO][LADO];
+	inicializar_campo(campo);
+	campo[2][2] = 't';
+	campo[4][4] = 'T';
+	CU_ASSERT(es_a_la_derecha_de_torre(2, 2, 2, 3, campo));
+	CU_ASSERT(es_a_la_derecha_de_torre(4, 4, 4, 3, campo));
+}
+
+
+
+
+

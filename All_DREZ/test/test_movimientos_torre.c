@@ -75,6 +75,13 @@ void test_es_a_la_derecha_de_torre(void) {
 	CU_ASSERT(es_a_la_derecha_de_torre(4, 4, 4, 3, campo));
 }
 
+void test_es_jaque_torre(void) {
+	char campo[LADO][LADO];
+	inicializar_campo(campo);
+	CU_ASSERT(es_jaque_torre('t', 4, 4, 0, 0, 5, 4, campo));
+	CU_ASSERT(es_jaque_torre('T', 4, 4, 5, 4, 0, 0, campo));
+}
+
 
 
 

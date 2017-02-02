@@ -87,22 +87,44 @@ void test_puede_ir_arriba_torre(void) {
 	inicializar_campo(campo);
 	campo[3][4] = 't';
 	campo[5][5] = 'T';
-	campo[1][4] = 'p';
 	CU_ASSERT(puede_ir_arriba_torre(3, 2, 4, campo));
 	CU_ASSERT(puede_ir_arriba_torre(5, 7, 5, campo));
-	CU_ASSERT_FALSE(puede_ir_arriba_torre(3, 0, 4, campo));
 }
 
 void test_puede_ir_abajo_torre(void) {
-
+	char campo[LADO][LADO];
+	inicializar_campo(campo);
+	campo[3][4] = 't';
+	campo[5][5] = 'T';
+	CU_ASSERT(puede_ir_abajo_torre(3, 5, 4, campo));
+	CU_ASSERT(puede_ir_abajo_torre(5, 4, 5, campo));
 }
 
-void test_puede_ir_a_la_derecha_torre(void) {
-
+void test_puede_ir_derecha_torre(void) {
+	char campo[LADO][LADO];
+	inicializar_campo(campo);
+	campo[3][4] = 't';
+	campo[5][5] = 'T';
+	CU_ASSERT(puede_ir_derecha_torre(4, 6, 3, campo));
+	CU_ASSERT(puede_ir_derecha_torre(5, 2, 5, campo));
 }
 
-void test_puede_ir_a_la_izquierda_torre(void) {
-
+void test_puede_ir_izquierda_torre(void) {
+	char campo[LADO][LADO];
+	inicializar_campo(campo);
+	campo[3][4] = 't';
+	campo[5][5] = 'T';
+	CU_ASSERT(puede_ir_izquierda_torre(4, 2, 3, campo));
+	CU_ASSERT(puede_ir_izquierda_torre(5, 6, 5, campo));
 }
 
-
+void test_si_se_mueve_es_jaque_torre(void) {
+	char campo[LADO][LADO];
+	inicializar_campo(campo);
+	campo[1][0] = 't';
+	campo[6][7] = 'T';
+	campo[6][0] = 'W';
+	campo[0][7] = 'w';
+	CU_ASSERT(si_se_mueve_es_jaque_torre(1, 0 , 6, 1, campo, 0, 0, 7, 7));
+	CU_ASSERT(si_se_mueve_es_jaque_torre(6, 7 , 6, 6, campo, 0, 0, 7, 7));
+}

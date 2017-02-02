@@ -8,6 +8,10 @@ void test_es_a_la_izquierda_de_torre(void);
 void test_es_a_la_derecha_de_torre(void);
 void test_es_jaque_torre(void);
 void test_puede_ir_arriba_torre(void);
+void test_puede_ir_abajo_torre(void);
+void test_puede_ir_izquierda_torre(void);
+void test_puede_ir_derecha_torre(void);
+void test_si_se_mueve_es_jaque_torre(void);
 
 
 #endif /* TEST_MOVIMIENTOS_TORRE_H_ */

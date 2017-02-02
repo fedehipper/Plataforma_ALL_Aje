@@ -105,10 +105,9 @@ bool es_jaque_torre(char pieza, int fila_d, int columna_d, int f_rey_b, int c_re
 }
 
 bool si_se_mueve_es_jaque_torre(int fila_o, int columna_o, int fila_d, int columna_d, char campo[LADO][LADO], int f_rey_b, int c_rey_b, int f_rey_n, int c_rey_n) {
-	int i,j;
+	int i, j;
 	char pieza = campo[fila_o][columna_o], pieza_destino = campo[fila_d][columna_d];
 	bool es_jaque = false;
-	// hago que se mueva al destino y veo si sigue el jaque
 	campo[fila_o][columna_o] = ' ';
 	campo[fila_d][columna_d] = pieza;
 	for(i = 0 ; i < LADO ; i++) {
@@ -125,7 +124,6 @@ bool si_se_mueve_es_jaque_torre(int fila_o, int columna_o, int fila_d, int colum
 			}
 		}
 	}
-	// hago que aparezca
 	campo[fila_o][columna_o] = pieza;
 	campo[fila_d][columna_d] = pieza_destino;
 	return es_jaque;

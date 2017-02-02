@@ -82,7 +82,27 @@ void test_es_jaque_torre(void) {
 	CU_ASSERT(es_jaque_torre('T', 4, 4, 5, 4, 0, 0, campo));
 }
 
+void test_puede_ir_arriba_torre(void) {
+	char campo[LADO][LADO];
+	inicializar_campo(campo);
+	campo[3][4] = 't';
+	campo[5][5] = 'T';
+	campo[1][4] = 'p';
+	CU_ASSERT(puede_ir_arriba_torre(3, 2, 4, campo));
+	CU_ASSERT(puede_ir_arriba_torre(5, 7, 5, campo));
+	CU_ASSERT_FALSE(puede_ir_arriba_torre(3, 0, 4, campo));
+}
 
+void test_puede_ir_abajo_torre(void) {
 
+}
+
+void test_puede_ir_a_la_derecha_torre(void) {
+
+}
+
+void test_puede_ir_a_la_izquierda_torre(void) {
+
+}
 
 

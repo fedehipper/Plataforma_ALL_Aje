@@ -49,6 +49,8 @@ CU_EXPORT CU_ErrorCode run_test(void) {
 	if(NULL == CU_add_test(p_suite, "test of test_es_a_la_izquierda_de_torre()", test_es_a_la_izquierda_de_torre)) clean_up_get_registry();
 	if(NULL == CU_add_test(p_suite, "test of test_es_a_la_derecha_de_torre()", test_es_a_la_derecha_de_torre)) clean_up_get_registry();
 	if(NULL == CU_add_test(p_suite, "test of test_es_jaque_torre()", test_es_jaque_torre)) clean_up_get_registry();
+	if(NULL == CU_add_test(p_suite, "test of test_puede_ir_arriba_torre()", test_puede_ir_arriba_torre)) clean_up_get_registry();
+
 
 	/* Run all tests using the CUnit Basic interface */
 	CU_basic_set_mode(CU_BRM_VERBOSE);

@@ -12,6 +12,7 @@ bool si_se_mueve_es_jaque_torre(int fila_origen, int columna_origen, int fila_de
 bool es_arriba_de_torre(int fila_origen, int columna_origen, int fila_destino, int columna_destino, char campo[LADO][LADO]);
 bool es_a_la_izquierda_de_torre(int fila_origen, int columna_origen, int fila_destino, int columna_destino, char campo[LADO][LADO]);
 bool es_a_la_derecha_de_torre(int fila_origen, int columna_origen, int fila_destino, int columna_destino, char campo[LADO][LADO]);
+bool puede_ir_arriba_torre(int fila_origen, int fila_destino, int columna, char campo[LADO][LADO]);
 
 
 #endif /* MOVIMIENTOS_TORRE_H_ */

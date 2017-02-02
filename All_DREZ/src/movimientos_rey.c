@@ -8,93 +8,59 @@
 
 #define LADO 8
 
-bool es_amigo_de_rey(char rey, char otro) {
-	return (rey == 'r')? otro == 'w' || otro == 'a' || otro == 'r' || otro == 't' || otro == 'c' || otro == 'p':
-			otro == 'W' || otro == 'A' || otro == 'R' || otro == 'T' || otro == 'C' || otro == 'P';
+bool es_amigo_de_rey(char rey, char p) {
+	return (rey == 'r')? p == 'w'||p == 'a'||p == 'r'||p == 't'||p == 'c'||p == 'p': p == 'W'||p == 'A'||p == 'R'||p == 'T'||p == 'C'||p == 'P';
 }
 
-bool movimiento_rey_sin_reestricciones(int fila_origen, int columna_origen, int fila_destino, int columna_destino) {
-	return ((fila_origen + 1 == fila_destino && columna_origen == columna_destino) ||
-			    (fila_origen - 1 == fila_destino && columna_origen == columna_destino) ||
-			    (columna_origen + 1 == columna_destino && fila_origen == fila_destino) ||
-			    (columna_origen - 1 == columna_destino && fila_origen == fila_destino) ||
-			    (fila_origen + 1 == fila_destino && columna_origen + 1 == columna_destino) ||
-			    (fila_origen - 1 == fila_destino && columna_origen - 1 == columna_destino) ||
-			    (fila_origen + 1 == fila_destino && columna_origen - 1 == columna_destino) ||
-			    (fila_origen - 1 == fila_destino && columna_origen + 1 == columna_destino));
+bool movimiento_rey_sin_reestricciones(int fila_o, int columna_o, int fila_d, int columna_d) {
+	return ((fila_o + 1 == fila_d && columna_o == columna_d) || (fila_o - 1 == fila_d && columna_o == columna_d) ||
+		(columna_o + 1 == columna_d && fila_o == fila_d) || (columna_o - 1 == columna_d && fila_o == fila_d) ||
+		(fila_o + 1 == fila_d && columna_o + 1 == columna_d) || (fila_o - 1 == fila_d && columna_o - 1 == columna_d) ||
+		(fila_o + 1 == fila_d && columna_o - 1 == columna_d) || (fila_o - 1 == fila_d && columna_o + 1 == columna_d));
 }
 
-bool me_hacen_jaque(int fila_origen, int columna_origen, int fila_destino, int columna_destino, char campo[LADO][LADO]) {
+bool me_hacen_jaque(int fila_o, int columna_o, int fila_d, int columna_d, char campo[LADO][LADO]) {
 	int i,j, f_rey_b, c_rey_b, f_rey_n, c_rey_n;
 	bool es_jaque = false;
-	char pieza_aux = campo[fila_destino][columna_destino], rey_original = ' ';
-	if(campo[fila_origen][columna_origen] == 'r') {
-		campo[fila_destino][columna_destino] = 'r';
+	char pieza_aux = campo[fila_d][columna_d], rey_original = ' ';
+	if(campo[fila_o][columna_o] == 'r') {
+		campo[fila_d][columna_d] = 'r';
 		rey_original = 'r';
-		f_rey_b = fila_destino;
-		c_rey_b = columna_destino;
+		f_rey_b = fila_d;
+		c_rey_b = columna_d;
 	} else {
-		campo[fila_destino][columna_destino] = 'R';
+		campo[fila_d][columna_d] = 'R';
 		rey_original = 'R';
-		f_rey_n = fila_destino;
-		c_rey_n = columna_destino;
+		f_rey_n = fila_d;
+		c_rey_n = columna_d;
 	}
-	campo[fila_origen][columna_origen] = ' ';
-
+	campo[fila_o][columna_o] = ' ';
 	for(i = 0 ; i < LADO ; i++) {
 		for(j = 0 ; j < LADO ; j++) {
-			if(campo[i][j] != ' ' && !es_amigo_de_rey(campo[fila_destino][columna_destino], campo[i][j])) {
+			if(campo[i][j] != ' ' && !es_amigo_de_rey(campo[fila_d][columna_d], campo[i][j])) {
 				switch(campo[i][j]) {
-					case 'p': if(es_jaque_peon('p', i, j, f_rey_b, c_rey_b, f_rey_n, c_rey_n, campo)) es_jaque = true;
-					break;
-					case 'P': if(es_jaque_peon('P', i, j, f_rey_b, c_rey_b, f_rey_n, c_rey_n, campo)) es_jaque = true;
-					break;
-					case 'a': if(es_jaque_alfil('a', i, j, f_rey_b, c_rey_b, f_rey_n, c_rey_n,campo)) es_jaque = true;
-					break;
-					case 'A': if(es_jaque_alfil('A', i, j, f_rey_b, c_rey_b, f_rey_n, c_rey_n,campo)) es_jaque = true;
-					break;
-					case 't': if(es_jaque_torre('t', i, j, f_rey_b, c_rey_b, f_rey_n, c_rey_n, campo)) es_jaque = true;
-					break;
-					case 'T': if(es_jaque_torre('T', i, j, f_rey_b, c_rey_b, f_rey_n, c_rey_n, campo)) es_jaque = true;
-					break;
-					case 'c': if(es_jaque_caballo('c', i, j, f_rey_b, c_rey_b, f_rey_n, c_rey_n, campo)) es_jaque = true;
-					break;
-					case 'C': if(es_jaque_caballo('C', i, j, f_rey_b, c_rey_b, f_rey_n, c_rey_n, campo)) es_jaque = true;
-					break;
-					case 'w': if(es_jaque_reina('w', i, j, f_rey_b, c_rey_b, f_rey_n, c_rey_n, campo)) es_jaque = true;
-					break;
-					case 'W': if(es_jaque_reina('W', i, j, f_rey_b, c_rey_b, f_rey_n, c_rey_n, campo)) es_jaque = true;
-					break;
-					case 'R':
-					case 'r': if(movimiento_rey_sin_reestricciones(i, j, fila_destino, columna_destino)) es_jaque = true;
-					break;
+					case 'p': case 'P': if(es_jaque_peon(campo[i][j], i, j, f_rey_b, c_rey_b, f_rey_n, c_rey_n, campo)) es_jaque = true; break;
+					case 'a': case 'A': if(es_jaque_alfil(campo[i][j], i, j, f_rey_b, c_rey_b, f_rey_n, c_rey_n,campo)) es_jaque = true; break;
+					case 't': case 'T': if(es_jaque_torre(campo[i][j], i, j, f_rey_b, c_rey_b, f_rey_n, c_rey_n, campo)) es_jaque = true; break;
+					case 'c': case 'C': if(es_jaque_caballo(campo[i][j], i, j, f_rey_b, c_rey_b, f_rey_n, c_rey_n, campo)) es_jaque = true; break;
+					case 'w': case 'W': if(es_jaque_reina(campo[i][j], i, j, f_rey_b, c_rey_b, f_rey_n, c_rey_n, campo)) es_jaque = true; break;
+					case 'R': case 'r': if(movimiento_rey_sin_reestricciones(i, j, fila_d, columna_d)) es_jaque = true; break;
 				}
 				if (es_jaque) break;
 			}
 		}
 	}
-	campo[fila_destino][columna_destino] = pieza_aux;
-	campo[fila_origen][columna_origen] = rey_original;
+	campo[fila_d][columna_d] = pieza_aux;
+	campo[fila_o][columna_o] = rey_original;
 	return es_jaque;
 }
 
-bool movimiento_permitido_rey(int fila_origen, int columna_origen, int fila_destino, int columna_destino, char campo[LADO][LADO]) {
-	return movimiento_rey_sin_reestricciones(fila_origen, columna_origen, fila_destino, columna_destino) &&
-			!me_hacen_jaque(fila_origen, columna_origen, fila_destino, columna_destino, campo) &&
-			!es_amigo_de_rey(campo[fila_origen][columna_origen], campo[fila_destino][columna_destino]);
+bool movimiento_permitido_rey(int fila_o, int columna_o, int fila_d, int columna_d, char campo[LADO][LADO]) {
+	return movimiento_rey_sin_reestricciones(fila_o, columna_o, fila_d, columna_d) &&
+		!me_hacen_jaque(fila_o, columna_o, fila_d, columna_d, campo) && !es_amigo_de_rey(campo[fila_o][columna_o], campo[fila_d][columna_d]);
 }
 
-
-bool es_jaque_rey(char pieza, int fila_destino, int columna_destino, int f_rey_b, int c_rey_b, int f_rey_n, int c_rey_n, char campo[LADO][LADO]) {
-	bool es_jaque = false;
-		if(pieza == 'r' && movimiento_permitido_rey(fila_destino, columna_destino, f_rey_n, c_rey_n, campo)) {
-			es_jaque = true;
-		}
-		if(pieza == 'R' && movimiento_permitido_rey(fila_destino, columna_destino, f_rey_b, c_rey_b, campo)) {
-			es_jaque = true;
-		}
-	return es_jaque;
+bool es_jaque_rey(char pieza, int fila_d, int columna_d, int f_rey_b, int c_rey_b, int f_rey_n, int c_rey_n, char campo[LADO][LADO]) {
+	return ((pieza == 'r' && movimiento_permitido_rey(fila_d, columna_d, f_rey_n, c_rey_n, campo))) ||
+		((pieza == 'R' && movimiento_permitido_rey(fila_d, columna_d, f_rey_b, c_rey_b, campo)));
 }
-
-
-

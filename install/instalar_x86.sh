@@ -6,6 +6,7 @@ echo
 	sudo apt-get update
 	sudo dpkg -i logmein-hamachi_2.1.0.174-1_i386
 	sudo apt-get install haguichi
+	sudo apt-get install libtool
 	tar -xvf CUnit-2.1-3.tar
 	cd CUnit-2.1-3
 	./bootstrap

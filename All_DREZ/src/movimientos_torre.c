@@ -8,7 +8,7 @@
 #define LADO 8
 
 bool es_amigo_de_torre(char t, char p) {
-	return t == 't'? p == 'w'||p == 'a'||p == 'r'||p == 'p'||p == 'c'||p == 't' : p == 'W'||p == 'A'||p == 'R'||p == 'P'||p == 'C'||p == 'T';
+	return t =='t'? p =='w'||p =='a'||p =='r'||p =='p'||p =='c'||p =='t' : p =='W'||p =='A'||p =='R'||p =='P'||p =='C'||p =='T';
 }
 
 bool es_abajo_de_torre(int fila_o, int columna_o, int fila_d, int columna_d, char campo[LADO][LADO]) {

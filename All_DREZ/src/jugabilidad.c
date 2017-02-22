@@ -21,6 +21,7 @@
 #define SELECCION_OSCURO 72
 #define PARAR_CRONOMETRO 1000
 #define TAMANIO_STREAM 17
+#define COLOR_JAQUE 39
 
 int f_rey_b = 7, c_rey_b = 4, f_rey_n = 0, c_rey_n = 4,
 	f_origen_anterior = -1, c_origen_anterior = -1, f_destino_anterior = -1, c_destino_anterior = -1,
@@ -555,6 +556,9 @@ void seleccionar_en_solitario(char campo[LADO][LADO], SAMPLE * sonido_mover, BIT
 		blit(pantalla, screen, 0, 0, 0, 0, 870, 667);
 		verificar_estado_de_rey(turno_blanca, &mensaje_jaque_mate, &mensaje_jaque, &jaque_mate, negra_en_jaque, blanca_en_jaque, campo);
 
+		if(negra_en_jaque) draw_cuadrado(f_rey_n, c_rey_n, campo, 15, COLOR_JAQUE, pantalla);
+		if(blanca_en_jaque) draw_cuadrado(f_rey_b, c_rey_b, campo, 15, COLOR_JAQUE, pantalla);
+
 		rest(30);
 
 		if(!jaque_mate && (mouse_b & 1) && mouse_dentro_tablero(mouse_x, mouse_y) && !tiempo_limite_blanco && !tiempo_limite_negro) {
@@ -571,7 +575,8 @@ void seleccionar_en_solitario(char campo[LADO][LADO], SAMPLE * sonido_mover, BIT
 					while(mouse_b & 1) {
 						ocultar_pieza(fila_origen, columna_origen, campo, 114, 66, pantalla);
 						marcar_movimiento_permitido(pantalla, campo, fila_origen, columna_origen);
-						draw_cuadrado(fila_origen, columna_origen, campo, SELECCION_CLARO, SELECCION_OSCURO, pantalla);
+						(blanca_en_jaque && fila_origen == f_rey_b && columna_origen == c_rey_b) ? draw_cuadrado(f_rey_b, c_rey_b, campo, 15, COLOR_JAQUE, pantalla) :
+								draw_cuadrado(fila_origen, columna_origen, campo, SELECCION_CLARO, SELECCION_OSCURO, pantalla);
 						obtener_fila_y_columna(&fila_destino, &columna_destino);
 						seleccionar_pieza_blanca_a_mover(pantalla, pieza, campo);
 						re_draw(pantalla, campo);
@@ -618,7 +623,8 @@ void seleccionar_en_solitario(char campo[LADO][LADO], SAMPLE * sonido_mover, BIT
 					while(mouse_b & 1) {
 						ocultar_pieza(fila_origen, columna_origen, campo, 114, 66, pantalla);
 						marcar_movimiento_permitido(pantalla, campo, fila_origen, columna_origen);
-						draw_cuadrado(fila_origen, columna_origen, campo, SELECCION_CLARO, SELECCION_OSCURO, pantalla);
+						(negra_en_jaque && fila_origen == f_rey_n && columna_origen == c_rey_n) ? draw_cuadrado(f_rey_n, c_rey_n, campo, 15, COLOR_JAQUE, pantalla) :
+							draw_cuadrado(fila_origen, columna_origen, campo, SELECCION_CLARO, SELECCION_OSCURO, pantalla);
 						obtener_fila_y_columna(&fila_destino, &columna_destino);
 						seleccionar_pieza_negra_a_mover(pantalla, pieza, campo);
 						re_draw(pantalla, campo);
@@ -649,7 +655,6 @@ void seleccionar_en_solitario(char campo[LADO][LADO], SAMPLE * sonido_mover, BIT
 					} else {
 						turno_blanca = false;
 						switcheo_draw_piezas(pantalla, pieza, campo);
-
 					}
 					if(movio_negra && verificar_jaque(pieza, fila_destino, columna_destino, campo)) blanca_en_jaque = true;
 					clic_negra = 0;
@@ -664,8 +669,8 @@ void seleccionar_en_solitario(char campo[LADO][LADO], SAMPLE * sonido_mover, BIT
 
 		verificar_tiempo_limite_message(tiempo_limite_blanco, tiempo_limite_negro, &mensaje_tiempo_limite);
 		dibujar_cuadros_seleccion_anterior(pantalla, campo);
-		if(!presiono_blanca && presiono_negra) draw_cuadrado(fila_origen, columna_origen, campo, SELECCION_CLARO, SELECCION_OSCURO, pantalla);
-		if(!presiono_negra && presiono_blanca) draw_cuadrado(fila_origen, columna_origen, campo, SELECCION_CLARO, SELECCION_OSCURO, pantalla);
+		if(!presiono_blanca && presiono_negra && !negra_en_jaque) draw_cuadrado(fila_origen, columna_origen, campo, SELECCION_CLARO, SELECCION_OSCURO, pantalla);
+		if(!presiono_negra && presiono_blanca && !blanca_en_jaque) draw_cuadrado(fila_origen, columna_origen, campo, SELECCION_CLARO, SELECCION_OSCURO, pantalla);
 		marcar_movimiento_permitido(pantalla, campo, fila_origen, columna_origen);
 		dibujar_seleccion_promocion(pantalla, pieza_promocion_blanca, pieza_promocion_negra);
 		timer(pantalla, turno_blanca, minuto_n_detenido, segundo_n_detenido, minuto_b_detenido, segundo_b_detenido, &tiempo_limite_blanco, &tiempo_limite_negro);
@@ -746,6 +751,9 @@ void seleccionar_en_red(char campo[LADO][LADO], SAMPLE * sonido_mover, BITMAP * 
 			blit(pantalla, screen, 0, 0, 0, 0, 870, 667);
 			verificar_estado_de_rey(turno_blanca, &mensaje_jaque_mate, &mensaje_jaque, &jaque_mate, negra_en_jaque, blanca_en_jaque, campo);
 
+			if(negra_en_jaque) draw_cuadrado(f_rey_n, c_rey_n, campo, 15, COLOR_JAQUE, pantalla);
+			if(blanca_en_jaque) draw_cuadrado(f_rey_b, c_rey_b, campo, 15, COLOR_JAQUE, pantalla);
+
 			rest(30);
 
 			if(!jaque_mate && !turno_blanca && !tiempo_limite_blanco && !tiempo_limite_negro && (recibir(*socket, &package) != -1)) {
@@ -787,7 +795,8 @@ void seleccionar_en_red(char campo[LADO][LADO], SAMPLE * sonido_mover, BITMAP * 
 					while(mouse_b & 1) {
 						ocultar_pieza(fila_origen, columna_origen, campo, 114, 66, pantalla);
 						marcar_movimiento_permitido(pantalla, campo, fila_origen, columna_origen);
-						draw_cuadrado(fila_origen, columna_origen, campo, SELECCION_CLARO, SELECCION_OSCURO, pantalla);
+						(blanca_en_jaque && fila_origen == f_rey_b && columna_origen == c_rey_b) ? draw_cuadrado(f_rey_b, c_rey_b, campo, 15, COLOR_JAQUE, pantalla) :
+							draw_cuadrado(fila_origen, columna_origen, campo, SELECCION_CLARO, SELECCION_OSCURO, pantalla);
 						obtener_fila_y_columna(&fila_destino, &columna_destino);
 						seleccionar_pieza_blanca_a_mover(pantalla, pieza, campo);
 						re_draw(pantalla, campo);
@@ -838,8 +847,8 @@ void seleccionar_en_red(char campo[LADO][LADO], SAMPLE * sonido_mover, BITMAP * 
 
 			verificar_tiempo_limite_message(tiempo_limite_blanco, tiempo_limite_negro, &mensaje_tiempo_limite);
 			dibujar_cuadros_seleccion_anterior(pantalla, campo);
-			if(!presiono_blanca && presiono_negra) draw_cuadrado(fila_origen, columna_origen, campo, SELECCION_CLARO, SELECCION_OSCURO, pantalla);
-			if(!presiono_negra && presiono_blanca) draw_cuadrado(fila_origen, columna_origen, campo, SELECCION_CLARO, SELECCION_OSCURO, pantalla);
+			if(!presiono_blanca && presiono_negra && !negra_en_jaque) draw_cuadrado(fila_origen, columna_origen, campo, SELECCION_CLARO, SELECCION_OSCURO, pantalla);
+			if(!presiono_negra && presiono_blanca && !blanca_en_jaque) draw_cuadrado(fila_origen, columna_origen, campo, SELECCION_CLARO, SELECCION_OSCURO, pantalla);
 			marcar_movimiento_permitido(pantalla, campo, fila_origen, columna_origen);
 			dibujar_seleccion_promocion(pantalla, pieza_promocion_blanca, pieza_promocion_negra);
 			timer(pantalla, turno_blanca, minuto_n_detenido, segundo_n_detenido, minuto_b_detenido, segundo_b_detenido, &tiempo_limite_blanco, &tiempo_limite_negro);
@@ -853,6 +862,10 @@ void seleccionar_en_red(char campo[LADO][LADO], SAMPLE * sonido_mover, BITMAP * 
 		while(!close_button_pressed) {
 			blit(pantalla, screen, 0, 0, 0, 0, 870, 667);
 			verificar_estado_de_rey(turno_blanca, &mensaje_jaque_mate, &mensaje_jaque, &jaque_mate, negra_en_jaque, blanca_en_jaque, campo);
+
+			if(negra_en_jaque) draw_cuadrado(f_rey_n, c_rey_n, campo, 15, COLOR_JAQUE, pantalla);
+			if(blanca_en_jaque) draw_cuadrado(f_rey_b, c_rey_b, campo, 15, COLOR_JAQUE, pantalla);
+
 			rest(30);
 
 			if(!jaque_mate && turno_blanca && !tiempo_limite_blanco && !tiempo_limite_negro && (recibir(*socket, &package) != -1)) {
@@ -893,7 +906,8 @@ void seleccionar_en_red(char campo[LADO][LADO], SAMPLE * sonido_mover, BITMAP * 
 					while(mouse_b & 1) {
 						ocultar_pieza(fila_origen, columna_origen, campo, 114, 66, pantalla);
 						marcar_movimiento_permitido(pantalla, campo, fila_origen, columna_origen);
-						draw_cuadrado(fila_origen, columna_origen, campo, SELECCION_CLARO, SELECCION_OSCURO, pantalla);
+						(negra_en_jaque && fila_origen == f_rey_n && columna_origen == c_rey_n) ? draw_cuadrado(f_rey_n, c_rey_n, campo, 15, COLOR_JAQUE, pantalla) :
+							draw_cuadrado(fila_origen, columna_origen, campo, SELECCION_CLARO, SELECCION_OSCURO, pantalla);
 						obtener_fila_y_columna(&fila_destino, &columna_destino);
 						seleccionar_pieza_negra_a_mover(pantalla, pieza, campo);
 						re_draw(pantalla, campo);
@@ -944,8 +958,8 @@ void seleccionar_en_red(char campo[LADO][LADO], SAMPLE * sonido_mover, BITMAP * 
 
 			verificar_tiempo_limite_message(tiempo_limite_blanco, tiempo_limite_negro, &mensaje_tiempo_limite);
 			dibujar_cuadros_seleccion_anterior(pantalla, campo);
-			if(!presiono_blanca && presiono_negra) draw_cuadrado(fila_origen, columna_origen, campo, SELECCION_CLARO, SELECCION_OSCURO, pantalla);
-			if(!presiono_negra && presiono_blanca) draw_cuadrado(fila_origen, columna_origen, campo, SELECCION_CLARO, SELECCION_OSCURO, pantalla);
+			if(!presiono_blanca && presiono_negra && !negra_en_jaque) draw_cuadrado(fila_origen, columna_origen, campo, SELECCION_CLARO, SELECCION_OSCURO, pantalla);
+			if(!presiono_negra && presiono_blanca && !blanca_en_jaque) draw_cuadrado(fila_origen, columna_origen, campo, SELECCION_CLARO, SELECCION_OSCURO, pantalla);
 			marcar_movimiento_permitido(pantalla, campo, fila_origen, columna_origen);
 			dibujar_seleccion_promocion(pantalla, pieza_promocion_blanca, pieza_promocion_negra);
 			timer(pantalla, turno_blanca, minuto_n_detenido, segundo_n_detenido, minuto_b_detenido, segundo_b_detenido, &tiempo_limite_blanco, &tiempo_limite_negro);

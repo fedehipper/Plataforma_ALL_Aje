@@ -9,7 +9,7 @@
 #define LADO 8
 
 bool es_amigo_de_rey(char rey, char p) {
-	return (rey == 'r')? p == 'w'||p == 'a'||p == 'r'||p == 't'||p == 'c'||p == 'p': p == 'W'||p == 'A'||p == 'R'||p == 'T'||p == 'C'||p == 'P';
+	return (rey =='r')? p =='w'||p =='a'||p =='r'||p =='t'||p =='c'||p =='p': p =='W'||p =='A'||p =='R'||p =='T'||p =='C'||p =='P';
 }
 
 bool movimiento_rey_sin_reestricciones(int fila_o, int columna_o, int fila_d, int columna_d) {

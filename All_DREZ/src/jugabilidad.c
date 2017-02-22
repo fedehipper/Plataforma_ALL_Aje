@@ -36,7 +36,7 @@ bool es_pieza_blanca(char pieza) {
 }
 
 bool verificar_jaque_intermedio_blancas(char campo[LADO][LADO]) {
-	int i,j;
+	int i, j;
 	bool es_jaque = false;
 	for(i = 0 ; i < LADO ; i++) {
 		for(j = 0 ; j < LADO ; j++) {
@@ -58,7 +58,7 @@ bool verificar_jaque_intermedio_blancas(char campo[LADO][LADO]) {
 }
 
 bool verificar_jaque_intermedio_negras(char campo[LADO][LADO]) {
-	int i,j;
+	int i, j;
 	bool es_jaque = false;
 	for(i = 0 ; i < LADO ; i++) {
 		for(j = 0 ; j < LADO ; j++) {
@@ -286,7 +286,6 @@ bool hay_movimiento_permitido_blancas(char campo[LADO][LADO]) {
 	return se_puede_mover;
 }
 
-
 bool hay_movimiento_permitido_negras(char campo[LADO][LADO]) {
 	int i, j, k, l;
 	bool aux = false, se_puede_mover = false;
@@ -418,13 +417,11 @@ bool mouse_dentro_tablero(int mouse_x, int mouse_y) {
 }
 
 void promocionar_peon_blanco(char pieza_promocion_blanca, char campo[LADO][LADO]) {
-	int i;
-	for(i = 0 ; i < 8 ; i++) if(campo[0][i] == 'p') campo[0][i] = pieza_promocion_blanca;
+	for(int i = 0 ; i < 8 ; i++) if(campo[0][i] == 'p') campo[0][i] = pieza_promocion_blanca;
 }
 
 void promocionar_peon_negro(char pieza_promocion_negra, char campo[LADO][LADO]) {
-	int i;
-	for(i = 0 ; i < 8 ; i++) if(campo[7][i] == 'P') campo[7][i] = pieza_promocion_negra;
+	for(int i = 0 ; i < 8 ; i++) if(campo[7][i] == 'P') campo[7][i] = pieza_promocion_negra;
 }
 
 void tiempo_jugador_blanco(BITMAP *pantalla, int minuto, int segundo, bool *tiempo_limite) {

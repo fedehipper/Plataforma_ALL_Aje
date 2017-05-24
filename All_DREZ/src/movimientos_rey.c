@@ -39,7 +39,14 @@ bool me_hacen_jaque(int fila_o, int columna_o, int fila_d, int columna_d, char c
 	for(i = 0 ; i < LADO ; i++) {
 		for(j = 0 ; j < LADO ; j++) {
 			if(campo[i][j] != ' ' && !es_amigo_de_rey(campo[fila_d][columna_d], campo[i][j])) {
-				es_jaque = rutina_case_jaque(campo[i][j], i, j, campo, f_rey_b, c_rey_b, f_rey_n, c_rey_n);
+				switch(campo[i][j]) {
+					case 'p': case 'P': if(es_jaque_peon(campo[i][j], i, j, f_rey_b, c_rey_b, f_rey_n, c_rey_n, campo)) es_jaque = true; break;
+					case 'a': case 'A': if(es_jaque_alfil(campo[i][j], i, j, f_rey_b, c_rey_b, f_rey_n, c_rey_n,campo)) es_jaque = true; break;
+					case 't': case 'T': if(es_jaque_torre(campo[i][j], i, j, f_rey_b, c_rey_b, f_rey_n, c_rey_n, campo)) es_jaque = true; break;
+					case 'c': case 'C': if(es_jaque_caballo(campo[i][j], i, j, f_rey_b, c_rey_b, f_rey_n, c_rey_n, campo)) es_jaque = true; break;
+					case 'w': case 'W': if(es_jaque_reina(campo[i][j], i, j, f_rey_b, c_rey_b, f_rey_n, c_rey_n, campo)) es_jaque = true; break;
+					case 'R': case 'r': if(movimiento_rey_sin_reestricciones(i, j, fila_d, columna_d)) es_jaque = true; break;
+				}
 				if (es_jaque) break;
 			}
 		}

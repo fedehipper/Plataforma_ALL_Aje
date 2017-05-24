@@ -100,7 +100,13 @@ bool si_se_mueve_es_jaque_peon(int fila_origen, int columna_origen, int fila_des
 	for(i = 0 ; i < LADO ; i++) {
 		for(j = 0 ; j < LADO ; j++) {
 			if(!es_amigo_de_peon(pieza, campo[i][j])) {
-				es_jaque = rutina_case_jaque(campo[i][j], i, j, campo, f_rey_b, c_rey_b, f_rey_n, c_rey_n);
+				switch(campo[i][j]) {
+					case 'p': case 'P': if(es_jaque_peon(campo[i][j], i, j, f_rey_b, c_rey_b, f_rey_n, c_rey_n, campo)) es_jaque = true; break;
+					case 'a': case 'A': if(es_jaque_alfil(campo[i][j], i, j, f_rey_b, c_rey_b, f_rey_n, c_rey_n,campo)) es_jaque = true; break;
+					case 't': case 'T': if(es_jaque_torre(campo[i][j], i, j, f_rey_b, c_rey_b, f_rey_n, c_rey_n, campo)) es_jaque = true; break;
+					case 'c': case 'C': if(es_jaque_caballo(campo[i][j], i, j, f_rey_b, c_rey_b, f_rey_n, c_rey_n, campo)) es_jaque = true; break;
+					case 'w': case 'W': if(es_jaque_reina(campo[i][j], i, j, f_rey_b, c_rey_b, f_rey_n, c_rey_n, campo)) es_jaque = true; break;
+				}
 				if (es_jaque) break;
 			}
 		}

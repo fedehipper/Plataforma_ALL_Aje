@@ -5,7 +5,6 @@
 #include "movimientos_peon.h"
 #include "movimientos_reina.h"
 #include "movimientos_torre.h"
-#include "comportamiento_comun_piezas.h"
 
 #define LADO 8
 

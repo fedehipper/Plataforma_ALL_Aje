@@ -417,11 +417,13 @@ bool mouse_dentro_tablero(int mouse_x, int mouse_y) {
 }
 
 void promocionar_peon_blanco(char pieza_promocion_blanca, char campo[LADO][LADO]) {
-	for(int i = 0 ; i < 8 ; i++) if(campo[0][i] == 'p') campo[0][i] = pieza_promocion_blanca;
+	int i;
+	for(i = 0 ; i < 8 ; i++) if(campo[0][i] == 'p') campo[0][i] = pieza_promocion_blanca;
 }
 
 void promocionar_peon_negro(char pieza_promocion_negra, char campo[LADO][LADO]) {
-	for(int i = 0 ; i < 8 ; i++) if(campo[7][i] == 'P') campo[7][i] = pieza_promocion_negra;
+	int i;
+	for(i = 0 ; i < 8 ; i++) if(campo[7][i] == 'P') campo[7][i] = pieza_promocion_negra;
 }
 
 void tiempo_jugador_blanco(BITMAP *pantalla, int minuto, int segundo, bool *tiempo_limite) {

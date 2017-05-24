@@ -20,7 +20,7 @@ bool movimiento_rey_sin_reestricciones(int fila_o, int columna_o, int fila_d, in
 }
 
 bool me_hacen_jaque(int fila_o, int columna_o, int fila_d, int columna_d, char campo[LADO][LADO]) {
-	int i,j, f_rey_b, c_rey_b, f_rey_n, c_rey_n;
+	int i, j, f_rey_b, c_rey_b, f_rey_n, c_rey_n;
 	bool es_jaque = false;
 	char pieza_aux = campo[fila_d][columna_d], rey_original = ' ';
 	if(campo[fila_o][columna_o] == 'r') {

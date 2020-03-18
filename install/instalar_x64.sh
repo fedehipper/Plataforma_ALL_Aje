@@ -7,10 +7,10 @@ echo
 	sudo dpkg -i logmein-hamachi_2.1.0.174-1_amd64
 	sudo apt-get install haguichi
 	sudo apt-get install libtool
+	sudo apt-get install automake
 	tar -xvf CUnit-2.1-3.tar
 	cd CUnit-2.1-3
 	./bootstrap
-	./compile
 	./configure --prefix=/usr
 	make
 	sudo make install
